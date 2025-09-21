@@ -1,0 +1,172 @@
+/* ===================== RFQ — Final styles ===================== */
+/* تعتمد الألوان على متغيراتك العامة في app.css (مع قيم افتراضية احتياطية) */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg, #f8fafc);
+  /* الخط يتبع ما ضبطته في app.css. إن رغبت بمظهر أقرب للّقطة،
+     أزل التعليق عن السطر التالي لتفرض تاجوال:
+     font-family: "Tajawal","Cairo","Inter",ui-sans-serif,system-ui; */
+  line-height: 1.6;
+}
+
+/* غلاف البطاقة */
+.rfq-wrap{
+  width: min(900px, 95%);
+  margin-inline: auto;
+  padding: 22px 0 44px;
+  display: flex;
+  justify-content: center;
+}
+
+/* البطاقة */
+.rfq-card{
+  width: 100%;
+  background: var(--card, #ffffff);
+  border: 1px solid var(--ring, #d1d5db);
+  border-radius: 22px;
+  padding: 28px 22px;
+  color: var(--fg, #0f172a);
+  box-shadow: 0 10px 24px rgba(2,6,23,.10);
+  transition: background .25s ease, color .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+
+/* تحسين بسيط في الداكن */
+.dark .rfq-card{
+  background: var(--card, #0e1627);
+  border-color: var(--ring, #1f2937);
+  box-shadow: 0 12px 28px rgba(0,0,0,.28);
+}
+
+/* العنوان */
+.rfq-title{
+  margin: 0 0 16px;
+  font-size: clamp(22px, 4.6vw, 32px);
+  font-weight: 900;
+  letter-spacing: .2px;         /* إحساس الخط العريض مثل اللقطة */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.rfq-title span{ font-size: 1.05em; }
+
+/* نموذج الحقول */
+.rfq-form{
+  display: grid;
+  gap: 14px;
+}
+
+/* الملصق */
+.rfq-label{
+  display: block;
+  margin-bottom: 6px;
+  color: var(--muted, #64748b);
+  font-weight: 800;
+  font-size: .96rem;
+}
+
+/* الحقول */
+.rfq-input,
+.rfq-select,
+.rfq-textarea{
+  width: 100%;
+  box-sizing: border-box;
+  background: transparent;                         /* يظهر لون البطاقة */
+  color: var(--fg, #0f172a);
+  border: 1px solid var(--ring, #d1d5db);
+  border-radius: 16px;
+  padding: 12px 14px;
+  outline: none;
+  font-weight: 700;                                 /* ثِقل الخط مثل اللقطة */
+  transition: border-color .2s, box-shadow .2s, background .2s;
+}
+.rfq-input::placeholder,
+.rfq-textarea::placeholder{
+  color: var(--muted, #64748b);
+  font-weight: 600;
+}
+
+.rfq-input:focus,
+.rfq-select:focus,
+.rfq-textarea:focus{
+  border-color: var(--brand, #2563eb);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand, #2563eb) 28%, transparent);
+}
+
+.rfq-textarea{ resize: vertical; min-height: 120px; }
+
+/* select يحافظ على تجربة الهواتف (خاصة iOS) */
+.rfq-select{
+  -webkit-appearance: none;
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted, #64748b) 50%),
+    linear-gradient(135deg, var(--muted, #64748b) 50%, transparent 50%),
+    linear-gradient(to right, transparent, transparent);
+  background-position:
+    calc(100% - 18px) calc(50% - 3px),
+    calc(100% - 12px) calc(50% - 3px),
+    100% 0;
+  background-size: 6px 6px, 6px 6px, 2.4rem 100%;
+  background-repeat: no-repeat;
+  padding-inline-end: 2.4rem;
+}
+
+/* أخطاء التحقق */
+.rfq-err{
+  color: #f87171;
+  font-weight: 800;
+  font-size: .9rem;
+}
+.is-invalid{ border-color: #f87171 !important; }
+
+/* زر الإرسال (نفس خامة الأزرار العامة) */
+.rfq-submit,
+.btn-gradient{
+  margin-top: 6px;
+  border: 0;
+  cursor: pointer;
+  padding: 14px 20px;
+  border-radius: 18px;
+  font-weight: 900;
+  font-size: 1rem;
+  color: #0b1220;
+  background: linear-gradient(135deg, #22d3ee 0%, #60a5fa 40%, #8b5cf6 100%);
+  box-shadow: 0 10px 26px color-mix(in srgb, var(--brand, #2563eb) 35%, transparent);
+  transition: transform .12s ease, filter .12s ease, box-shadow .12s ease;
+}
+.rfq-submit:hover,
+.btn-gradient:hover{
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+.rfq-submit:active,
+.btn-gradient:active{
+  transform: translateY(0);
+  filter: brightness(.97);
+}
+
+/* ملاحظات أسفل النموذج */
+.rfq-note,
+.foot-note{
+  margin-top: 10px;
+  color: var(--muted, #64748b);
+  font-weight: 700;
+  font-size: .95rem;
+}
+
+/* تماسك مع الهيدر المقوّس لديك */
+.rfq-card{
+  backdrop-filter: saturate(160%) blur(2px);
+}
+
+/* استجابة كاملة */
+@media (max-width: 640px){
+  .rfq-card{ padding: 20px 16px; border-radius: 18px; }
+  .rfq-title{ font-size: 1.45rem; }
+  .rfq-submit{ width: 100%; }
+}
+
+/* RTL */
+html[dir="rtl"] .rfq-card{ direction: rtl; }

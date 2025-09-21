@@ -1,0 +1,14 @@
+/* Base (يفضّل تضمين reset أيضًا لصفحات الأوث) */
+@import "../base/reset.css";
+@import "../base/variables.css";
+@import "../base/utilities.css";
+
+/* Components */
+@import "../components/forms.css";
+@import "../components/buttons.css";
+@import "../components/alerts.css";
+@import "../components/nav.css";
+@import "../components/cards.css";
+@import "../components/table.css";
+/* Layout صفحات المصادقة */
+@import "../layouts/auth.css";

@@ -1,0 +1,95 @@
+<?php
+
+return [
+
+    /* ===== Brand / Layout ===== */
+    'brand'      => 'Adel Saeed Trading & Industry',
+    'tagline'    => 'Supply & Installation of Production Lines',
+    'home'       => 'Home',
+    'catalog'    => 'Catalog',
+    'rfq'        => 'Request Quote',
+    'projects'   => 'Projects',
+    'reports'    => 'Technician Reports',
+    'dark'       => 'Dark',
+    'light'      => 'Light',
+    'ar'         => 'العربية',
+    'en'         => 'English',
+    'admin'      => 'Admin',
+    'ClientPortal' => 'Client Portal',
+    'logout'     => 'Logout',
+    'login'      => 'Login',
+    'rfqs'       => 'RFQs',
+    'register'   => 'Register',
+    'cta_browse' => 'Browse Catalog',
+    'cta_rfq'    => 'Request a Quote',
+    'contact'    => 'Contact Info',
+    'rights'     => 'All rights reserved.',
+
+    /* ===== Catalog ===== */
+    'search'      => 'Search for a product or keyword',
+    'search_btn'  => 'Search',
+    'no_products' => 'No products found.',
+    'sku'         => 'SKU',
+    'ask_quote'   => 'Request Quote',
+
+    /* ===== RFQ Form ===== */
+    'rfq_title'       => 'Request a Quote',
+    'full_name'       => 'Full Name',
+    'ph_full_name'    => 'e.g. XYZ Industries',
+    'email'           => 'Email',
+    'ph_email'        => 'you@company.com',
+    'phone'           => 'Phone / WhatsApp',
+    'ph_phone'        => '+1...',
+    'location'        => 'Country / City',
+    'ph_location'     => 'e.g. Saudi Arabia - Jeddah',
+    'service'         => 'Requested Service',
+    'budget'          => 'Estimated Budget',
+    'brief'           => 'Project Brief',
+    'ph_brief'        => 'Materials / capacity / location / timeline…',
+    'submit'          => 'Submit Request',
+    'rfq_note_whatsapp' => 'WhatsApp will open with the data filled automatically. You can also send via email.',
+    'rfq_sent'        => 'Your request has been sent successfully!',
+
+    /* ===== Services Options ===== */
+    'service_import'       => 'Import & Supply',
+    'service_procurement'  => 'Procurement',
+    'service_customs'      => 'Freight & Customs',
+    'service_installation' => 'Install & Commission',
+    'service_training'     => 'Training & Maintenance',
+    'service_full_line'    => 'Full Production Line',
+
+    /* ===== Budget Options ===== */
+    'budget_under_20k' => 'Under $20,000',
+    'budget_20_100k'   => '$20,000 - $100,000',
+    'budget_100_500k'  => '$100,000 - $500,000',
+    'budget_over_500k' => 'Over $500,000',
+
+    // ...
+'services'              => 'Services',
+'contact_us'            => 'Contact Us',
+'services_hero_title'   => 'End-to-End Industrial & Production Line Solutions',
+'services_hero_text'    => 'We provide procurement, freight & customs, installation & commissioning, training & maintenance, and full production lines.',
+'our_services'          => 'Our Services',
+'service_procurement_desc'   => 'Sourcing and supplying equipment from trusted vendors.',
+'service_customs_desc'       => 'Freight coordination, insurance, and customs clearance to your site.',
+'service_installation_desc'  => 'On-site installation and commissioning with performance testing.',
+'service_training_desc'      => 'Training programs and maintenance plans for your team.',
+'service_full_line_desc'     => 'Turnkey delivery of complete production lines.',
+'sectors_we_serve'      => 'Sectors We Serve',
+'sector_food'           => 'Food',
+'sector_beverage'       => 'Beverage',
+'sector_packaging'      => 'Packaging',
+'sector_pharma'         => 'Pharma',
+'sector_food_desc'      => 'Processing and canning equipment.',
+'sector_beverage_desc'  => 'Cold & hot beverage filling lines.',
+'sector_packaging_desc' => 'Automated packaging & on-pack printing.',
+'sector_pharma_desc'    => 'Pharmaceutical processing and filling.',
+'contact_hero_title'    => 'We’d love to hear from you',
+'contact_hero_text'     => 'Reach us via WhatsApp or email for quotes and technical advice.',
+'whatsapp_chat'         => 'WhatsApp Chat',
+'email_us'              => 'Email Us',
+'contact_info'          => 'Contact Info',
+'quick_links'           => 'Quick Links',
+
+
+];

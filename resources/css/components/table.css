@@ -1,0 +1,5 @@
+.table{ width:100%; border-collapse:separate; border-spacing:0; }
+.table th, .table td{ padding:.75rem .9rem; border-bottom:1px solid var(--ring); text-align:start; }
+.table thead th{ background:color-mix(in srgb, var(--soft) 60%, transparent); font-weight:900; }
+.table-striped tbody tr:nth-child(odd){ background:color-mix(in srgb, var(--soft) 30%, transparent); }
+.table-responsive{ width:100%; overflow:auto; border:1px solid var(--ring); border-radius:16px; }

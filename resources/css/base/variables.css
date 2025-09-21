@@ -1,0 +1,68 @@
+/* ===================== Theme Variables (Light/Dark) ===================== */
+:root{
+  /* ألوان أساسية */
+  --bg:#ffffff;
+  --fg:#0f172a;
+  --text:var(--fg);
+  --muted:#475569;
+  --soft:#f1f5f9;
+  --card:#ffffff;
+  --ring:#e2e8f0;
+  --border:var(--ring);
+
+  /* العلامة التجارية */
+  --brand:#2563eb;
+  --brand-600:#2563eb;
+  --brand-700:#1d4ed8;
+  --primary: var(--brand);
+
+  /* حالة/رسائل */
+  --success:#16a34a;
+  --warning:#f59e0b;
+  --danger:#dc2626;
+  --info:#0ea5e9;
+
+  /* ظلال وحدود ونعومة */
+  --radius:16px;
+  --shadow:0 10px 16px rgba(2,6,23,.06);
+  --shadow-lg:0 14px 28px rgba(2,6,23,.12);
+
+  /* حركات وانتقالات */
+  --dur-fast:.12s;
+  --dur:.22s;
+  --dur-slow:.45s;
+  --easing:cubic-bezier(.2,.7,.2,1);
+
+  /* تدرّجات مفيدة (أزرار…الخ) */
+  --grad-brand: linear-gradient(135deg,#22d3ee 0%, #60a5fa 40%, #8b5cf6 100%);
+  --grad-warn:  linear-gradient(135deg,#fde047, #fb7185);
+}
+
+/* داكن */
+.dark{
+  --bg:#0b1220;
+  --fg:#e2e8f0;
+  --text:var(--fg);
+  --muted:#94a3b8;
+  --soft:#0f172a;
+  --card:#0e1627;
+  --ring:#1f2937;
+  --border: var(--ring);
+
+  --brand:#3b82f6;      /* لمسة أخف في الداكن */
+  --brand-600:#3b82f6;
+  --brand-700:#2563eb;
+
+  --shadow:0 10px 20px rgba(0,0,0,.28);
+  --shadow-lg:0 18px 32px rgba(0,0,0,.36);
+}
+
+/* احترام تفضيل النظام (إذا لم تُفعّل .dark يدوياً) */
+@media (prefers-color-scheme: dark){
+  :root{ color-scheme: dark; }
+}
+
+:root{
+  --font-sans: "IBM Plex Sans Arabic","Cairo","Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Apple Color Emoji","Segoe UI Emoji",sans-serif;
+}
+body{ font-family: var(--font-sans); }

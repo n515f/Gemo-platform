@@ -1,0 +1,105 @@
+/* ======= Grid ======= */
+.pro-grid{
+  display:grid;
+  gap:1rem;
+  grid-template-columns:repeat(auto-fill, minmax(280px,1fr));
+}
+
+/* ======= Card ======= */
+.pro-card{
+  background:var(--card);
+  border:1px solid var(--ring);
+  border-radius:20px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  min-height:100%;
+}
+
+/* Media */
+.pro-card .media{ position:relative; background:var(--soft); }
+.pro-card .media img{ width:100%; height:190px; object-fit:cover; display:block; }
+
+/* إيقاف أي شارة على الصورة نهائيًا */
+.pro-card .badge{ display:none !important; }
+
+/* Body */
+.pro-card .body{
+  display:flex; flex-direction:column;
+  padding:18px;
+  min-height:260px;             /* يساعد على تثبيت الزر في الأسفل */
+}
+
+/* Title + code (code أصغر) */
+.pro-card .title{ margin:.2rem 0 .25rem; font-size:1.25rem; font-weight:900; }
+.pro-card .title .code{
+  font-weight:700;
+  font-size:.80rem;             /* أصغر بوضوح */
+  color:var(--muted);
+  margin-inline-start:.35rem;   /* بجانب الاسم */
+}
+
+/* SKU (اختياري) */
+.pro-card .sku{
+  display:inline-block;
+  margin:.2rem 0 .6rem;
+  padding:.35rem .7rem;
+  border-radius:14px;
+  background:color-mix(in srgb,var(--fg) 6%, transparent);
+  color:var(--muted); font-weight:800;
+}
+
+/* Lead paragraph */
+.pro-card .lead{ color:var(--muted); line-height:1.8; margin:.4rem 0 1rem; }
+
+/* Bullets */
+.pro-card ul.features{
+  margin:.4rem 0 1.1rem; padding:0 1rem 0 0;
+  list-style:disc; color:var(--fg);
+}
+html[dir="ltr"] .pro-card ul.features{ padding:0 0 0 1rem; }
+.pro-card ul.features li{ margin:.3rem 0; }
+
+/* CTA دائماً أسفل البطاقة */
+.pro-card .cta{
+  margin-top:auto;              /* يدفع الزر للأسفل */
+  display:flex; justify-content:flex-start;
+  padding-top:.25rem;
+}
+
+/* ======= Button (Gradient) ======= */
+.pro-card .btn{
+  border-radius:14px;
+  padding:.9rem 1.25rem;
+  font-weight:900;
+  text-decoration:none;
+  display:inline-flex; align-items:center; justify-content:center;
+  border:1px solid transparent;
+  transition:transform .12s ease, filter .12s ease, box-shadow .12s ease;
+}
+
+.btn-gradient{
+  background:linear-gradient(135deg,#22d3ee 0%, #60a5fa 38%, #8b5cf6 100%);
+  color:#0b1220;
+  box-shadow:0 10px 26px rgba(2,6,23,.18);
+}
+.btn-gradient:hover{ filter:brightness(1.05); transform:translateY(-1px); }
+.btn-gradient:active{ transform:translateY(0); filter:brightness(.98); }
+
+/* Media */
+.pro-card .media {
+  position: relative;
+  background: var(--soft);
+  display: flex;                /* مهم للتوسيط */
+  justify-content: center;      /* أفقي */
+  align-items: center;          /* عمودي */
+  height: 190px;                /* ارتفاع ثابت للبلوك */
+}
+
+.pro-card .media img {
+  max-width: 120px;             /* أقصى عرض للصورة */
+  max-height: 120px;            /* أقصى ارتفاع للصورة */
+  object-fit: contain;          /* يحافظ على النسبة */
+  display: block;
+}

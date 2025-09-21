@@ -1,0 +1,28 @@
+/* تخطيط صفحات المصادقة */
+.auth-wrap{
+  display:flex; justify-content:center; padding:24px;
+}
+.auth-card{
+  width:min(760px, 92%);
+  background:var(--card);
+  border:1px solid var(--ring);
+  border-radius:20px;
+  box-shadow:var(--shadow);
+  padding:24px 20px 28px;
+}
+.rfq-title{
+  margin:0 0 12px; color:var(--fg);
+  font-size:clamp(20px,5vw,34px); font-weight:900; display:flex; align-items:center; gap:.5rem;
+}
+.rfq-form{ display:grid; gap:10px; margin-top:6px; }
+.rfq-label{ color:var(--muted); font-weight:800; margin-top:6px; }
+.rfq-input,.rfq-select,.rfq-textarea{
+  width:100%; box-sizing:border-box; background:var(--card); color:var(--fg);
+  border:1px solid var(--ring); border-radius:14px; padding:12px 14px; outline:none;
+}
+.rfq-input:focus,.rfq-select:focus,.rfq-textarea:focus{
+  border-color:var(--brand); box-shadow:0 0 0 3px rgba(37,99,235,.25);
+}
+.rfq-textarea{ resize:vertical; }
+.rfq-submit{ margin-top:10px; }
+.foot-note{ color:var(--muted); margin-top:10px; font-weight:700; }

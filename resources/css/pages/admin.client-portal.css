@@ -1,0 +1,130 @@
+/* غلاف الصفحة */
+.client-portal {
+  width: min(1100px, 96%);
+  margin-inline: auto;
+  padding: 24px 0 40px;
+  text-align: center;
+}
+
+/* العنوان والوصف */
+.cp-title {
+  font-weight: 900;
+  font-size: clamp(22px, 2.6vw, 32px);
+  margin-bottom: 6px;
+}
+.cp-sub {
+  color: var(--muted);
+  margin-bottom: 22px;
+  font-weight: 600;
+}
+
+/* شبكة البطاقات */
+.cp-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+/* البطاقات */
+.cp-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 20px 16px;
+  border-radius: 18px;
+  border: 1px solid var(--ring);
+  background: var(--card);
+  color: var(--fg);
+  text-decoration: none;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  box-shadow: var(--shadow);
+}
+.cp-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px rgba(0,0,0,.12);
+  border-color: color-mix(in srgb, var(--brand) 40%, var(--ring));
+}
+
+/* صورة الأيقونة */
+.cp-media {
+  display: grid;
+  place-items: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 16px;
+  background: var(--soft);
+  border: 1px solid var(--ring);
+}
+.cp-media img {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+
+/* النصوص */
+.cp-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cp-head {
+  margin: 0;
+  font-weight: 800;
+  font-size: 1.05rem;
+}
+.cp-desc {
+  margin: 0;
+  color: var(--muted);
+  font-size: .9rem;
+  line-height: 1.4;
+  min-height: 2.2em;
+}
+
+/* زر الانتقال */
+.cp-actions {
+  margin-top: auto;
+}
+.btn.btn-go {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: .55rem 1rem;
+  border-radius: 999px;
+  font-weight: 800;
+  background: #fff;
+  color: #111;
+  border: 1px solid var(--ring);
+  transition: all .15s ease;
+}
+.btn.btn-go:hover {
+  background: var(--grad-brand);
+  color: #0b1220;
+  border-color: transparent;
+}
+
+/* الوضع الداكن */
+.dark .cp-card {
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  border-color: var(--ring);
+}
+.dark .btn.btn-go {
+  background: #fff;
+  color: #111;
+}
+.dark .btn.btn-go:hover {
+  background: var(--grad-brand);
+  color: #0b1220;
+}
+
+/* استجابة */
+@media (max-width: 560px) {
+  .cp-media {
+    width: 70px;
+    height: 70px;
+  }
+  .cp-media img {
+    width: 36px;
+    height: 36px;
+  }
+}

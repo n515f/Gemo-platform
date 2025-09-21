@@ -1,0 +1,15 @@
+/* تخطيط لوحة التحكم */
+.admin-root{ background:var(--bg); color:var(--fg); }
+.admin-topbar{
+  position:sticky; top:0; z-index:40; border-bottom:1px solid var(--ring);
+  background:color-mix(in srgb, var(--bg) 96%, transparent); backdrop-filter:saturate(160%) blur(6px);
+}
+.admin-shell{
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  width:min(1200px,96%); margin-inline:auto; padding:12px 8px;
+}
+.admin-brand .admin-logo{ font-weight:900; font-size:1.15rem; }
+.admin-nav{ display:flex; gap:6px; }
+.admin-container{ width:min(1200px,96%); margin-inline:auto; padding:18px 0; }
+.admin-header{ margin:8px 0 14px; font-size:clamp(20px,2.2vw,26px); font-weight:900; }
+.admin-content{ display:block; }

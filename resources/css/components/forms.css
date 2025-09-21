@@ -1,0 +1,12 @@
+.form-grid{ display:grid; gap:12px; }
+label, .label{ display:block; color:var(--muted); font-weight:800; margin:.25rem 0 .35rem; }
+.input, .select, .textarea{
+  width:100%; background:var(--card); color:var(--fg);
+  border:1px solid var(--ring); border-radius:14px; padding:12px 14px; outline:none;
+}
+.input:focus, .select:focus, .textarea:focus{ border-color:var(--brand); box-shadow:0 0 0 3px color-mix(in srgb, var(--brand) 24%, transparent); }
+.textarea{ resize:vertical; }
+.invalid{ border-color: #f87171; }
+.form-help{ font-size:.9rem; color:var(--muted); }
+.form-error{ color:#f87171; font-weight:800; font-size:.9rem; }
+.switch{ display:flex; align-items:center; gap:.5rem; font-weight:700; }

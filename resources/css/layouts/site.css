@@ -1,0 +1,240 @@
+/* تخطيط الموقع العام */
+body.app{ background:var(--bg); color:var(--fg); }
+.center-nav{ flex:1; display:flex; justify-content:center; }
+/* ==== سلوك ترتيب عناصر الهيدر بحسب الاتجاه ==== */
+.topbar .shell{
+  display:flex; align-items:center; justify-content:space-between; gap:18px;
+  width:min(1200px,96%); margin-inline:auto; padding:14px;
+  border:1px solid var(--border); border-radius:22px;
+  background:color-mix(in srgb, var(--bg) 92%, transparent);
+  box-shadow:var(--shadow);
+  flex-wrap: wrap; /* يسمح باللف على الشاشات الصغيرة */
+}
+
+/* النظام العام: nav في الوسط دائمًا */
+.center-nav{ flex:1; display:flex; justify-content:center; }
+
+/* ترتيب مرن حسب LTR/RTL */
+html[dir="rtl"] .right-logo{ order: 0; }
+html[dir="rtl"] .center-nav{ order: 1; }
+html[dir="rtl"] .brand-left{ order: 2; }
+
+html[dir="ltr"] .right-logo{ order: 0; }
+html[dir="ltr"] .center-nav{ order: 1; }
+html[dir="ltr"] .brand-left{ order: 2; }
+
+/* إصلاح هبوط بطاقة المستخدم */
+.brand-left{
+  display:flex; align-items:center; gap:12px;
+  min-width: 230px; /* يمنع الانضغاط المبالغ فيه */
+}
+
+/* الشعار لا يختفي في LTR */
+.right-logo .brand-logo-link { display:inline-flex; align-items:center; }
+.right-logo .logo-big{
+  width:56px; height:56px; object-fit:contain; border:none; box-shadow:none; background:transparent;
+}
+
+/* شريط التنقّل الجديد */
+.topnav{
+  flex: 1 1 auto;
+  display:flex; align-items:center; justify-content:space-between;
+  gap: 10px;
+}
+.mainnav{
+  display:flex; align-items:center; gap:8px; padding:4px; border-radius:16px;
+  background:color-mix(in srgb, var(--fg) 6%, transparent); border:1px solid var(--border);
+  overflow:auto;  /* على الموبايل يسمح بالتمرير الأفقي */
+}
+.mainnav .pill{
+  text-decoration:none; font-weight:900; white-space:nowrap; color:var(--muted);
+  padding:10px 16px; border-radius:14px; display:inline-flex; align-items:center;
+  transition: color var(--dur-fast) var(--easing), background var(--dur-fast) var(--easing), transform var(--dur-fast) var(--easing);
+}
+.mainnav .pill:hover{ color:var(--primary); transform:translateY(-1px); }
+.mainnav .pill.active{
+  background:color-mix(in srgb, var(--fg) 6%, transparent); color:var(--text);
+  box-shadow:inset 0 0 0 1px var(--border);
+}
+.dark .mainnav{ background:rgba(255,255,255,.04); }
+.dark .mainnav .pill.active{ background:rgba(255,255,255,.06); }
+
+/* مجموعة الأزرار يمين/يسار (تسجيل خروج أو ابدأ الآن) */
+.authnav{ display:flex; align-items:center; gap:8px; }
+.pill.danger{ color:#b91c1c; }
+.pill.cta{
+  background: var(--grad-brand);
+  color:#0b1220; font-weight:900;
+  padding:10px 16px; border-radius:14px; text-decoration:none;
+  box-shadow: 0 10px 20px rgba(2,6,23,.10);
+}
+.pill.cta:hover{ filter:brightness(1.05); transform:translateY(-1px); }
+
+
+.footer{ margin-top:60px; padding:24px 16px; border-top:1px solid var(--ring);
+  display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap; color:var(--muted); }
+.footer .socials{ display:flex; gap:1rem; }
+.footer .socials a{ color:var(--muted); text-decoration:none; font-weight:900; }
+.footer .socials a:hover{ color:var(--brand); }
+.footer .copy{ font-size:13px; }
+.footer.footer-triple{ display:flex; align-items:center; gap:12px; justify-content:space-between; }
+.footer .left-controls{ display:flex; align-items:center; gap:12px; }
+.footer .left-controls .lang{ color:var(--muted); text-decoration:none; font-weight:900; }
+.footer .left-controls .lang:hover{ color:var(--primary); }
+.footer .copy.center{ text-align:center; margin-inline:auto; }
+.footer .socials.right{ display:flex; align-items:center; gap:12px; }
+.footer .socials .social img{ width:22px; height:22px; display:block; }
+
+/* تحسنيات شاشة صغيرة */
+@media (max-width: 860px){
+  .brand-left{ min-width:180px; }
+  .mainnav{ max-width: 100%; }
+}
+
+@media (max-width: 640px){
+  .topbar .shell{ padding:10px; border-radius:16px; }
+  .brand-left .title{ font-size: 16px; }
+  .manager-img{ width:40px; height:40px; border-radius:10px; }
+}
+
+/* يمنع التفاف عناصر الهيدر */
+.topbar .shell.no-wrap{
+  display:flex; align-items:center; justify-content:space-between; gap:18px;
+  width:min(1200px,96%); margin-inline:auto; padding:12px 14px;
+  border:1px solid var(--border); border-radius:22px;
+  background:color-mix(in srgb, var(--bg) 92%, transparent);
+  box-shadow:var(--shadow);
+  flex-wrap:nowrap; /* مهم: لا يلف */
+}
+
+.right-logo .brand-logo-link{ display:inline-flex; align-items:center; }
+.right-logo .logo-big{ width:56px; height:56px; object-fit:contain; border:none; background:transparent; }
+
+.topnav{ display:flex; align-items:center; gap:10px; flex:1; justify-content:center; }
+.desktop-nav{ display:flex; align-items:center; gap:8px; padding:4px; border-radius:16px;
+  background:color-mix(in srgb, var(--fg) 6%, transparent); border:1px solid var(--border);
+}
+.desktop-nav .pill{ text-decoration:none; font-weight:900; white-space:nowrap; color:var(--muted);
+  padding:10px 16px; border-radius:14px; display:inline-flex; align-items:center;
+}
+.desktop-nav .pill:hover{ color:var(--primary); transform:translateY(-1px); }
+.desktop-nav .pill.active{ background:color-mix(in srgb, var(--fg) 6%, transparent); color:var(--text); box-shadow:inset 0 0 0 1px var(--border); }
+
+.user-actions{ display:flex; align-items:center; gap:10px; }
+
+/* بطاقة المستخدم للديسكتوب فقط */
+.only-desktop{ display:flex; align-items:center; gap:12px; min-width:230px; }
+.manager-img{ width:44px; height:44px; border-radius:12px; object-fit:cover; }
+.brand-text .title{ display:block; color:var(--text); font-weight:900; font-size:20px; line-height:1; letter-spacing:.2px; }
+.brand-text small{ display:block; color:var(--muted); margin-top:4px; }
+
+/* همبرغر */
+.hamburger{ display:none; flex-direction:column; justify-content:center; gap:4px;
+  width:38px; height:38px; padding:6px; border:1px solid var(--ring); border-radius:10px; background:var(--card); cursor:pointer;
+}
+.hamburger > span{ height:2px; border-radius:2px; background:var(--fg); display:block; }
+
+/* قائمة الموبايل */
+.mobile-menu{ position:absolute; inset-inline:10px; top:calc(100% + 8px); background:var(--card);
+  border:1px solid var(--ring); border-radius:14px; box-shadow:var(--shadow-lg); padding:8px;
+  display:none; flex-direction:column; gap:4px; z-index:60;
+}
+.mobile-menu .item{ display:block; padding:.7rem .9rem; border-radius:10px; font-weight:800; color:var(--fg); text-decoration:none; border:1px solid transparent; }
+.mobile-menu .item:hover{ background:color-mix(in srgb, var(--fg) 5%, transparent); }
+.mobile-menu .item.active{ background:color-mix(in srgb, var(--brand) 10%, transparent); border-color:color-mix(in srgb, var(--brand) 25%, transparent); }
+.mobile-menu .item.start{ background:var(--grad-brand); color:#0b1220; text-align:center; }
+.mobile-menu .item.danger{ background:#fee2e2; color:#991b1b; font-weight:900; text-align:center; }
+
+/* زر خروج كأيقونة */
+.logout-icon{ width:38px; height:38px; display:inline-grid; place-items:center;
+  border:1px solid color-mix(in srgb, #ef4444 46%, var(--ring)); border-radius:10px; background:#fef2f2; cursor:pointer;
+}
+.logout-icon img{ width:18px; height:18px; display:block; }
+.logout-icon:hover{ transform:translateY(-1px); box-shadow:0 8px 18px rgba(239,68,68,.18); }
+
+/* زر "ابدأ الآن" */
+.btn-start{ background:var(--grad-brand); color:#0b1220; font-weight:900; border:1px solid transparent; padding:10px 16px; border-radius:14px; }
+
+/* أيقونة الثيم */
+.theme-btn{ display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border:1px solid var(--ring);
+  background:var(--card); border-radius:10px; }
+.theme-btn img{ width:18px; height:18px; display:block; }
+
+/* ترتيب RTL/LTR للأعمدة */
+html[dir="rtl"] .right-logo{ order:0; }
+html[dir="rtl"] .topnav{ order:1; }
+html[dir="rtl"] .user-actions{ order:2; }
+
+html[dir="ltr"] .right-logo{ order:0; }
+html[dir="ltr"] .topnav{ order:1; }
+html[dir="ltr"] .user-actions{ order:2; }
+
+/* استجابة: عند الشاشات الصغيرة نخفي الروابط وبطاقة المستخدم */
+@media (max-width: 992px){
+  .desktop-nav{ display:none; }
+  .hamburger{ display:inline-flex; }
+  .only-desktop{ display:none; }
+  .topbar .shell.no-wrap{ gap:10px; }
+}
+
+/* إظهار قائمة الموبايل عند فتحها (Alpine يضيف x-show) */
+.md-hide[x-cloak]{ display:none !important; }
+
+.brand-text small{
+  display:block;
+  color:var(--muted);
+  margin-top:4px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  max-width: 180px; /* يضمن عدم خروج البريد */
+}
+@media (max-width: 1200px){
+  .brand-text small{ max-width: 140px; }
+}
+
+/* ... (كل ما لديك سابقًا يبقى كما هو) ... */
+
+/* ====== تحسين بطاقة المستخدم بالديسكتوب ====== */
+.only-desktop{ display:flex; align-items:center; gap:12px; min-width:230px; }
+.manager-img{ width:44px; height:44px; border-radius:12px; object-fit:cover; }
+.brand-text .title{ display:block; color:var(--text); font-weight:900; font-size:20px; line-height:1; letter-spacing:.2px; }
+.brand-text small{ display:block; color:var(--muted); margin-top:4px; }
+.brand-text .email{ direction:ltr; unicode-bidi:embed; }
+
+/* ====== Helpers للظهور/الإخفاء حسب المقاس (مهم لزر ابدأ الآن) ====== */
+.only-desktop{ display:inline-flex; }
+@media (max-width: 991px){
+  .only-desktop{ display:none !important; }
+}
+/* تحريك الهمبرغر إلى X عندما يكون مفتوح */
+.hamburger{ position:relative; overflow:hidden; }
+.hamburger > span{
+  height:2px; border-radius:2px; background:var(--fg); display:block;
+  transition:transform .18s var(--easing), opacity .18s var(--easing);
+}
+.hamburger.open > span:nth-child(1){ transform: translateY(6px) rotate(45deg); }
+.hamburger.open > span:nth-child(2){ opacity:0; }
+.hamburger.open > span:nth-child(3){ transform: translateY(-6px) rotate(-45deg); }
+
+/* لا تغييرات على بقية تنسيقاتك هنا */
+[x-cloak]{ display:none !important; }
+
+.md-hide{ display:inline-flex; }      /* افتراضيًا مرئي */
+.desktop-nav{ display:flex; }
+
+@media (min-width: 992px){
+  .md-hide{ display:none !important; }     /* تختفي عناصر الموبايل فوق 992px */
+}
+@media (max-width: 991.98px){
+  .desktop-nav{ display:none !important; } /* تختفي روابط الديسكتوب تحت 992px */
+  .hamburger{ display:inline-flex !important; }
+}
+
+.topnav{ position:relative; }
+.mobile-menu{
+  position:absolute; inset-inline:10px; top:calc(100% + 8px);
+  background:var(--card); border:1px solid var(--ring);
+  border-radius:14px; box-shadow:var(--shadow-lg);
+  padding:8px; display:flex; flex-direction:column; gap:4px; z-index:60;
+}
