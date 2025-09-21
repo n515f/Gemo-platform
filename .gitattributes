@@ -9,3 +9,18 @@
 /.github export-ignore
 CHANGELOG.md export-ignore
 .styleci.yml export-ignore
+# اجعل Git يطبع LF في المستودع ويوحّد الأسطر
+* text=auto eol=lf
+
+# صوّر وملفات ثنائية
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.pdf binary
+*.zip binary
+
+# Windows-only scripts (خليها CRLF إذا احتجت)
+*.bat text eol=crlf

@@ -29,3 +29,16 @@ Thumbs.db
 /storage/framework/views/
 /storage/logs/
 .env
+/vendor/
+/node_modules/
+/public/build/
+/storage/*.key
+/storage/app/public/*
+!.gitignore
+.env
+.env.*
+/npm-debug.log*
+/yarn-error.log
+/.idea/
+/.vscode/
+.DS_Store
