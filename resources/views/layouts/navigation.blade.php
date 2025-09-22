@@ -24,18 +24,26 @@
       <a class="pill {{ request()->routeIs('catalog.*') ? 'active' : '' }}" href="{{ route('catalog.index') }}">{{ __('app.catalog') }}</a>
       <a class="pill {{ request()->routeIs('rfq.*') ? 'active' : '' }}" href="{{ route('rfq.create') }}">{{ __('app.rfq') }}</a>
       <a class="pill {{ request()->routeIs('contact') ? 'active' : '' }}" href="{{ route('contact') }}">{{ __('app.contact_us') }}</a>
+
       @auth
+        {{-- لو المستخدم Admin --}}
         @role('admin')
           <a class="pill {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">{{ __('app.admin') }}</a>
+        @endrole
+
+        {{-- لو المستخدم فني --}}
+        @role('technician')
+          <a class="pill {{ request()->routeIs('reports.create') ? 'active' : '' }}" href="{{ route('reports.create') }}">إنشاء تقرير</a>
+          <a class="pill {{ request()->routeIs('reports.index') ? 'active' : '' }}" href="{{ route('reports.index') }}">تقاريري</a>
         @endrole
       @endauth
     @else
       <a class="pill {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">{{ __('app.admin') }}</a>
       <a class="pill {{ request()->routeIs('admin.projects.*') ? 'active' : '' }}" href="{{ route('admin.projects.index') }}">{{ __('app.projects') }}</a>
-      <a class="pill {{ request()->routeIs('admin.reports.*') ? 'active' : '' }}" href="{{ route('admin.reports.create') }}">{{ __('app.reports') }}</a>
+      <a class="pill {{ request()->routeIs('admin.reports.*') ? 'active' : '' }}" href="{{ route('admin.reports.index') }}">{{ __('app.reports') }}</a>
       <a class="pill {{ request()->routeIs('admin.rfqs.*') ? 'active' : '' }}" href="{{ route('admin.rfqs.index') }}">{{ __('app.rfqs') }}</a>
       <a class="pill {{ request()->routeIs('admin.products.*') ? 'active' : '' }}" href="{{ route('admin.products.index') }}">{{ __('app.catalog') }}</a>
-      {{-- زر شاشات العميل (صفحة البطاقات) --}}
+      {{-- زر شاشات العميل --}}
       <a class="pill btn-start {{ request()->routeIs('admin.screens.*') ? 'active' : '' }}" href="{{ route('admin.screens.ClientPortal') }}">
         {{ __('app.ClientPortal') }}
       </a>
@@ -93,15 +101,21 @@
       <a class="item {{ request()->routeIs('catalog.*') ? 'active' : '' }}" href="{{ route('catalog.index') }}">{{ __('app.catalog') }}</a>
       <a class="item {{ request()->routeIs('rfq.*') ? 'active' : '' }}" href="{{ route('rfq.create') }}">{{ __('app.rfq') }}</a>
       <a class="item {{ request()->routeIs('contact') ? 'active' : '' }}" href="{{ route('contact') }}">{{ __('app.contact_us') }}</a>
+
       @auth
         @role('admin')
           <a class="item" href="{{ route('admin.dashboard') }}">{{ __('app.admin') }}</a>
+        @endrole
+
+        @role('technician')
+          <a class="item {{ request()->routeIs('reports.create') ? 'active' : '' }}" href="{{ route('reports.create') }}">إنشاء تقرير</a>
+          <a class="item {{ request()->routeIs('reports.index') ? 'active' : '' }}" href="{{ route('reports.index') }}">تقاريري</a>
         @endrole
       @endauth
     @else
       <a class="item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">{{ __('app.admin') }}</a>
       <a class="item {{ request()->routeIs('admin.projects.*') ? 'active' : '' }}" href="{{ route('admin.projects.index') }}">{{ __('app.projects') }}</a>
-      <a class="item {{ request()->routeIs('admin.reports.*') ? 'active' : '' }}" href="{{ route('admin.reports.create') }}">{{ __('app.reports') }}</a>
+      <a class="item {{ request()->routeIs('admin.reports.*') ? 'active' : '' }}" href="{{ route('admin.reports.index') }}">{{ __('app.reports') }}</a>
       <a class="item {{ request()->routeIs('admin.rfqs.*') ? 'active' : '' }}" href="{{ route('admin.rfqs.index') }}">{{ __('app.rfqs') }}</a>
       <a class="item {{ request()->routeIs('admin.products.*') ? 'active' : '' }}" href="{{ route('admin.products.index') }}">{{ __('app.catalog') }}</a>
       <a class="item start {{ request()->routeIs('admin.screens.*') ? 'active' : '' }}" href="{{ route('admin.screens.ClientPortal') }}">

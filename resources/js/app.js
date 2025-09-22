@@ -39,3 +39,14 @@ document.addEventListener('DOMContentLoaded', () => {
   setIcon(document.getElementById('themeIcon'));
   setIcon(document.getElementById('themeIconMobile'));
 });
+// تأكيد للحذف لأي form يحمل data-confirm
+document.addEventListener('submit', (e) => {
+  const form = e.target;
+  if (form && form.matches('form[data-confirm]')) {
+    const msg = form.getAttribute('data-confirm') || 'Are you sure?';
+    if (!window.confirm(msg)) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }
+});

@@ -17,7 +17,6 @@
       if(s==='dark'||(!s&&p)) document.documentElement.classList.add('dark');
     }catch(_){}})();
   </script>
-  @include('components.flash')
   @vite(['resources/css/entries/auth.css','resources/js/app.js'])
   @stack('styles')
 </head>
