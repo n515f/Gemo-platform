@@ -1,0 +1,122 @@
+/* ========== Services Page (RTL/LTR aware) ========== */
+
+:root{
+  --radius: 16px;
+}
+
+/* Hero */
+.svc-hero{ padding: clamp(22px,5vw,48px) 0; border-bottom:1px solid var(--ring); }
+.svc-hero__head{ display:flex; align-items:center; gap:12px; }
+.svc-hero__icon{ width:48px; height:48px; object-fit:contain; }
+.svc-hero__title{ margin:0 0 4px; font-size:clamp(24px,3.3vw,36px); font-weight:900; }
+.svc-hero__sub{ margin:0; color:var(--muted); }
+.svc-hero__cta{ display:flex; gap:10px; margin-top:14px; }
+
+/* Section Head */
+.svc-section{ padding: clamp(18px,4vw,28px) 0; }
+.sec-head{ display:flex; flex-direction:column; gap:4px; margin-bottom:12px; }
+.sec-title{ margin:0; font-weight:900; font-size: clamp(20px,2.3vw,28px); }
+.sec-sub{ margin:0; color:var(--muted); }
+
+/* Services Grid */
+.svc-grid{
+  display:grid; gap:12px;
+  grid-template-columns: repeat(5,1fr);
+}
+@media (max-width:1200px){ .svc-grid{ grid-template-columns: repeat(3,1fr); } }
+@media (max-width:720px){ .svc-grid{ grid-template-columns: 1fr; } }
+
+.svc-card{
+  display:flex; flex-direction:column; align-items:center; text-align:center;
+  text-decoration:none; color:var(--fg);
+  background: var(--card); border:1px solid var(--ring); border-radius: var(--radius);
+  padding:14px; box-shadow: var(--shadow);
+  transform: translateX(var(--from, 0)) translateY(10px) scale(.98);
+  opacity:0; transition: transform .35s ease, box-shadow .35s ease, opacity .35s ease;
+}
+.svc-card .svc-ico{ width:64px; height:64px; object-fit:contain; border-radius:12px; background:var(--soft); border:1px solid var(--ring); margin-bottom:8px; }
+.svc-card .svc-title{ margin:.25rem 0; font-weight:900; }
+.svc-card .svc-desc{ margin:0; color:var(--muted); }
+
+/* alternating entrance: odd from right, even from left */
+.svc-grid .svc-card:nth-child(odd){ --from: 40px; }
+.svc-grid .svc-card:nth-child(even){ --from: -40px; }
+
+/* hover pulse + lift */
+.svc-card:hover{
+  transform: translateX(0) translateY(0) scale(1.01);
+  animation: svcPulse .9s ease;
+  box-shadow: 0 18px 28px -16px color-mix(in srgb, var(--brand) 35%, transparent);
+}
+@keyframes svcPulse{
+  0%{ box-shadow: 0 0 0 0 color-mix(in srgb, var(--brand) 30%, transparent) }
+  70%{ box-shadow: 0 0 0 14px transparent }
+  100%{ box-shadow: 0 0 0 0 transparent }
+}
+
+/* Sectors */
+.sectors-grid{
+  display:grid; gap:12px;
+  grid-template-columns: repeat(4,1fr);
+}
+@media (max-width:1100px){ .sectors-grid{ grid-template-columns: repeat(2,1fr); } }
+@media (max-width:600px){ .sectors-grid{ grid-template-columns: 1fr; } }
+
+.sector-card{
+  background: var(--card); border:1px solid var(--ring); border-radius: var(--radius);
+  padding:14px; box-shadow: var(--shadow);
+  display:flex; flex-direction:column; align-items:center; text-align:center;
+  transform: translateY(12px) scale(.98); opacity:0; transition: all .35s ease;
+}
+.sector-card:hover{ transform: translateY(0) scale(1.01); }
+.sector-ico{ width:56px; height:56px; object-fit:contain; margin-bottom:8px; }
+.sector-title{ margin:.25rem 0; font-weight:900; }
+.sector-desc{ margin:0; color:var(--muted); }
+
+/* Reveal on scroll (تشتغل مع سكربت IntersectionObserver) */
+.reveal{ opacity:0; transform: translateY(12px); }
+.reveal.in{ opacity:1; transform: none; }
+.reveal.in .svc-card,
+.reveal.in .sector-card{ opacity:1; transform: translateX(0) translateY(0) scale(1); }
+
+/* ===== خدماتنا: شبكة + دخول متناوب يمين/يسار ===== */
+.services-grid{
+  display:grid; gap:12px;
+  grid-template-columns: repeat(5, 1fr);
+}
+@media (max-width:1200px){ .services-grid{ grid-template-columns: repeat(3,1fr); } }
+@media (max-width:720px){  .services-grid{ grid-template-columns: 1fr; } }
+
+.svc-card{
+  display:flex; flex-direction:column; align-items:center; text-align:center;
+  text-decoration:none; color:var(--fg); background:var(--card);
+  border:1px solid var(--ring); border-radius:16px; padding:16px;
+  box-shadow: 0 14px 22px -14px color-mix(in srgb, var(--brand) 38%, transparent);
+  transition: transform .35s ease, box-shadow .35s ease, opacity .5s ease;
+  /* حالة قبل الظهور (ستُزال عبر .in من الـJS) */
+  opacity:0; transform: translateY(12px) translateX(var(--slideX,0));
+}
+.svc-card .ico{ width:64px; height:64px; object-fit:cover; border-radius:14px;
+  background:var(--soft); border:1px solid var(--ring); margin-bottom:8px; }
+.svc-card h3{ margin:.25rem 0 .25rem; font-weight:900; }
+.svc-card p{ color:var(--muted); margin:0; }
+
+/* دخول عند إضافة .in */
+.svc-card.in{ opacity:1; transform:none; }
+
+/* اتجاه متناوب: فردية من اليمين، زوجية من اليسار */
+.services-grid .svc-card:nth-child(odd){  --slideX: 56px; }
+.services-grid .svc-card:nth-child(even){ --slideX: -56px; }
+
+/* نبض وارتفاع بسيط عند التحويم */
+@keyframes svcPulse {
+  0%{ box-shadow:0 0 0 0 color-mix(in srgb,var(--brand) 25%, transparent); }
+  70%{ box-shadow:0 0 0 18px transparent; }
+  100%{ box-shadow:0 0 0 0 transparent; }
+}
+.svc-card:hover{
+  transform: translateY(-3px) scale(1.02);
+  animation: svcPulse .9s ease;
+}
+
+/* نظام الـreveal العام لديك يجب أن يضيف .in على العناصر داخل viewport */

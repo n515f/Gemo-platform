@@ -18,8 +18,12 @@
 
   {{-- روابط الديسكتوب --}}
   <div class="mainnav desktop-nav">
+    
+    <div class="item row-split">
+      
     @if(!$isAdminArea)
       <a class="pill {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">{{ __('app.home') }}</a>
+      <a class="pill {{ request()->routeIs('categories.*') ? 'active' : '' }}" href="{{ route('categories.index') }}">{{ __('app.categories') }}</a>
       <a class="pill {{ request()->routeIs('services.*') ? 'active' : '' }}" href="{{ route('services.index') }}">{{ __('app.services') }}</a>
       <a class="pill {{ request()->routeIs('catalog.*') ? 'active' : '' }}" href="{{ route('catalog.index') }}">{{ __('app.catalog') }}</a>
       <a class="pill {{ request()->routeIs('rfq.*') ? 'active' : '' }}" href="{{ route('rfq.create') }}">{{ __('app.rfq') }}</a>
@@ -39,14 +43,13 @@
       @endauth
     @else
       <a class="pill {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">{{ __('app.admin') }}</a>
+      <a class="pill {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}" href="{{ route('admin.categories.index') }}">{{ __('app.categories') }}</a>
       <a class="pill {{ request()->routeIs('admin.projects.*') ? 'active' : '' }}" href="{{ route('admin.projects.index') }}">{{ __('app.projects') }}</a>
       <a class="pill {{ request()->routeIs('admin.reports.*') ? 'active' : '' }}" href="{{ route('admin.reports.index') }}">{{ __('app.reports') }}</a>
       <a class="pill {{ request()->routeIs('admin.rfqs.*') ? 'active' : '' }}" href="{{ route('admin.rfqs.index') }}">{{ __('app.rfqs') }}</a>
       <a class="pill {{ request()->routeIs('admin.products.*') ? 'active' : '' }}" href="{{ route('admin.products.index') }}">{{ __('app.catalog') }}</a>
-      {{-- زر شاشات العميل --}}
-      <a class="pill btn-start {{ request()->routeIs('admin.screens.*') ? 'active' : '' }}" href="{{ route('admin.screens.ClientPortal') }}">
-        {{ __('app.ClientPortal') }}
-      </a>
+      <a class="pill {{ request()->routeIs('admin.screens.*') ? 'active' : '' }}" href="{{ route('admin.screens.ClientPortal') }}">{{ __('app.ClientPortal') }}</a>
+      <a class="pill {{ request()->routeIs('admin.ads.*') ? 'active' : '' }}" href="{{ route('admin.ads.index') }}">{{ __('app.ads') }}</a>
     @endif
   </div>
 
@@ -57,6 +60,9 @@
     @else
       <form method="POST" action="{{ route('logout') }}">
         @csrf
+        <button id="themeIconBtnMobile" class="toggle icon theme-btn" type="button" aria-label="Toggle theme">
+        <img id="themeIconMobile" src="{{ asset('images/moon.png') }}" alt="" width="18" height="18">
+      </button>
         <button type="submit" class="logout-icon" title="{{ __('app.logout') }}" aria-label="{{ __('app.logout') }}">
           <img src="{{ asset('images/logout.png') }}" alt="">
         </button>
@@ -114,12 +120,16 @@
       @endauth
     @else
       <a class="item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">{{ __('app.admin') }}</a>
+      <a class="pill {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}" href="{{ route('admin.categories.index') }}">{{ __('app.categories') }}</a>
       <a class="item {{ request()->routeIs('admin.projects.*') ? 'active' : '' }}" href="{{ route('admin.projects.index') }}">{{ __('app.projects') }}</a>
       <a class="item {{ request()->routeIs('admin.reports.*') ? 'active' : '' }}" href="{{ route('admin.reports.index') }}">{{ __('app.reports') }}</a>
       <a class="item {{ request()->routeIs('admin.rfqs.*') ? 'active' : '' }}" href="{{ route('admin.rfqs.index') }}">{{ __('app.rfqs') }}</a>
       <a class="item {{ request()->routeIs('admin.products.*') ? 'active' : '' }}" href="{{ route('admin.products.index') }}">{{ __('app.catalog') }}</a>
-      <a class="item start {{ request()->routeIs('admin.screens.*') ? 'active' : '' }}" href="{{ route('admin.screens.ClientPortal') }}">
+      <a class="item {{ request()->routeIs('admin.screens.*') ? 'active' : '' }}" href="{{ route('admin.screens.ClientPortal') }}">
         {{ __('app.ClientPortal') }}
+      </a>
+      <a class="item {{ request()->routeIs('admin.ads.*') ? 'active' : '' }}" href="{{ route('admin.ads.index') }}">
+        {{ __('app.ads') }}
       </a>
     @endif
 

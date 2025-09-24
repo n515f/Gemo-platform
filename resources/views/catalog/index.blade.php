@@ -1,7 +1,10 @@
 @extends('layouts.site')
 
+@push('styles')
+  @vite(['resources/css/entries/site.css'])
+@endpush
+
 @section('content')
-  <link rel="stylesheet" href="{{ asset('css/catalog.css') }}">
 
   <h1 class="page-title">{{ __('app.catalog') }}</h1>
 

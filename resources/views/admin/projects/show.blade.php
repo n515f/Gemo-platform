@@ -1,6 +1,6 @@
 {{-- resources/views/admin/projects/show.blade.php --}}
 @extends('layouts.site')
-@push('styles') @vite(['resources/css/pages/admin.projects.css']) @endpush
+@push('styles') @vite(['resources/css/entries/admin.css']) @endpush
 
 @section('content')
 <section class="admin-page">

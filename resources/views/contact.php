@@ -1,7 +1,9 @@
 @extends('layouts.site')
+
+
 @push('styles')
-  @vite('resources/css/app.css')
-@section('content')
+  @vite(['resources/css/entries/site.css','resources/js/app.js'])
+@endpush
   <h1 class="page-title">{{ __('app.contact_us') }}</h1>
 
   <section class="hero">

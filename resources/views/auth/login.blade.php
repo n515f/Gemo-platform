@@ -1,6 +1,6 @@
 {{-- صفحة الدخول --}}
 @push('styles')
-  @vite('resources/css/auth.css')
+  @vite('resources/css/entries/auth.css')
 @endpush
 
 <x-guest-layout>

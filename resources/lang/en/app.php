@@ -22,6 +22,9 @@ return [
     'register'   => 'Register',
     'cta_browse' => 'Browse Catalog',
     'cta_rfq'    => 'Request a Quote',
+    'ads'        => 'Ads',
+    'categories' => 'Categories',
+    'services'   => 'Services',
     'contact'    => 'Contact Info',
     'rights'     => 'All rights reserved.',
 
@@ -57,6 +60,11 @@ return [
     'service_installation' => 'Install & Commission',
     'service_training'     => 'Training & Maintenance',
     'service_full_line'    => 'Full Production Line',
+    // en
+'services_intro' => 'We provide end-to-end solutions from supply to O&M.',
+'sectors_hero_text' => 'We serve multiple industries with deep expertise.',
+'sector_logistics' => 'Logistics',
+'sector_logistics_desc' => 'Material handling, transport and storage solutions.',
 
     /* ===== Budget Options ===== */
     'budget_under_20k' => 'Under $20,000',

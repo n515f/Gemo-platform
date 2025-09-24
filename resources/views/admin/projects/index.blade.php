@@ -2,7 +2,7 @@
 @extends('layouts.site')
 
 @push('styles')
-  @vite(['resources/css/pages/admin.projects.css'])
+  @vite(['resources/css/entries/admin.css'])
 @endpush
 
 @section('content')

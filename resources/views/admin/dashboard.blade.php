@@ -4,8 +4,7 @@
 @push('styles')
   {{-- ادخل CSS العام + صفحة الداشبورد --}}
   @vite([
-    'resources/css/entries/admin.css',
-    'resources/css/pages/admin.dashboard.css'
+    'resources/css/entries/admin.css'
   ])
 @endpush
 

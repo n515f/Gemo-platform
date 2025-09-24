@@ -128,4 +128,9 @@ class Product extends Model
         $path = optional($this->images->first())->path;
         return $path ? asset($path) : 'https://picsum.photos/seed/'.$this->id.'/900/600';
     }
+    public function categories()
+{
+    return $this->belongsToMany(\App\Models\Category::class, 'category_product');
+}
+    
 }

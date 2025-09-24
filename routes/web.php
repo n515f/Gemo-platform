@@ -13,6 +13,10 @@ use App\Http\Controllers\Admin\ClientPortalController;
 use App\Http\Controllers\Admin\ReportAdminController;      // إدارة
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\CategoryAdminController;
+use App\Http\Controllers\CategoryController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +24,7 @@ use App\Http\Controllers\Admin\DashboardController;
 |--------------------------------------------------------------------------
 */
 Route::middleware(['setlocale'])->group(function () {
-    Route::view('/', 'home')->name('home');
+    Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::view('/about', 'about')->name('about');
     Route::view('/services', 'services.index')->name('services.index');
     Route::view('/contact', 'contact')->name('contact');
@@ -30,6 +34,9 @@ Route::middleware(['setlocale'])->group(function () {
 
     Route::get('/rfq',  [RfqController::class, 'create'])->name('rfq.create');
     Route::post('/rfq', [RfqController::class, 'store'])->middleware('auth')->name('rfq.store');
+
+    Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
 
     // تبديل اللغة
     Route::get('/lang/{locale}', function (string $locale) {
@@ -63,8 +70,13 @@ Route::middleware(['auth','setlocale'])->group(function () {
 Route::prefix('admin')
     ->middleware(['auth','role:admin','setlocale'])
     ->group(function () {
-
+        // لوحة التحكم
       Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+        // الفئات
+        Route::resource('categories', CategoryAdminController::class)->names('admin.categories');
+        Route::patch('categories/{category}/toggle',             [CategoryAdminController::class, 'toggle'])->name('admin.categories.toggle');
+        Route::delete('categories/{category}/icon',              [CategoryAdminController::class, 'destroyIcon'])->name('admin.categories.icon.destroy');
+        
         // المنتجات
         Route::resource('products', ProductAdminController::class)->names('admin.products');
         Route::patch('products/{product}/toggle',                [ProductAdminController::class, 'toggle'])->name('admin.products.toggle');
@@ -97,6 +109,10 @@ Route::post('reports', [ReportAdminController::class, 'store'])
 
         // شاشات العميل (البطاقات)
         Route::get('/screens', [ClientPortalController::class, 'index'])->name('admin.screens.ClientPortal');
+
+        // إدارة الإعلانات (الأدمن)
+Route::resource('ads', \App\Http\Controllers\Admin\AdAdminController::class)
+    ->names('admin.ads');
     });
 
 /*
