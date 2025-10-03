@@ -2,7 +2,6 @@
 .admin-root{ background:var(--bg); color:var(--fg); }
 .admin-topbar{
   position:sticky; top:0; z-index:40; border-bottom:1px solid var(--ring);
-  background:color-mix(in srgb, var(--bg) 96%, transparent); backdrop-filter:saturate(160%) blur(6px);
 }
 .admin-shell{
   display:flex; align-items:center; justify-content:space-between; gap:12px;

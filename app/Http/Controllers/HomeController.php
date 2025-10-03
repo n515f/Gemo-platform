@@ -1,4 +1,5 @@
 <?php
+// app/Http/Controllers/HomeController.php
 
 namespace App\Http\Controllers;
 
@@ -9,20 +10,19 @@ class HomeController extends Controller
 {
     public function index()
     {
-        // منتجات مختارة (مع الصور)
-        $featuredProducts = Product::with(['images' => function ($q) {
-                $q->oldest(); // أول صورة تظهر أولاً
-            }])
+        // منتجات مميزة للواجهة
+        $featuredProducts = Product::with('images')
             ->latest('id')
             ->take(3)
             ->get();
 
-        // الإعلانات المفعّلة فقط (بحد أقصى 10)
-        $ads = Ad::where('is_active', true)
+        // إعلانات مخصصة لصفحة الهوم فقط (أو العامة 'all')
+        $homeAds = Ad::active()
+            ->for('home')      // ← يطابق scopeFor() في موديل Ad
             ->latest()
             ->take(10)
             ->get();
 
-        return view('home', compact('featuredProducts', 'ads'));
+        return view('home', compact('featuredProducts', 'homeAds'));
     }
 }

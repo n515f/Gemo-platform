@@ -1,0 +1,286 @@
+/* =========================================================
+   Admin UI — Categories (Create / Edit / Index)
+   يعمل مع متغيرات الثيم:
+   --bg, --card, --fg, --muted, --ring, --soft, --brand, --grad-brand, --shadow
+   ========================================================= */
+
+/* قاعدة عامة */
+:root{
+  --easing: cubic-bezier(.22,.88,.28,1);
+}
+
+.page-title{
+  margin: 10px 0 16px;
+  font-weight: 900;
+  font-size: clamp(22px, 2.6vw, 32px);
+}
+
+/* تخطيط عام */
+.toolbar{
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+  margin: 6px 0 16px;
+}
+.inline{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+
+.grid-2{
+  display:grid; gap:14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.grid-3{
+  display:grid; gap:14px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+@media (max-width: 1000px){
+  .grid-3{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (max-width: 680px){
+  .grid-2, .grid-3{ grid-template-columns: 1fr; }
+}
+
+/* بطاقات عامة */
+.card{
+  background: var(--card);
+  border: 1px solid var(--ring);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 14px;
+  transition: transform .18s var(--easing), box-shadow .18s var(--easing), border-color .18s var(--easing);
+}
+/* Fallback ثم color-mix للمتصفحات الحديثة */
+.card:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 16px 28px rgba(0,0,0,.08);
+  border-color: var(--ring);
+}
+@supports (color: color-mix(in srgb, black, white)) {
+  .card:hover{
+    box-shadow: 0 16px 28px color-mix(in srgb, var(--fg) 8%, transparent);
+    border-color: color-mix(in srgb, var(--ring) 40%, var(--fg) 10%);
+  }
+}
+
+/* بطاقات القائمة (Index) */
+.grid-3 .card{
+  display: grid; gap: 10px;
+  grid-template-rows: auto auto 1fr auto;
+}
+.row-between{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.row-end{ display:flex; align-items:center; justify-content:flex-end; gap:10px; }
+.gap-6{ gap: 6px; }
+.mt-8{ margin-top: .6rem; }
+.muted{ color: var(--muted); }
+.empty{
+  background: rgba(148,163,184,.08); /* fallback */
+  color: var(--muted); padding: 14px; border-radius: 12px; text-align:center; font-weight: 800;
+}
+@supports (color: color-mix(in srgb, black, white)) {
+  .empty{ background: color-mix(in srgb, var(--ring) 8%, transparent); }
+}
+
+/* صورة الغلاف داخل البطاقة */
+.cover{
+  width: 100%; aspect-ratio: 3/1.4; object-fit: cover;
+  border-radius: 12px; border: 1px solid var(--ring); background: var(--soft);
+  transition: transform .25s var(--easing);
+}
+.card:hover .cover{ transform: scale(1.01); }
+
+/* شارات */
+.badge{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:.25rem .6rem; border-radius:999px; font-weight:900; font-size:.85rem;
+  background:#dcfce7; color:#065f46; border:1px solid #86efac;
+}
+.badge.soft{
+  background:#f1f5f9; color:#334155; border-color:#e2e8f0;
+}
+
+/* نموذج: form */
+.form{
+  display:grid; gap:16px;
+  animation: cardIn .35s var(--easing);
+}
+.label{
+  display:block; margin-bottom:6px; font-weight:900; color:var(--fg);
+}
+
+/* عناصر الإدخال */
+.input, .form select{
+  width:100%;
+  background: var(--card); color: var(--fg);
+  border: 1px solid var(--ring); border-radius: 12px;
+  padding: .65rem .75rem;
+  transition: border-color .18s var(--easing), box-shadow .18s var(--easing), transform .06s;
+}
+.input:focus, .form select:focus, .form textarea:focus{
+  outline: none;
+  border-color: var(--brand); /* fallback */
+  box-shadow: 0 0 0 4px rgba(59,130,246,.16); /* fallback */
+}
+@supports (color: color-mix(in srgb, black, white)) {
+  .input:focus, .form select:focus, .form textarea:focus{
+    border-color: color-mix(in srgb, var(--brand) 60%, var(--ring));
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand) 16%, transparent);
+  }
+}
+.input[type="file"]{ padding:.52rem .6rem; }
+
+/* أزرار */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:.45rem;
+  padding:.62rem .9rem; border-radius:12px; border:1px solid transparent;
+  font-weight:900; cursor:pointer; text-decoration:none;
+  background: rgba(255,255,255,.06); color: var(--fg);
+  transition: transform .15s var(--easing), filter .15s var(--easing), box-shadow .2s var(--easing);
+}
+.btn:hover{ transform: translateY(-1px); }
+.btn:active{ transform: translateY(0); }
+
+.btn-primary{
+  background: var(--grad-brand); color:#0b1220;
+  box-shadow: 0 6px 16px rgba(59,130,246,.2); /* fallback */
+}
+@supports (color: color-mix(in srgb, black, white)) {
+  .btn-primary{ box-shadow: 0 6px 16px color-mix(in srgb, var(--brand) 20%, transparent); }
+}
+.btn-primary:hover{ filter: brightness(1.05); }
+.btn.danger{
+  background:#fee2e2; color:#991b1b; border:1px solid #ef9a9a; /* fallback */
+}
+@supports (color: color-mix(in srgb, black, white)) {
+  .btn.danger{ border:1px solid color-mix(in srgb, #ef4444 46%, var(--ring)); }
+}
+.btn.outline{
+  background: transparent; color: var(--fg); border-color: var(--ring);
+}
+
+/* خيارات إضافية */
+.checkbox input{ width:18px; height:18px; }
+
+/* فلاش رسائل */
+.flash{
+  padding:.8rem 1rem; border-radius:12px; margin:10px 0; font-weight:800;
+  border:1px solid var(--ring); background: rgba(148,163,184,.10); /* fallback */
+}
+.flash.success{ background:#ecfdf5; color:#065f46; border-color:#86efac; }
+.flash.warn{ background:#fff7ed; color:#9a3412; border-color:#fed7aa; }
+@supports (color: color-mix(in srgb, black, white)) {
+  .flash{ background: color-mix(in srgb, var(--ring) 10%, transparent); }
+}
+
+/* ===== أيقونة الفئة في بطاقات فهرس الفئات ===== */
+.cat-icon-box{
+  width: 100%;
+  height: 140px;              /* ارتفاع ثابت للتماسك */
+  border: 1px solid var(--ring);
+  border-radius: 12px;
+  background: var(--soft);
+  display: grid;
+  place-items: center;
+  margin: 6px 0 8px;
+  overflow: hidden;
+}
+.cat-icon{
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;        /* تظهر كاملة بدون قص */
+  display: block;
+}
+
+/* ===== Pagination (Laravel links()) =====
+   (تجميع كل أنماط .mt-12 في كتلة واحدة فقط) */
+.mt-12{
+  margin-top:3rem;
+  display:flex; justify-content:center;
+  padding: 12px 18px;
+  background: var(--card, #1e293b);
+  border: 1px solid var(--ring, #334155);
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 700;
+  color: var(--muted, #94a3b8);
+  font-size: .95rem;
+}
+
+/* أخفي سطر "Showing x to y..." إن وُجد */
+.mt-12 nav p,
+.mt-12 nav .pagination-summary,
+.mt-12 nav > div > p { display:none !important; }
+
+/* الحاوية الأساسية */
+.mt-12 nav ul{
+  display:flex; gap:6px; list-style:none; padding:0; margin:0;
+  align-items:center; justify-content:center;
+}
+
+/* الروابط والأرقام */
+.mt-12 nav ul li a,
+.mt-12 nav ul li span{
+  display:inline-flex; align-items:center; justify-content:center;
+  min-width:32px; height:32px; padding:0 .6rem;
+  font-size:12px; font-weight:800; line-height:1;
+  color:var(--fg,#e5eefc); background:var(--card,#1f2937);
+  border:1px solid var(--ring,#334155); border-radius:8px;
+  text-decoration:none; transition:all .18s ease;
+}
+
+/* الأسهم كـ SVG (قالب Tailwind/Blade الافتراضي) */
+.mt-12 nav svg{
+  width:14px; height:14px; /* تصغير السهم */
+  stroke-width:2; flex-shrink:0;
+}
+
+/* أسهم النص */
+.mt-12 nav ul li:first-child a,
+.mt-12 nav ul li:last-child a{
+  padding-inline:.5rem;
+  font-size:12px;
+}
+
+/* العنصر الحالي */
+.mt-12 nav ul li span[aria-current="page"]{
+  background:var(--brand,#3b82f6); color:#fff; border-color:var(--brand,#3b82f6);
+}
+
+/* Hover */
+.mt-12 nav ul li a:hover{
+  background:rgba(59,130,246,.18); color:#93c5fd; /* fallback */
+}
+@supports (color: color-mix(in srgb, black, white)) {
+  .mt-12 nav ul li a:hover{
+    background:color-mix(in srgb, var(--brand,#3b82f6) 18%, transparent);
+    color:color-mix(in srgb, var(--brand,#3b82f6) 70%, white);
+  }
+}
+
+/* معطّل */
+.mt-12 nav ul li span[aria-disabled="true"],
+.mt-12 nav ul li span.disabled{ opacity:.45; cursor:not-allowed; }
+
+/* اجعل كل شيء صغير ومرتب على الشاشات الصغيرة */
+@media (max-width: 480px){
+  .mt-12 nav ul{ gap:4px; }
+  .mt-12 nav ul li a,
+  .mt-12 nav ul li span{ min-width:28px; height:28px; font-size:11px; border-radius:7px; }
+  .mt-12 nav svg{ width:12px; height:12px; }
+}
+
+/* دخول أنيق */
+@keyframes cardIn{
+  from{ transform: translateY(6px); opacity:0; }
+  to  { transform: translateY(0);  opacity:1; }
+}
+
+/* تحسينات اللمس/المحمول */
+@media (hover: hover){
+  .btn:not(.danger):hover{
+    box-shadow: 0 10px 22px rgba(0,0,0,.10); /* fallback */
+  }
+}
+@supports (color: color-mix(in srgb, black, white)) {
+  @media (hover:hover){
+    .btn:not(.danger):hover{
+      box-shadow: 0 10px 22px color-mix(in srgb, var(--fg) 10%, transparent);
+    }
+  }
+}

@@ -98,6 +98,17 @@ return [
 'email_us'              => 'Email Us',
 'contact_info'          => 'Contact Info',
 'quick_links'           => 'Quick Links',
+'yahoo_desc'            => 'Use Yahoo Mail to contact us.',
+'gmail_desc'            => 'Use Gmail to contact us.',
+'phone_desc'            => 'Call or message us on WhatsApp.',
+'whatsapp_desc'         => 'Send us a message on WhatsApp.',
+'instagram_desc'      => 'Follow us on Instagram for our latest projects.',
+'facebook_desc'       => 'Follow us on Facebook for our latest projects.',
+'wechat_desc'         => 'Connect with us on WeChat for instant support.',
+'address'               => 'Address',
+'email'                 => 'Email',
+'phone'                 => 'Phone',
+
 
 
 ];

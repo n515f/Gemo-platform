@@ -2,21 +2,24 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\RfqController;
-use App\Http\Controllers\ProjectController;
-use App\Http\Controllers\ReportController;                 // واجهة/فني
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProfileController;
+
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\CategoryAdminController;
 use App\Http\Controllers\Admin\ProductAdminController;
 use App\Http\Controllers\Admin\ProjectAdminController;
 use App\Http\Controllers\Admin\RfqAdminController;
+use App\Http\Controllers\Admin\ReportAdminController;
 use App\Http\Controllers\Admin\ClientPortalController;
-use App\Http\Controllers\Admin\ReportAdminController;      // إدارة
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Admin\CategoryAdminController;
-use App\Http\Controllers\CategoryController;
-
+use App\Http\Controllers\Admin\AdAdminController;
+use App\Http\Controllers\Admin\AdminUsersController; // ✅ هذا المهم
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +30,7 @@ Route::middleware(['setlocale'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::view('/about', 'about')->name('about');
     Route::view('/services', 'services.index')->name('services.index');
-    Route::view('/contact', 'contact')->name('contact');
+    Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
     Route::get('/works',   [ProjectController::class, 'publicIndex'])->name('works.index');
     Route::get('/catalog', [CatalogController::class, 'index'])->name('catalog.index');
@@ -53,12 +56,9 @@ Route::middleware(['setlocale'])->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth','setlocale'])->group(function () {
-    // قائمة تقاريري
     Route::get('/my/reports',           [ReportController::class, 'index'])->name('reports.index');
-    // إنشاء تقرير
     Route::get('/reports/create',       [ReportController::class, 'create'])->name('reports.create');
     Route::post('/reports',             [ReportController::class, 'store'])->name('reports.store');
-    // عرض تقرير يخصني
     Route::get('/my/reports/{report}',  [ReportController::class, 'show'])->name('reports.show');
 });
 
@@ -70,49 +70,45 @@ Route::middleware(['auth','setlocale'])->group(function () {
 Route::prefix('admin')
     ->middleware(['auth','role:admin','setlocale'])
     ->group(function () {
-        // لوحة التحكم
-      Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+
+        Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+
         // الفئات
         Route::resource('categories', CategoryAdminController::class)->names('admin.categories');
-        Route::patch('categories/{category}/toggle',             [CategoryAdminController::class, 'toggle'])->name('admin.categories.toggle');
-        Route::delete('categories/{category}/icon',              [CategoryAdminController::class, 'destroyIcon'])->name('admin.categories.icon.destroy');
-        
+        Route::patch('categories/{category}/toggle', [CategoryAdminController::class, 'toggle'])->name('admin.categories.toggle');
+        Route::delete('categories/{category}/icon',  [CategoryAdminController::class, 'destroyIcon'])->name('admin.categories.icon.destroy');
+
         // المنتجات
         Route::resource('products', ProductAdminController::class)->names('admin.products');
-        Route::patch('products/{product}/toggle',                [ProductAdminController::class, 'toggle'])->name('admin.products.toggle');
-        Route::delete('products/{product}/images/{image}',       [ProductAdminController::class, 'destroyImage'])->name('admin.products.images.destroy');
-        Route::post('products/{product}/images/sort',            [ProductAdminController::class, 'sortImages'])->name('admin.products.images.sort');
+        Route::patch('products/{product}/toggle',          [ProductAdminController::class, 'toggle'])->name('admin.products.toggle');
+        Route::delete('products/{product}/images/{image}', [ProductAdminController::class, 'destroyImage'])->name('admin.products.images.destroy');
+        Route::post('products/{product}/images/sort',      [ProductAdminController::class, 'sortImages'])->name('admin.products.images.sort');
 
         // المشاريع + تحديثاتها
         Route::resource('projects', ProjectAdminController::class)->names('admin.projects');
-        Route::post('projects/{project}/updates',                [ProjectAdminController::class, 'storeUpdate'])->name('admin.projects.updates.store');
-        Route::delete('projects/{project}/updates/{update}',     [ProjectAdminController::class, 'destroyUpdate'])->name('admin.projects.updates.destroy');
+        Route::post('projects/{project}/updates',            [ProjectAdminController::class, 'storeUpdate'])->name('admin.projects.updates.store');
+        Route::delete('projects/{project}/updates/{update}', [ProjectAdminController::class, 'destroyUpdate'])->name('admin.projects.updates.destroy');
 
         // RFQs
-        Route::resource('rfqs', RfqAdminController::class)
-            ->only(['index','show','update','destroy'])
-            ->names('admin.rfqs');
-        Route::patch('rfqs/{rfq}/status',                        [RfqAdminController::class, 'updateStatus'])->name('admin.rfqs.status');
+        Route::resource('rfqs', RfqAdminController::class)->only(['index','show','update','destroy'])->names('admin.rfqs');
+        Route::patch('rfqs/{rfq}/status', [RfqAdminController::class, 'updateStatus'])->name('admin.rfqs.status');
 
         // تقارير الفنيين (إدارة)
-        
-        Route::resource('reports', ReportAdminController::class)
-            ->only(['index','show','edit','update','destroy'])
-            ->names('admin.reports');
-// داخل مجموعة admin نفسها
-Route::get('reports/create', [ReportAdminController::class, 'create'])
-    ->name('admin.reports.create');
-Route::post('reports', [ReportAdminController::class, 'store'])
-    ->name('admin.reports.store');
-        // حذف مرفق مفرد من تقرير
-        Route::delete('reports/{report}/attachment',             [ReportAdminController::class,'destroyAttachment'])->name('admin.reports.attachment.destroy');
+        Route::resource('reports', ReportAdminController::class)->only(['index','show','edit','update','destroy'])->names('admin.reports');
+        Route::get('reports/create',  [ReportAdminController::class, 'create'])->name('admin.reports.create');
+        Route::post('reports',        [ReportAdminController::class, 'store'])->name('admin.reports.store');
+        Route::delete('reports/{report}/attachment', [ReportAdminController::class,'destroyAttachment'])->name('admin.reports.attachment.destroy');
 
-        // شاشات العميل (البطاقات)
+        // شاشات العميل
         Route::get('/screens', [ClientPortalController::class, 'index'])->name('admin.screens.ClientPortal');
 
-        // إدارة الإعلانات (الأدمن)
-Route::resource('ads', \App\Http\Controllers\Admin\AdAdminController::class)
-    ->names('admin.ads');
+        // الإعلانات
+        Route::resource('ads', AdAdminController::class)->names('admin.ads');
+
+        // ✅ صفحة إدارة المستخدمين للأدمن
+        Route::get('users',                        [AdminUsersController::class, 'index'])->name('admin.users.index');
+        Route::post('users/{user}/role',           [AdminUsersController::class, 'updateRole'])->name('admin.users.role');
+        Route::post('users/{user}/avatar',         [AdminUsersController::class, 'updateAvatar'])->name('admin.users.avatar');
     });
 
 /*
@@ -135,9 +131,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile',[ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-/*
-|--------------------------------------------------------------------------
-| Auth Routes (Breeze)
-|--------------------------------------------------------------------------
-*/
 require __DIR__.'/auth.php';

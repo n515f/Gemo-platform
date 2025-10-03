@@ -279,3 +279,145 @@ html[dir="ltr"] .user-actions{ order:2; }
 }
 
 /* نظام الـreveal العام لديك يجب أن يضيف .in على العناصر داخل viewport */
+/* ====== Ads Rotator ====== */
+.ads-rotator{
+  position:relative;
+  overflow:hidden;
+  border-radius:16px;
+}
+
+.ads-rotator .ad{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  transform:translateX(16%);
+  transition:
+    opacity .45s ease,
+    transform .55s cubic-bezier(.22,.61,.36,1); /* دخول ناعم */
+  display:grid;
+}
+
+.ads-rotator .ad.active{
+  opacity:1;
+  transform:translateX(0);
+  z-index:2;
+}
+
+.ads-rotator .ad.out-left{
+  opacity:0;
+  transform:translateX(-18%);
+  z-index:1;
+}
+
+.ad-visual img{
+  display:block;
+  width:100%;
+  height:auto;
+  transition: opacity .35s ease;
+}
+
+/* (اختياري) طبقة نص فوق الصورة */
+.ad-overlay{
+  position:absolute; inset:auto 0 0 0;
+  padding:14px;
+  background:linear-gradient(0deg, rgba(0,0,0,.5), rgba(0,0,0,0));
+  color:#fff;
+}
+/* ====== Ads Rotator ====== */
+.ads-rotator{
+  position:relative;
+  overflow:hidden;
+  border-radius:16px;
+}
+.ads-rotator { min-height: 360px; }                /* اضبط الارتفاع الذي تريده */
+
+/* كل إعلان */
+.ads-rotator .ad{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  transform:translateX(16%);
+  transition:
+    opacity .45s ease,
+    transform .55s cubic-bezier(.22,.61,.36,1);
+  display:block;
+}
+
+.ads-rotator .ad.active{
+  opacity:1;
+  transform:translateX(0);
+  z-index:2;
+}
+
+.ads-rotator .ad.out-left{
+  opacity:0;
+  transform:translateX(-18%);
+  z-index:1;
+}
+
+/* الصورة تملأ السيكشن */
+.ad-visual{
+  position:absolute;
+  inset: 0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+}
+.ad-visual img{
+  width:100%;
+  height:100%;
+  object-fit:cover; /* تملأ مع الحفاظ على التناسب */
+  transition: transform .6s ease;
+}
+
+/* تكبير الصورة عند الهوفر */
+.ads-rotator .ad:hover .ad-visual img{
+  transform:scale(1.08);
+}
+
+/* النص يبقى ثابت أسفل */
+.ad-overlay{
+  position:absolute;
+  inset:auto 0 0 0;
+  padding:16px;
+  background:linear-gradient(0deg, rgba(0,0,0,.55), rgba(0,0,0,0));
+  color:#fff;
+  z-index:3;
+}
+.ad-overlay h3.ad-title{
+  margin:0;
+  font-size:1.25rem;
+  font-weight:900;
+}
+.ad-overlay p.ad-desc{
+  margin:.25rem 0 0;
+  font-size:.95rem;
+  font-weight:600;
+}
+
+/* ====== Indicators (dots) ====== */
+.ads-dots{
+  position:absolute;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:8px;
+  z-index:4;
+}
+.ads-dots button{
+  width:10px; height:10px;
+  border-radius:50%;
+  background:rgba(255,255,255,.6);
+  border:none;
+  cursor:pointer;
+  transition:all .3s ease;
+}
+.ads-dots button.active{
+  background:#fff;
+  width:12px; height:12px;
+}
+.ads-rotator { position: relative; overflow: hidden; border-radius: 16px; }
+.ads-rotator .ad { position: absolute; inset: 0; }
+.ad-visual { position: absolute; inset: 0; }       /* تجعل الصورة تملأ الإطار */
+.ads-rotator { min-height: 360px; }                /* اضبط الارتفاع الذي تريده */

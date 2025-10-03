@@ -18,7 +18,18 @@
         <input class="input" name="title_en" value="{{ old('title_en') }}">
       </div>
     </div>
-
+    <div class="field">
+  <label>مكان الظهور</label>
+  <select name="placement" class="input">
+    <option value="">— بدون تحديد —</option>
+    <option value="home"    @selected(old('placement', $ad->placement ?? '')==='home')>الصفحة الرئيسية</option>
+    <option value="catalog" @selected(old('placement', $ad->placement ?? '')==='catalog')>الكتالوج</option>
+    <option value="categories" @selected(old('placement', $ad->placement ?? '')==='categories')>الفئات</option>
+    <option value="services"@selected(old('placement', $ad->placement ?? '')==='services')>خدماتنا</option>
+    <option value="rfq"     @selected(old('placement', $ad->placement ?? '')==='rfq')>طلب عرض سعر</option>
+    <option value="all"     @selected(old('placement', $ad->placement ?? '')==='all')>كل الصفحات</option>
+  </select>
+</div>
     <div class="grid-2">
       <div>
         <label>وصف قصير (AR)</label>

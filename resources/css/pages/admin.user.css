@@ -1,0 +1,25 @@
+.users-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+@media(max-width:1200px){.users-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:900px){.users-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.users-grid{grid-template-columns:1fr}}
+
+.user-card{position:relative;background:var(--card);border:1px solid var(--ring);
+  border-radius:16px;padding:14px;display:grid;grid-template-columns:auto 1fr;gap:12px;
+  transition:transform .2s, box-shadow .2s}
+.user-card:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(0,0,0,.18)}
+
+.user-card .avatar{width:64px;height:64px;border-radius:12px;object-fit:cover;border:1px solid var(--ring)}
+.user-card .name{font-weight:900;margin:0}
+.user-card .email{color:var(--muted);font-weight:700;margin:.25rem 0 .35rem;direction:ltr}
+.badge{font-size:.75rem;font-weight:800;border-radius:999px;padding:.2rem .55rem;border:1px solid var(--ring)}
+.badge.admin{background:#0ea5e922;color:#0ea5e9}
+.badge.technician{background:#22c55e22;color:#22c55e}
+.badge.client{background:#f59e0b22;color:#f59e0b}
+
+.user-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}
+select.role{padding:.45rem .6rem;border-radius:10px;border:1px solid var(--ring);background:var(--soft);font-weight:800}
+.upload{display:inline-flex;align-items:center;gap:.4rem}
+.upload input[type=file]{display:none}
+.upload .btn{cursor:pointer}
+.searchbar{display:flex;gap:8px;margin-bottom:12px}
+.searchbar input{flex:1;padding:.6rem .8rem;border-radius:12px;border:1px solid var(--ring);background:var(--soft);font-weight:800}

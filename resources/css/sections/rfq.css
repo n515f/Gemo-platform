@@ -156,10 +156,6 @@ html, body {
   font-size: .95rem;
 }
 
-/* تماسك مع الهيدر المقوّس لديك */
-.rfq-card{
-  backdrop-filter: saturate(160%) blur(2px);
-}
 
 /* استجابة كاملة */
 @media (max-width: 640px){

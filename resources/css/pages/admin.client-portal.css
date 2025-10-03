@@ -43,7 +43,6 @@
 .cp-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 10px 22px rgba(0,0,0,.12);
-  border-color: color-mix(in srgb, var(--brand) 40%, var(--ring));
 }
 
 /* صورة الأيقونة */

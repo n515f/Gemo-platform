@@ -34,6 +34,7 @@
     </div>
   </section>
 
+
   {{-- ===== المدير التنفيذي + شهادات ===== --}}
   <section class="home-section reveal">
     <div class="sec-head icon-head">
@@ -67,31 +68,39 @@
     </div>
   </section>
 
-  {{-- ===== الإعلانات (تأتي بعد المدير التنفيذي) ===== --}}
-  @if(($ads ?? collect())->count())
+
+  {{-- ===== الإعلانات (بعد المدير التنفيذي) ===== --}}
+  @if(($homeAds ?? collect())->count())
     <section class="home-section reveal">
       <div class="sec-head">
         <h2>{{ $isAr ? 'إعلانات' : 'Announcements' }}</h2>
         <p class="sec-sub">{{ $isAr ? 'أحدث الإعلانات والصور من الإدارة.' : 'Latest announcements & visuals from management.' }}</p>
       </div>
 
-      <div class="ads-rotator" data-interval="7000" data-fade="500">
-        @foreach($ads as $ad)
+      <div class="ads-rotator" data-interval-sec="30" data-fade="500">
+        @foreach($homeAds as $ad)
           @php
-            $title = $isAr ? ($ad->title_ar ?: $ad->title_en) : ($ad->title_en ?: $ad->title_ar);
-            $desc  = $isAr ? ($ad->desc_ar  ?: $ad->desc_en)  : ($ad->desc_en  ?: $ad->desc_ar);
-            $imgs  = is_string($ad->images) ? json_decode($ad->images, true) : ($ad->images ?? []);
-            $imgs  = is_array($imgs) ? $imgs : [];
-            $first = $imgs[0] ?? 'images/services/full-line.jpg';
+            $imgs   = is_array($ad->images) ? $ad->images : (json_decode($ad->images ?? '[]', true) ?: []);
+            $first  = $imgs[0] ?? 'images/services/full-line.jpg';
+            $durMin = $ad->duration_min ?? null;
+            $durSec = $ad->duration_sec ?? null;
           @endphp
 
-          <article class="ad" data-images='@json($imgs, JSON_UNESCAPED_UNICODE)'>
+          <article class="ad"
+            data-images='@json($imgs, JSON_UNESCAPED_UNICODE)'
+            @if($durMin) data-duration-min="{{ $durMin }}" @endif
+            @if($durSec) data-duration-sec="{{ $durSec }}" @endif
+          >
             <div class="ad-visual">
               <img src="{{ asset($first) }}" alt="">
             </div>
             <div class="ad-overlay">
-              @if($title)<h3 class="ad-title">{{ $title }}</h3>@endif
-              @if($desc)<p class="ad-desc">{{ $desc }}</p>@endif
+              @if($ad->title_ar || $ad->title_en)
+                <h3 class="ad-title">{{ app()->getLocale()==='ar' ? ($ad->title_ar ?: $ad->title_en) : ($ad->title_en ?: $ad->title_ar) }}</h3>
+              @endif
+              @if($ad->desc_ar || $ad->desc_en)
+                <p class="ad-desc">{{ app()->getLocale()==='ar' ? ($ad->desc_ar ?: $ad->desc_en) : ($ad->desc_en ?: $ad->desc_ar) }}</p>
+              @endif
               @if($ad->location_title)
                 <div class="ad-loc">{{ $ad->location_title }}</div>
               @endif

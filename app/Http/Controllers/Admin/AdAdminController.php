@@ -58,6 +58,7 @@ class AdAdminController extends Controller
             'desc_en'         => ['nullable','string'],
             'location_title'  => ['nullable','string','max:255'],
             'is_active'       => ['nullable','boolean'],
+            'placement'       => ['nullable','in:home,catalog,categories,services,rfq,all'],
             'images'          => ['nullable','array'],
             'images.*'        => ['file','mimes:jpg,jpeg,png,webp','max:8192'],
         ]);
@@ -72,7 +73,9 @@ class AdAdminController extends Controller
             'location_title' => $data['location_title'] ?? null,
             'images'         => $paths ?: null,
             'is_active'      => array_key_exists('is_active', $data) ? (bool) $data['is_active'] : true,
+            'placement'     => $data['placement'] ?? null,
             'created_by'     => Auth::id(),
+
         ]);
 
         return redirect()->route('admin.ads.index')->with('ok','✅ تمت إضافة الإعلان.');
@@ -101,6 +104,7 @@ class AdAdminController extends Controller
             'desc_en'         => ['nullable','string'],
             'location_title'  => ['nullable','string','max:255'],
             'is_active'       => ['nullable','boolean'],
+            'placement'       => ['nullable','in:home,catalog,categories,services,rfq,all'],
             'images'          => ['nullable','array'],
             'images.*'        => ['file','mimes:jpg,jpeg,png,webp','max:8192'],
             'keep'            => ['nullable','array'],
@@ -129,6 +133,8 @@ class AdAdminController extends Controller
             'location_title' => $data['location_title'] ?? null,
             'images'         => $all ?: null,
             'is_active'      => (bool) ($data['is_active'] ?? false),
+            'placement'      => $data['placement'] ?? $ad->placement,
+
         ]);
 
         return redirect()->route('admin.ads.index')->with('ok','🛠 تم تحديث الإعلان.');

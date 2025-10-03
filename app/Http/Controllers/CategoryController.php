@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Ad;
 
 class CategoryController extends Controller
 {
@@ -10,10 +11,18 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::where('is_active', true)->latest()->paginate(12);
-        return view('categories.index', compact('categories'));
+
+        // إعلانات خاصة بالكتالوج
+        $categoryAds = Ad::active()
+            ->for('categories')   // أو 'all'
+            ->latest()
+            ->take(10)
+            ->get();
+
+        return view('categories.index', compact('categories','categoryAds'));
     }
 
-    // عرض منتجات فئة معيّنة (الفئة قد تكون غير نشطة ولكن سنعرض لو رابطها مباشر — غيّر السلوك إن أردت)
+    // عرض منتجات فئة معيّنة
     public function show(Category $category)
     {
         $products = $category->products()
@@ -21,6 +30,13 @@ class CategoryController extends Controller
             ->latest('id')
             ->paginate(12);
 
-        return view('categories.show', compact('category','products'));
+        // إعلانات خاصة بالكتالوج أيضًا
+        $categoryAds = Ad::active()
+            ->for('categories')
+            ->latest()
+            ->take(10)
+            ->get();
+
+        return view('categories.show', compact('category','products','categoryAds'));
     }
 }

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-// أبقه فقط إذا كنت تستخدم Sanctum فعلاً. وإلا احذفه من use ومن use-trait.
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -21,16 +21,17 @@ class User extends Authenticatable
 
     /**
      * الحقول المسموح تعبئتها جماعياً.
-     * (لا يوجد عمود role هنا لأن الأدوار تُدار عبر جداول Spatie)
      */
     protected $fillable = [
         'name',
         'email',
         'password',
+        'profile_image',   // مسار الصورة داخل storage/app/public مثلاً
+        'role_id',         // اختياري؛ إن كنت تستخدم Spatie يكفي pivot لكن أبقيناه بناءً على طلبك
     ];
 
     /**
-     * الحقول المخفية عن المخرجات.
+     * الحقول المخفية.
      */
     protected $hidden = [
         'password',
@@ -39,18 +40,36 @@ class User extends Authenticatable
 
     /**
      * التحويلات (Casts).
-     * في Laravel 12، 'hashed' تُشفّر كلمة المرور تلقائياً.
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password'          => 'hashed',
+        'role_id'           => 'integer',
     ];
 
     /**
-     * Accessor اختياري: اسم الدور الأول للمستخدم (للعرض فقط).
+     * اسم الدور الأساسي (للعرض فقط).
      */
     public function getPrimaryRoleAttribute(): ?string
     {
         return $this->roles()->pluck('name')->first();
+    }
+
+    /**
+     * رابط الصورة المعروضة في الواجهة.
+     * - لو كانت قيمة profile_image URL كامل أو مسار يبدأ بـ "/" نعيده كما هو.
+     * - غير ذلك نفترض أنها محفوظة تحت storage/public فنربطها بـ asset('storage/...').
+     * - وإلا صورة افتراضية.
+     */
+    public function getProfilePhotoUrlAttribute(): string
+    {
+        if (!empty($this->profile_image)) {
+            if (Str::startsWith($this->profile_image, ['http://', 'https://', '/'])) {
+                return $this->profile_image;
+            }
+            return asset('storage/' . ltrim($this->profile_image, '/'));
+        }
+
+        return asset('images/user.png');
     }
 }

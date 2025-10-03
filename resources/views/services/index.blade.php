@@ -9,7 +9,7 @@
 
 @section('content')
   {{-- Hero تعريفي خفيف --}}
-  <section class="svc-hero reveal">
+  <!--section class="svc-hero reveal">
     <div class="shell">
       <div class="svc-hero__head">
         <img class="svc-hero__icon" src="{{ asset('images/icons/services.png') }}" alt="">
@@ -23,7 +23,7 @@
         <a class="btn outline" href="{{ route('contact') }}">{{ __('app.contact_us') }}</a>
       </div>
     </div>
-  </section>
+  </section-->
 
   {{-- عنوان عام للقسم --}}
   <section class="svc-section reveal">
@@ -69,7 +69,7 @@
   </section>
 
   {{-- القطاعات التي نخدمها --}}
-  <section class="svc-section reveal">
+  <!--section class="svc-section reveal">
     <div class="sec-head">
       <h2 class="sec-title">{{ __('app.sectors_we_serve') }}</h2>
       <p class="sec-sub">{{ __('app.sectors_hero_text') /* ضف المفتاح */ }}</p>
@@ -100,7 +100,7 @@
         <p class="sector-desc">{{ __('app.sector_logistics_desc') }}</p>
       </div>
     </div>
-  </section>
+  </section-->
 @endsection
 
 @push('scripts')

@@ -13,7 +13,48 @@
       </div>
     </div>
   </section>
+{{-- ===== إعلانات الفئات ===== --}}
+@if(($categoryAds ?? collect())->count())
+  <section class="svc-section reveal">
+    <div class="sec-head">
+      <h2>{{ app()->getLocale()==='ar' ? 'إعلانات الفئات' : 'Categories Ads' }}</h2>
+    </div>
 
+    <div class="ads-rotator" data-interval-sec="20" data-fade="500" data-fit="cover">
+      @foreach($categoryAds as $ad)
+        @php
+          $imgs  = is_string($ad->images) ? json_decode($ad->images, true) : ($ad->images ?? []);
+          $imgs  = is_array($imgs) ? $imgs : [];
+          $first = $imgs[0] ?? 'images/services/full-line.jpg';
+        @endphp
+
+        <article class="ad" data-images='@json($imgs, JSON_UNESCAPED_UNICODE)'>
+          <div class="ad-visual">
+            <img src="{{ asset($first) }}" alt="">
+          </div>
+          <div class="ad-overlay">
+            @if($ad->title_ar || $ad->title_en)
+              <h3 class="ad-title">
+                {{ app()->getLocale()==='ar' ? ($ad->title_ar ?: $ad->title_en) : ($ad->title_en ?: $ad->title_ar) }}
+              </h3>
+            @endif
+
+            @if($ad->desc_ar || $ad->desc_en)
+              <p class="ad-desc">
+                {{ app()->getLocale()==='ar' ? ($ad->desc_ar ?: $ad->desc_en) : ($ad->desc_en ?: $ad->desc_ar) }}
+              </p>
+            @endif
+
+            @if($ad->location_title)
+              <div class="ad-loc">{{ $ad->location_title }}</div>
+            @endif
+          </div>
+        </article>
+      @endforeach
+    </div>
+  </section>
+@endif
+  {{-- ===== فئات الخدمات ===== --}}
   <section class="svc-section reveal">
     <div class="sec-head"><h2 class="sec-title">{{ __('app.categories') }}</h2></div>
 

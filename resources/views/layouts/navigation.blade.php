@@ -48,8 +48,10 @@
       <a class="pill {{ request()->routeIs('admin.reports.*') ? 'active' : '' }}" href="{{ route('admin.reports.index') }}">{{ __('app.reports') }}</a>
       <a class="pill {{ request()->routeIs('admin.rfqs.*') ? 'active' : '' }}" href="{{ route('admin.rfqs.index') }}">{{ __('app.rfqs') }}</a>
       <a class="pill {{ request()->routeIs('admin.products.*') ? 'active' : '' }}" href="{{ route('admin.products.index') }}">{{ __('app.catalog') }}</a>
-      <a class="pill {{ request()->routeIs('admin.screens.*') ? 'active' : '' }}" href="{{ route('admin.screens.ClientPortal') }}">{{ __('app.ClientPortal') }}</a>
       <a class="pill {{ request()->routeIs('admin.ads.*') ? 'active' : '' }}" href="{{ route('admin.ads.index') }}">{{ __('app.ads') }}</a>
+      <a class="pill {{ request()->routeIs('admin.users.*') ? 'active' : '' }}" href="{{ route('admin.users.index') }}">{{ __('app.user') }}</a>
+      <a class="pill {{ request()->routeIs('admin.screens.*') ? 'active' : '' }}" href="{{ route('admin.screens.ClientPortal') }}">{{ __('app.ClientPortal') }}</a>
+
     @endif
   </div>
 
@@ -125,6 +127,7 @@
       <a class="item {{ request()->routeIs('admin.reports.*') ? 'active' : '' }}" href="{{ route('admin.reports.index') }}">{{ __('app.reports') }}</a>
       <a class="item {{ request()->routeIs('admin.rfqs.*') ? 'active' : '' }}" href="{{ route('admin.rfqs.index') }}">{{ __('app.rfqs') }}</a>
       <a class="item {{ request()->routeIs('admin.products.*') ? 'active' : '' }}" href="{{ route('admin.products.index') }}">{{ __('app.catalog') }}</a>
+      <a class="pill {{ request()->routeIs('admin.users.*') ? 'active' : '' }}" href="{{ route('admin.users.index') }}">{{ __('app.user') }}</a>
       <a class="item {{ request()->routeIs('admin.screens.*') ? 'active' : '' }}" href="{{ route('admin.screens.ClientPortal') }}">
         {{ __('app.ClientPortal') }}
       </a>

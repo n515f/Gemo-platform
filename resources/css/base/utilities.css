@@ -98,12 +98,6 @@ body.has-offline{ padding-top:44px; }
 .toast .title{ font-weight:900; margin-inline-end:.25rem; }
 .toast .msg{ color:var(--muted); font-weight:700; }
 
-/* حالات لونية */
-.toast.success{ border-color: color-mix(in srgb, var(--success) 45%, var(--ring)); }
-.toast.warning{ border-color: color-mix(in srgb, var(--warning) 45%, var(--ring)); }
-.toast.danger{  border-color: color-mix(in srgb, var(--danger)  45%, var(--ring)); }
-.toast.info{    border-color: color-mix(in srgb, var(--info)    45%, var(--ring)); }
-
 /* تنبيهات ثابتة داخل الصفحة */
 .alert{
   display:flex; align-items:center; gap:.6rem;
@@ -112,10 +106,6 @@ body.has-offline{ padding-top:44px; }
   background: var(--card);
   color: var(--fg);
 }
-.alert.success{ border-color: color-mix(in srgb, var(--success) 45%, var(--ring)); }
-.alert.warning{ border-color: color-mix(in srgb, var(--warning) 45%, var(--ring)); }
-.alert.danger{  border-color: color-mix(in srgb, var(--danger)  45%, var(--ring)); }
-.alert.info{    border-color: color-mix(in srgb, var(--info)    45%, var(--ring)); }
 
 /* ================== Ad Banner / Ticker ================== */
 .ad-rail{

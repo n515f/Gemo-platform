@@ -1,0 +1,156 @@
+/* ===== Contact Page (Glass + Pulse + Gradient Fill) ===== */
+
+/* حاوية عامة */
+.shell{ width:min(1100px,94%); margin-inline:auto; }
+.ltr{ direction:ltr; unicode-bidi:plaintext; }
+
+/* ---------- Hero ---------- */
+.contact-hero{ padding:28px 0 8px; }
+.contact-hero__head{ display:flex; gap:14px; align-items:center; }
+.contact-hero__icon{ width:42px; height:42px; object-fit:contain; }
+.contact-hero__title{ margin:0; font-weight:900; font-size:clamp(22px,2.4vw,30px); }
+.contact-hero__sub{ margin:.35rem 0 0; color:var(--muted); font-weight:700; }
+.contact-hero__cta{ margin-top:14px; display:flex; gap:10px; flex-wrap:wrap; }
+
+/* أزرار */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:.45rem;
+  padding:.68rem 1rem; border-radius:12px; font-weight:900;
+  border:1px solid transparent; text-decoration:none; cursor:pointer;
+  transition: transform .2s ease, filter .2s ease;
+}
+.btn:hover{ transform:translateY(-1px); }
+.btn.btn-gradient{ background:var(--grad-brand); color:#0b1220; }
+.btn.outline{ background:transparent; color:var(--fg); border-color:var(--ring); }
+.btn.is-disabled{ opacity:.5; pointer-events:none; }
+
+/* ---------- Grid ---------- */
+.contact-grid{
+  display:grid; grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px; padding:16px 0 24px;
+}
+@media (max-width: 900px){ .contact-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width: 560px){ .contact-grid{ grid-template-columns:1fr; } }
+
+/* ---------- Channel card: Glass base ---------- */
+.channel-card{
+  --glass-bg: color-mix(in srgb, var(--card) 60%, transparent);
+  --glass-br: 16px;
+
+  position:relative; display:flex; gap:12px; align-items:center;
+  background: var(--glass-bg);
+  border:1px solid var(--ring);
+  border-radius: var(--glass-br);
+  padding:14px; text-decoration:none; color:inherit;
+  box-shadow: var(--shadow);
+  overflow:hidden;
+  isolation:isolate;                    /* لسلامة الطبقات */
+ 
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+
+/* طبقة تعبئة التدرّج (تكون مخفية ثم تظهر على hover) */
+.channel-card::before{
+  content:"";
+  position:absolute; inset:0; z-index:-1;
+  background: var(--grad, linear-gradient(135deg, #94a3b8 0%, #64748b 100%)); /* افتراضي */
+  opacity:0; transition: opacity .35s ease;
+}
+
+/* حلقة نبض performative (باستعمال transform وليس box-shadow الثقيل) */
+.channel-card::after{
+  content:"";
+  position:absolute; inset:-2px; border-radius: calc(var(--glass-br) + 2px);
+  border:2px solid transparent; pointer-events:none;
+  transform: scale(0.98); opacity:0;
+}
+
+/* Hover: تعبئة التدرج + ظل + نبض */
+.channel-card:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(0,0,0,.22);
+}
+.channel-card:hover::before{ opacity: 1; }
+.channel-card:hover::after{
+  animation: ring 1.1s ease-out;
+}
+
+/* نبض الحلقة */
+@keyframes ring{
+  70% { transform: scale(1.06); opacity:0;   border-color: transparent; }
+  100%{ transform: scale(1.06); opacity:0;   border-color: transparent; }
+}
+
+/* محتوى البطاقة */
+.channel-icon{
+  width:64px; min-width:64px; height:64px; border-radius:14px;
+  display:grid; place-items:center; overflow:hidden;
+  background: color-mix(in srgb, var(--soft) 70%, transparent);
+  transition: transform .25s ease, background .25s ease;
+}
+.channel-icon img{
+  width:38px; height:38px; object-fit:contain; transition: transform .25s ease;
+}
+
+.channel-body h3{ margin:0 0 .25rem; font-size:1.05rem; font-weight:900; }
+.channel-body .muted{ color:var(--muted); font-weight:700; margin:.1rem 0 .5rem; }
+.pill{
+  display:inline-flex; align-items:center; padding:.35rem .6rem; border-radius:999px;
+  border:1px solid var(--ring); background:var(--soft); font-weight:800; font-size:.9rem;
+}
+
+/* تأثير أيقونة عند التحويم */
+.channel-card:hover .channel-icon{ transform: scale(1.06) rotate(-1deg); }
+.channel-card:hover .channel-icon img{ transform: scale(1.08); }
+
+/* معطَّلة */
+.channel-card.is-disabled{ opacity:.55; cursor:not-allowed; pointer-events:none; }
+
+/* ---------- Gradients & Pulses per platform ---------- */
+/* نحدد متغيرين لكل منصة:
+   --grad  : تعبئة التدرج (تظهر على hover عبر ::before)
+   --pulse : لون حلقة النبض (ring animation) */
+
+.glass{ /* فقط لو أردت توكيد الخلفية الزجاجية لعدة عناصر */
+  background: var(--glass-bg);
+}
+
+/* WhatsApp */
+.pulse-whatsapp{ --pulse:#25D366; --grad: linear-gradient(135deg,#25D366 0%, #128C7E 100%); }
+
+/* Gmail */
+.pulse-gmail   { --pulse:#ea4335; --grad: linear-gradient(135deg,#ea4335 0%, #fbbc05 100%); }
+
+/* Yahoo */
+.pulse-yahoo   { --pulse:#6001d2; --grad: linear-gradient(135deg,#6001d2 0%, #a25ddc 100%); }
+
+/* WeChat */
+.pulse-wechat  { --pulse:#2cbf6b; --grad: linear-gradient(135deg,#2cbf6b 0%, #0aa34b 100%); }
+
+/* Facebook */
+.pulse-facebook{ --pulse:#1877f2; --grad: linear-gradient(135deg,#1877f2 0%, #4e9af1 100%); }
+
+/* Instagram */
+.pulse-instagram{ --pulse:#dd2a7b; --grad: linear-gradient(135deg,#f58529 0%, #dd2a7b 50%, #8134af 100%); }
+
+/* ---------- Hours + Map ---------- */
+.hours{ list-style:none; padding:0; margin:0; display:grid; gap:6px; }
+.hours li{ display:flex; justify-content:space-between; gap:10px; font-weight:700; }
+.hours strong{ font-weight:900; }
+
+.map-wrap{ padding:4px 0 28px; }
+.map-card{ border:1px solid var(--ring); border-radius:16px; overflow:hidden; background:var(--card); }
+.map-card iframe{ width:100%; height:380px; display:block; }
+
+/* ---------- Reveal on scroll (works with initRevealOnScroll) ---------- */
+.reveal{ opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease; }
+.reveal[data-reveal="right"]{ transform:translateX(32px); }
+.reveal[data-reveal="left"] { transform:translateX(-32px); }
+.reveal[data-reveal="up"]   { transform:translateY(26px); }
+.reveal.in{ opacity:1; transform:translate(0,0); }
+
+/* تفضيلات تقليل الحركة */
+@media (prefers-reduced-motion: reduce){
+  .channel-card, .channel-icon, .channel-card::before, .channel-card::after { transition: none !important; animation: none !important; }
+  .reveal{ opacity:1 !important; transform:none !important; }
+}

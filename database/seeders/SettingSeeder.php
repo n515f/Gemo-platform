@@ -16,14 +16,16 @@ class SettingSeeder extends Seeder
             ['key' => 'company.tagline_en',  'value' => 'Supply & Installation of Production Lines'],
             ['key' => 'company.email',       'value' => 'Adelsk2002@gmail.com'],
             ['key' => 'company.email_alt',   'value' => 'Adelsk2002@yahoo.com'],
-            ['key' => 'company.phone',       'value' => '+968-0000-0000'],
+            ['key' => 'company.phone',       'value' => '+966502496162'],
             ['key' => 'company.address_ar',  'value' => 'مسقط – سلطنة عُمان (الترخيص من مسقط)'],
             ['key' => 'company.address_en',  'value' => 'Muscat – Sultanate of Oman'],
 
             // السوشيال
-            ['key' => 'social.whatsapp',     'value' => 'https://wa.me/96800000000'],
-            ['key' => 'social.instagram',    'value' => 'https://instagram.com/yourpage'],
-
+            ['key' => 'social.whatsapp',     'value' => 'https://wa.me/8613544442901'],
+            ['key' => 'social.instagram',    'value' => 'https://www.instagram.com/adelsaeed_?igsh=MTJ4MTFrdmxudXp6NQ=='],
+            ['key' => 'social.facebook',     'value' => 'https://www.facebook.com/nofal.alhelaly2'],
+            // ====== خريطة (اختياري) ======
+            ['key' => 'company.map_embed',   'value' => '<iframe src="https://maps.google.com/?q=23.5859,58.4059&output=embed"></iframe>'],
             // واجهة
             ['key' => 'ui.primary_color',    'value' => '#0ea5e9'], // أزرق
             ['key' => 'ui.dark_mode_default','value' => 'true'],

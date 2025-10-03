@@ -9,6 +9,7 @@ class CatalogController extends Controller
 {
     public function index(Request $request)
     {
+        $ads = \App\Models\Ad::active()->for('catalog')->latest()->take(10)->get();
         $q = trim($request->get('q', ''));
         $locale = app()->getLocale() === 'ar' ? 'ar' : 'en';
 
@@ -22,7 +23,8 @@ class CatalogController extends Controller
             ->orderBy('id', 'desc')
             ->paginate(12)
             ->withQueryString();
-
+         return view('catalog.index', compact('ads', /* باقي البيانات */));
         return view('catalog.index', compact('products', 'q'));
+
     }
 }

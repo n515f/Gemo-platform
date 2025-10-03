@@ -12,12 +12,10 @@
   $darkDefault = (($settings['ui.dark_mode_default'] ?? 'false') === 'true');
 
   // الصورة حسب نوع المستخدم
-  $avatar = asset('images/returning-visitor.png');
-  if (auth()->check()) {
-      $avatar = auth()->user()->hasRole('admin')
-                ? (auth()->user()->profile_photo_url ?? asset($managerPath))
-                : asset('images/user.png');
-  }
+$avatar = asset('images/returning-visitor.png');
+if (auth()->check()) {
+    $avatar = auth()->user()->profile_photo_url; // يأخذ من Accessor في الموديل
+}
 @endphp
 
 <!doctype html>
