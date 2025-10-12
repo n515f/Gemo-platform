@@ -25,6 +25,7 @@ return [
     'ads'        => 'Ads',
     'categories' => 'Categories',
     'services'   => 'Services',
+    'user'       => 'users',
     'contact'    => 'Contact Info',
     'rights'     => 'All rights reserved.',
 

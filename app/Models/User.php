@@ -5,17 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
-    use HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
-     * الحارس الافتراضي الذي تستخدمه Spatie/Permission.
+     * الحارس الافتراضي لـ Spatie/Permission (إن كنت تحتاجه).
      */
     protected string $guard_name = 'web';
 
@@ -26,8 +25,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'profile_image',   // مسار الصورة داخل storage/app/public مثلاً
-        'role_id',         // اختياري؛ إن كنت تستخدم Spatie يكفي pivot لكن أبقيناه بناءً على طلبك
+        'profile_image', // نخزّن فيه المسار النسبي مثل "avatars/xxx.png"
+        'role_id',
     ];
 
     /**
@@ -39,7 +38,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * التحويلات (Casts).
+     * التحويلات.
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
@@ -48,28 +47,49 @@ class User extends Authenticatable
     ];
 
     /**
-     * اسم الدور الأساسي (للعرض فقط).
+     * نطلب إظهار الحقل المحسوب profile_photo_url تلقائياً في الـ JSON/Array.
+     */
+    protected $appends = ['profile_photo_url'];
+
+    /**
+     * Accessor: رابط صورة البروفايل للعرض في الواجهة.
+     *
+     * الأولوية:
+     * 1) إن كان profile_image رابطًا كاملاً (http/https) -> نرجعه كما هو.
+     * 2) إن كان مسارًا نسبيًا على قرص public وتوجد الملف -> نرجع Storage::url().
+     * 3) إن كان يبدأ بـ /storage/ -> نرجعه كما هو.
+     * 4) خلاف ذلك -> صورة افتراضية.
+     */
+    public function getProfilePhotoUrlAttribute(): string
+    {
+        $path = $this->profile_image;
+
+        if (!empty($path)) {
+            // رابط خارجي
+            if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+                return $path;
+            }
+
+            // يبدأ بـ /storage (مربوط مسبقًا) -> استخدمه كما هو
+            if (str_starts_with($path, '/storage/')) {
+                return $path;
+            }
+
+            // ملف محفوظ على قرص public (مثلاً avatars/xxx.png)
+            if (Storage::disk('public')->exists($path)) {
+                return Storage::url($path); // ينتج /storage/avatars/xxx.png
+            }
+        }
+
+        // fallback
+        return asset('images/user.png');
+    }
+
+    /**
+     * اسم الدور الأساسي (اختياري للعرض).
      */
     public function getPrimaryRoleAttribute(): ?string
     {
         return $this->roles()->pluck('name')->first();
-    }
-
-    /**
-     * رابط الصورة المعروضة في الواجهة.
-     * - لو كانت قيمة profile_image URL كامل أو مسار يبدأ بـ "/" نعيده كما هو.
-     * - غير ذلك نفترض أنها محفوظة تحت storage/public فنربطها بـ asset('storage/...').
-     * - وإلا صورة افتراضية.
-     */
-    public function getProfilePhotoUrlAttribute(): string
-    {
-        if (!empty($this->profile_image)) {
-            if (Str::startsWith($this->profile_image, ['http://', 'https://', '/'])) {
-                return $this->profile_image;
-            }
-            return asset('storage/' . ltrim($this->profile_image, '/'));
-        }
-
-        return asset('images/user.png');
     }
 }
