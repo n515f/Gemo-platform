@@ -1,3 +1,7 @@
+@props([
+  'hideHeaderLogo' => false,  // لإخفاء شعار الهيدر عند الحاجة
+  'boxed' => false            // لاحتواء المحتوى في كرت افتراضي (سلوك Breeze القديم)
+])
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale()==='ar'?'rtl':'ltr' }}">
 <head>
@@ -17,21 +21,35 @@
       if(s==='dark'||(!s&&p)) document.documentElement.classList.add('dark');
     }catch(_){}})();
   </script>
-  @vite(['resources/css/entries/auth.css','resources/js/app.js'])
+
+  {{-- أبقينا app.js، وصفحات الأوث نفسها تدفع auth.css عبر @push --}}
+  @vite(['resources/js/app.js'])
   @stack('styles')
 </head>
 <body class="font-sans text-gray-900 antialiased bg-gray-100 dark:bg-gray-900">
-  <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
-    <div>
-      <a href="/">
-        <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-      </a>
-    </div>
 
-    <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
+  {{-- هيدر الشعار (اختياري) --}}
+  @unless($hideHeaderLogo)
+    <header class="py-6 flex justify-center">
+      <a href="/" aria-label="Home">
+        <x-application-logo class="app-logo-img w-20 h-20 fill-current text-gray-500" />
+      </a>
+    </header>
+  @endunless
+
+  <main>
+    @if($boxed)
+      {{-- سلوك Breeze القديم بكرت وسطي --}}
+      <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
+        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
+          {{ $slot }}
+        </div>
+      </div>
+    @else
+      {{-- صفحات فل-بليد مثل صفحات الأوث الجديدة --}}
       {{ $slot }}
-    </div>
-  </div>
+    @endif
+  </main>
 
   @stack('scripts')
 </body>

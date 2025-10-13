@@ -3,3 +3,5 @@
 .table thead th{ background:color-mix(in srgb, var(--soft) 60%, transparent); font-weight:900; }
 .table-striped tbody tr:nth-child(odd){ background:color-mix(in srgb, var(--soft) 30%, transparent); }
 .table-responsive{ width:100%; overflow:auto; border:1px solid var(--ring); border-radius:16px; }
+.table td, .table th { padding: 12px 14px; border-bottom: 1px solid rgba(0,0,0,.06); text-align: start; }
+.table thead th { color: var(--text-2); font-weight: 800; }

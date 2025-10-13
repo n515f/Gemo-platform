@@ -19,7 +19,7 @@ use App\Http\Controllers\Admin\RfqAdminController;
 use App\Http\Controllers\Admin\ReportAdminController;
 use App\Http\Controllers\Admin\ClientPortalController;
 use App\Http\Controllers\Admin\AdAdminController;
-use App\Http\Controllers\Admin\AdminUsersController; // ✅ هذا المهم
+use App\Http\Controllers\Admin\AdminUsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,12 +54,23 @@ Route::middleware(['setlocale'])->group(function () {
 |--------------------------------------------------------------------------
 | تقارير الفنيين (واجهة المستخدم/الموظف)
 |--------------------------------------------------------------------------
+|
+| ملاحظة مهمة: اسم بارامتر الراوت {report} ليتوافق مع Requests (authorize)
+|
 */
 Route::middleware(['auth','setlocale'])->group(function () {
-    Route::get('/my/reports',           [ReportController::class, 'index'])->name('reports.index');
-    Route::get('/reports/create',       [ReportController::class, 'create'])->name('reports.create');
-    Route::post('/reports',             [ReportController::class, 'store'])->name('reports.store');
-    Route::get('/my/reports/{report}',  [ReportController::class, 'show'])->name('reports.show');
+    // يمكن لأي مستخدم مسجّل عرض قائمته/تفاصيل تقريره (الفلترة تتم داخل الكنترولر)
+    Route::get('/my/reports',          [ReportController::class, 'index'])->name('reports.index');
+    Route::get('/my/reports/{report}', [ReportController::class, 'show'])->name('reports.show');
+});
+
+// إنشاء/تعديل/حذف — حصراً لمن لديه دور technician
+Route::middleware(['auth','role:technician','setlocale'])->group(function () {
+    Route::get('/reports/create',        [ReportController::class, 'create'])->name('reports.create');
+    Route::post('/reports',              [ReportController::class, 'store'])->name('reports.store');
+    Route::get('/reports/{report}/edit', [ReportController::class, 'edit'])->name('reports.edit');
+    Route::put('/reports/{report}',      [ReportController::class, 'update'])->name('reports.update');
+    Route::delete('/reports/{report}',   [ReportController::class, 'destroy'])->name('reports.destroy');
 });
 
 /*
@@ -94,10 +105,17 @@ Route::prefix('admin')
         Route::patch('rfqs/{rfq}/status', [RfqAdminController::class, 'updateStatus'])->name('admin.rfqs.status');
 
         // تقارير الفنيين (إدارة)
-        Route::resource('reports', ReportAdminController::class)->only(['index','show','edit','update','destroy'])->names('admin.reports');
+        Route::resource('reports', ReportAdminController::class)
+            ->only(['index','show','edit','update','destroy'])
+            ->names('admin.reports');
+
+        // تمكين إنشاء تقرير من لوحة الأدمن (اختياري)
         Route::get('reports/create',  [ReportAdminController::class, 'create'])->name('admin.reports.create');
         Route::post('reports',        [ReportAdminController::class, 'store'])->name('admin.reports.store');
-        Route::delete('reports/{report}/attachment', [ReportAdminController::class,'destroyAttachment'])->name('admin.reports.attachment.destroy');
+
+        // حذف مرفق مفرد
+        Route::delete('reports/{report}/attachment', [ReportAdminController::class,'destroyAttachment'])
+            ->name('admin.reports.attachment.destroy');
 
         // شاشات العميل
         Route::get('/screens', [ClientPortalController::class, 'index'])->name('admin.screens.ClientPortal');
@@ -105,10 +123,10 @@ Route::prefix('admin')
         // الإعلانات
         Route::resource('ads', AdAdminController::class)->names('admin.ads');
 
-        // ✅ صفحة إدارة المستخدمين للأدمن
-        Route::get('users',                        [AdminUsersController::class, 'index'])->name('admin.users.index');
-        Route::post('users/{user}/role',           [AdminUsersController::class, 'updateRole'])->name('admin.users.role');
-        Route::post('users/{user}/avatar',         [AdminUsersController::class, 'updateAvatar'])->name('admin.users.avatar');
+        // إدارة المستخدمين
+        Route::get('users',                [AdminUsersController::class, 'index'])->name('admin.users.index');
+        Route::post('users/{user}/role',   [AdminUsersController::class, 'updateRole'])->name('admin.users.role');
+        Route::post('users/{user}/avatar', [AdminUsersController::class, 'updateAvatar'])->name('admin.users.avatar');
     });
 
 /*
@@ -130,10 +148,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile',[ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile',[ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // ✅ آفاتار المستخدم
+    // آفاتار المستخدم
     Route::post('/profile/avatar',   [ProfileController::class, 'storeAvatar'])->name('profile.avatar.store');
     Route::delete('/profile/avatar', [ProfileController::class, 'destroyAvatar'])->name('profile.avatar.destroy');
-
 });
 
 require __DIR__.'/auth.php';

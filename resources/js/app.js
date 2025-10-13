@@ -131,3 +131,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+// تأثير دخول العناصر + نبض زر الإرسال عند جاهزية الصفحة
+document.addEventListener('DOMContentLoaded', () => {
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, {threshold: 0.08});
+
+  document.querySelectorAll('.auth-card, .auth-illustration .feat').forEach(el => io.observe(el));
+
+  // Pulse on primary button for انتباه خفيف
+  const primaryBtn = document.querySelector('.auth-btn');
+  if (primaryBtn) {
+    primaryBtn.classList.add('pulse');
+    setTimeout(()=>primaryBtn.classList.remove('pulse'), 4000);
+  }
+});

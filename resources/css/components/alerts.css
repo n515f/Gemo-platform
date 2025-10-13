@@ -16,3 +16,13 @@
 .flash{padding:10px 12px;border-radius:10px;font-weight:800}
 .flash.ok{background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0}
 .flash.err{background:#fef2f2;color:#991b1b;border:1px solid #fecaca}
+.alert {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,.08);
+  background: #fff;
+  color: var(--text-1);
+}
+.alert.success { border-color: rgba(34,197,94,.3); background: #ecfdf5; }
+.alert.warning { border-color: rgba(245,158,11,.35); background: #fffbeb; }
+.alert.danger  { border-color: rgba(239,68,68,.35);  background: #fef2f2; }

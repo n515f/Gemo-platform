@@ -2,43 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TechnicianReport;
+use App\Http\Requests\StoreTechnicianReportRequest;
+use App\Http\Requests\UpdateTechnicianReportRequest;
 use App\Models\Project;
-use Illuminate\Http\Request;
+use App\Models\TechnicianReport;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
     /* ===================== Helpers (AuthZ) ===================== */
 
-   // app/Http/Controllers/ReportController.php
-
-protected function isAdmin(): bool
-{
-    $user = \Illuminate\Support\Facades\Auth::user();
-    if (! $user) {
-        return false;
+    protected function isAdmin(): bool
+    {
+        $user = Auth::user();
+        // تحاشيًا لتحذير Intelephense: افحص وجود الميثود قبل استدعائها
+        return $user && method_exists($user, 'hasRole')
+            ? (bool) call_user_func([$user, 'hasRole'], 'admin')
+            : false;
     }
-
-    // نستدعي hasRole بطريقة ديناميكية لتفادي تحذير Intelephense
-    if (method_exists($user, 'hasRole')) {
-        return (bool) call_user_func([$user, 'hasRole'], 'admin');
-    }
-
-    return false;
-}
 
     protected function canTouch(TechnicianReport $report): bool
     {
         return $this->isAdmin() || (Auth::id() === $report->created_by);
-    }
-
-    protected function decodeAttachments($attachments): array
-    {
-        if (!$attachments) return [];
-        $arr = is_array($attachments) ? $attachments : json_decode($attachments, true);
-        return is_array($arr) ? array_values($arr) : [];
     }
 
     protected function storeUploadedAttachments(Request $request, string $dir = 'tech_reports'): array
@@ -46,8 +33,8 @@ protected function isAdmin(): bool
         $paths = [];
         if ($request->hasFile('attachments')) {
             foreach ($request->file('attachments') as $file) {
-                $stored = $file->store($dir, 'public');  // storage/app/public/tech_reports/...
-                $paths[] = 'storage/' . $stored;         // للعرض عبر asset()
+                $stored  = $file->store($dir, 'public');  // storage/app/public/tech_reports
+                $paths[] = 'storage/' . $stored;          // للعرض عبر asset()
             }
         }
         return $paths;
@@ -55,7 +42,7 @@ protected function isAdmin(): bool
 
     protected function deletePublicPath(?string $publicPath): void
     {
-        if (!$publicPath) return;
+        if (! $publicPath) return;
         if (str_starts_with($publicPath, 'storage/')) {
             $relative = substr($publicPath, strlen('storage/'));
             Storage::disk('public')->delete($relative);
@@ -68,12 +55,12 @@ protected function isAdmin(): bool
     {
         $reports = TechnicianReport::query()
             ->with('project:id,title')
-            ->when(!$this->isAdmin(), fn($q) => $q->where('created_by', Auth::id()))
+            ->when(! $this->isAdmin(), fn($q) => $q->where('created_by', Auth::id()))
             ->latest()
             ->paginate(12);
 
         $projects = Project::orderBy('title')->get(['id','title']);
-        return view('reports.index', compact('reports','projects'));
+        return view('reports.index', compact('reports', 'projects'));
     }
 
     public function create()
@@ -82,22 +69,15 @@ protected function isAdmin(): bool
         return view('reports.create', compact('projects'));
     }
 
-    public function store(Request $request)
+    public function store(StoreTechnicianReportRequest $request)
     {
-        $data = $request->validate([
-            'project_id'     => ['nullable','integer','exists:projects,id'],
-            'title'          => ['required','string','max:255'],
-            'notes'          => ['nullable','string'],
-            'attachments'    => ['nullable','array'],
-            'attachments.*'  => ['file','mimes:jpg,jpeg,png,webp,pdf,doc,docx,xls,xlsx,zip','max:8192'],
-        ]);
+        $paths  = $this->storeUploadedAttachments($request, 'tech_reports');
 
-        $paths  = $this->storeUploadedAttachments($request);
         $report = TechnicianReport::create([
-            'project_id'  => $data['project_id'] ?? null,
-            'title'       => $data['title'],
-            'notes'       => $data['notes'] ?? null,
-            'attachments' => $paths ? json_encode($paths, JSON_UNESCAPED_UNICODE) : null,
+            'project_id'  => $request->input('project_id'),
+            'title'       => $request->string('title'),
+            'notes'       => $request->input('notes'),
+            'attachments' => $paths ?: null,     // مصفوفة مباشرة
             'created_by'  => Auth::id(),
         ]);
 
@@ -110,9 +90,9 @@ protected function isAdmin(): bool
         abort_unless($this->canTouch($report), 403);
 
         $report->load('project:id,title');
-        $attachments = $this->decodeAttachments($report->attachments);
+        $attachments = $report->attachments ?? [];
 
-        return view('reports.show', compact('report','attachments'));
+        return view('reports.show', compact('report', 'attachments'));
     }
 
     public function edit(TechnicianReport $report)
@@ -120,44 +100,35 @@ protected function isAdmin(): bool
         abort_unless($this->canTouch($report), 403);
 
         $projects    = Project::orderBy('title')->get(['id','title']);
-        $attachments = $this->decodeAttachments($report->attachments);
+        $attachments = $report->attachments ?? [];
 
-        return view('reports.edit', compact('report','projects','attachments'));
+        return view('reports.edit', compact('report', 'projects', 'attachments'));
     }
 
-    public function update(Request $request, TechnicianReport $report)
+    public function update(UpdateTechnicianReportRequest $request, TechnicianReport $report)
     {
         abort_unless($this->canTouch($report), 403);
 
-        $data = $request->validate([
-            'project_id'     => ['nullable','integer','exists:projects,id'],
-            'title'          => ['required','string','max:255'],
-            'notes'          => ['nullable','string'],
-            'attachments'    => ['nullable','array'],
-            'attachments.*'  => ['file','mimes:jpg,jpeg,png,webp,pdf,doc,docx,xls,xlsx,zip','max:8192'],
-            'keep'           => ['nullable','array'],
-        ]);
+        $current = $report->attachments ?? [];
 
-        $current = $this->decodeAttachments($report->attachments);
-
-        if (is_array($data['keep'] ?? null)) {
-            $toKeep = array_values(array_intersect($current, $data['keep']));
+        if (is_array($request->input('keep'))) {
+            $toKeep = array_values(array_intersect($current, $request->input('keep')));
             foreach ($current as $oldPath) {
-                if (!in_array($oldPath, $toKeep, true)) {
+                if (! in_array($oldPath, $toKeep, true)) {
                     $this->deletePublicPath($oldPath);
                 }
             }
             $current = $toKeep;
         }
 
-        $added = $this->storeUploadedAttachments($request);
+        $added = $this->storeUploadedAttachments($request, 'tech_reports');
         $all   = array_values(array_unique(array_merge($current, $added)));
 
         $report->update([
-            'project_id'  => $data['project_id'] ?? null,
-            'title'       => $data['title'],
-            'notes'       => $data['notes'] ?? null,
-            'attachments' => $all ? json_encode($all, JSON_UNESCAPED_UNICODE) : null,
+            'project_id'  => $request->input('project_id'),
+            'title'       => $request->string('title'),
+            'notes'       => $request->input('notes'),
+            'attachments' => $all ?: null,      // مصفوفة مباشرة
         ]);
 
         return redirect()->route('reports.show', $report)
@@ -168,7 +139,7 @@ protected function isAdmin(): bool
     {
         abort_unless($this->canTouch($report), 403);
 
-        foreach ($this->decodeAttachments($report->attachments) as $path) {
+        foreach (($report->attachments ?? []) as $path) {
             $this->deletePublicPath($path);
         }
         $report->delete();

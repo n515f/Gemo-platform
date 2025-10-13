@@ -126,3 +126,8 @@
   align-self:flex-start; padding:.35rem .6rem; border-radius:999px; font-weight:900;
   background:var(--grad-brand); color:#0b1220;
 }
+
+/* (مستخدم قليلًا في auth، لكنه مفيد لو وضعت شعارًا أعلى البطاقة) */
+.nav-inline { display:flex; align-items:center; justify-content:space-between; gap:14px; }
+.nav-brand { display:flex; align-items:center; gap:10px; font-weight:800; color:#fff; }
+.nav-brand img { width:32px; height:32px; object-fit:contain; }

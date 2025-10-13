@@ -11,7 +11,10 @@ class TechnicianReport extends Model
 
     protected $fillable = ['project_id','title','notes','attachments','created_by'];
 
-    protected $casts = ['attachments'=>'array'];
+    // إبقِ الـ casts كما فعلت
+    protected $casts = [
+        'attachments' => 'array',
+    ];
 
     public function project()
     {
@@ -20,8 +23,9 @@ class TechnicianReport extends Model
 
     public function creator()
     {
-        return $this->belongsTo(User::class,'created_by');
+        return $this->belongsTo(User::class, 'created_by');
     }
-    public function user(){ return $this->belongsTo(\App\Models\User::class,'created_by');
-    }
+
+    // احذف هذه لتفادي التكرار
+    // public function user(){ return $this->belongsTo(User::class,'created_by'); }
 }

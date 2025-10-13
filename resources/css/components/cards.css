@@ -10,3 +10,13 @@
 .card-title{ margin:0; font-size:1.1rem; line-height:1.3; font-weight:800; }
 .card-sub{ font-size:.9rem; color:var(--muted); }
 .card-actions{ margin-top:auto; display:flex; gap:.5rem; }
+.card {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.06);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-md);
+  padding: 18px;
+  color: var(--text-1);
+}
+.card-header { font-weight: 800; font-size: 18px; margin-bottom: 8px; }
+.card-muted  { color: var(--muted); }
