@@ -1,5 +1,6 @@
 {{-- resources/views/admin/dashboard.blade.php --}}
-@extends('layouts.site')
+@extends('layouts.admin')
+@section('title', __('app.admin'))
 
 @push('styles')
   {{-- ادخل CSS العام + صفحة الداشبورد --}}

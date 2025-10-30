@@ -1,4 +1,4 @@
-@extends('layouts.site')
+@extends('layouts.admin')
 @push('styles') @vite('resources/css/entries/admin.css') @endpush
 
 @section('content')

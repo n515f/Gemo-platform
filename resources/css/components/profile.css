@@ -1,0 +1,128 @@
+/* ===================== Profile (pf-*) — Unified ===================== */
+/* Layout */
+.pf-wrap { max-width: 1000px; margin-inline: auto; padding: 24px; }
+.pf-toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.pf-title { font-weight: 900; font-size: clamp(22px, 2.2vw, 28px); }
+
+/* Card */
+.pf-card {
+  background: var(--pf-card, #ffffff);
+  border: 1px solid var(--pf-ring, #e5e7eb);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.06);
+}
+
+/* Alerts */
+.pf-alert { padding: 12px 14px; border-radius: 12px; margin-bottom: 12px; font-weight: 600; }
+.pf-alert--success { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+.pf-alert--danger  { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+
+/* Lists */
+.pf-list { margin: 0; padding-inline-start: 18px; }
+
+/* Sections */
+.pf-section { margin-top: 18px; }
+.pf-sectionTitle { font-weight: 900; font-size: 18px; margin: 8px 0 12px; }
+
+.pf-sec { margin-top: 18px; }
+.pf-secHeader { margin-bottom: 10px; }
+.pf-secTitle { font-weight: 900; font-size: 18px; margin: 0 0 6px; }
+.pf-secHelp { color: var(--pf-muted, #6b7280); font-weight: 600; line-height: 1.6; }
+
+/* Forms */
+.pf-form { display: grid; gap: 12px; }
+.pf-form--modal { padding: 16px; }
+.pf-field { display: grid; gap: 6px; }
+.pf-input {
+  width: 100%; padding: 12px 14px; border-radius: 12px;
+  border: 1px solid var(--pf-ring, #e5e7eb);
+  background: var(--pf-input-bg, #fff);
+  color: var(--pf-fg, #0f172a);
+  transition: box-shadow .12s ease, border-color .12s ease;
+}
+.pf-input:focus { outline: none; box-shadow: 0 0 0 3px rgba(59,130,246,.25); border-color: #93c5fd; }
+.pf-input--modal { max-width: 520px; }
+.pf-error { color: #dc2626; font-weight: 600; }
+
+.pf-actions { display: flex; align-items: center; gap: 10px; }
+.pf-saved { color: var(--pf-muted, #6b7280); font-weight: 700; }
+
+/* Notes & Links */
+.pf-note { margin-top: 8px; }
+.pf-noteText { color: var(--pf-fg, #0f172a); font-weight: 600; }
+.pf-link { color: #2563eb; font-weight: 700; text-decoration: underline; border-radius: 8px; }
+.pf-successSmall { color: #059669; font-weight: 700; margin-top: 6px; }
+
+/* Buttons */
+.pf-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 10px 14px; border-radius: 12px; font-weight: 800;
+  transition: transform .12s ease, filter .12s ease, box-shadow .12s ease;
+  background: var(--pf-btn-bg, #f3f4f6); color: var(--pf-btn-fg, #0f172a);
+}
+.pf-btn:hover { transform: translateY(-1px); filter: brightness(0.98); }
+.pf-btn:active { transform: translateY(0); }
+
+.pf-btn--primary {
+  --pf-btn-bg: linear-gradient(180deg, #60a5fa 0%, #3b82f6 100%);
+  --pf-btn-fg: #0b1220;
+  box-shadow: 0 8px 18px rgba(59,130,246,.25);
+  border-color: rgba(59,130,246,.35);
+}
+.pf-btn--danger {
+  --pf-btn-bg: #fee2e2;
+  --pf-btn-fg: #991b1b;
+  border-color: #fecaca;
+}
+
+/* Make Jetstream buttons visually consistent if needed */
+button.pf-btn, .pf-btn button, .pf-btn .button { font: inherit; }
+
+/* Avatar row */
+.pf-avatarRow { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+.pf-avatar {
+  width: 90px; height: 90px; border-radius: 50%; object-fit: cover;
+  border: 1px solid var(--pf-ring, #e5e7eb); display: block;
+}
+.pf-avatar--empty {
+  width: 90px; height: 90px; border-radius: 50%;
+  display: grid; place-items: center;
+  border: 1px solid var(--pf-ring, #e5e7eb);
+  background: var(--pf-soft, #f3f4f6);
+  color: var(--pf-muted, #6b7280);
+}
+.pf-avatarIcon { width: 54px; height: 54px; display: block; }
+
+.pf-upload, .pf-delete { display: flex; align-items: center; gap: 10px; margin: 0; flex-wrap: wrap; }
+.pf-file {
+  padding: 10px; border: 1px solid var(--pf-ring, #e5e7eb); border-radius: 12px;
+  background: var(--pf-input-bg, #fff); color: var(--pf-fg, #0f172a);
+}
+
+/* Modal bits */
+.pf-modalTitle { font-weight: 900; margin: 0 0 8px; font-size: 18px; }
+.pf-modalActions { display: flex; gap: 10px; justify-content: flex-end; }
+
+/* ===================== Dark Theme (uses .dark on <html>) ===================== */
+.dark {
+  --pf-card: #0f172a;   /* card bg */
+  --pf-ring: #1f2937;   /* borders */
+  --pf-soft: #111827;   /* subtle surfaces */
+  --pf-input-bg: #0b1325;
+  --pf-fg: #e5e7eb;     /* text */
+  --pf-muted: #9ca3af;  /* secondary text */
+}
+.dark .pf-card { box-shadow: 0 10px 30px rgba(0,0,0,.28); }
+.dark .pf-title, .dark .pf-sectionTitle, .dark .pf-secTitle { color: var(--pf-fg); }
+.dark .pf-secHelp, .dark .pf-saved { color: var(--pf-muted); }
+.dark .pf-input, .dark .pf-file { border-color: var(--pf-ring); color: var(--pf-fg); background: var(--pf-input-bg); }
+.dark .pf-link { color: #60a5fa; }
+.dark .pf-avatar { border-color: var(--pf-ring); }
+.dark .pf-avatar--empty { background: var(--pf-soft); color: var(--pf-muted); }
+
+/* RTL tweak */
+[dir="rtl"] .pf-modalActions { justify-content: flex-start; }
+
+/* Optional accents */
+.pf-sec--danger .pf-secTitle { color: #b91c1c; }

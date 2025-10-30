@@ -22,7 +22,7 @@
     }catch(_){}})();
   </script>
 
-  {{-- أبقينا app.js، وصفحات الأوث نفسها تدفع auth.css عبر @push --}}
+  {{-- الأوث تدفع auth.css عبر @push من صفحاتها --}}
   @vite(['resources/js/app.js'])
   @stack('styles')
 </head>

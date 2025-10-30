@@ -18,7 +18,6 @@
     }catch(_){}})();
   </script>
 
-  {{-- حزمة الأوث --}}
   @vite(['resources/css/entries/auth.css','resources/js/app.js'])
   @stack('styles')
 </head>

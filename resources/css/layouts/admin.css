@@ -1,14 +1,187 @@
-/* تخطيط لوحة التحكم */
-.admin-root{ background:var(--bg); color:var(--fg); }
+/* ===== تخطيط لوحة التحكم (نهائي) ===== */
+.admin-body{ background:var(--bg); color:var(--fg); }
+
+/* تغليف المحتوى يمين السيـدر */
+.admin-wrap{
+  margin-inline-start: 260px;
+  transition: margin var(--dur) var(--easing);
+}
+.admin-wrap[data-collapsed="1"]{ margin-inline-start: 78px; }
+
+.admin-content{ padding:20px; }
+
+/* ===== Topbar ===== */
 .admin-topbar{
-  position:sticky; top:0; z-index:40; border-bottom:1px solid var(--ring);
-}
-.admin-shell{
+  position: sticky; top:0; z-index: 50;
   display:flex; align-items:center; justify-content:space-between; gap:12px;
-  width:min(1200px,96%); margin-inline:auto; padding:12px 8px;
+  background: var(--soft);
+  border-bottom:1px solid var(--ring);
+  padding:10px 14px;
 }
-.admin-brand .admin-logo{ font-weight:900; font-size:1.15rem; }
-.admin-nav{ display:flex; gap:6px; }
-.admin-container{ width:min(1200px,96%); margin-inline:auto; padding:18px 0; }
-.admin-header{ margin:8px 0 14px; font-size:clamp(20px,2.2vw,26px); font-weight:900; }
-.admin-content{ display:block; }
+.page-title{ font-weight:900; font-size:1.15rem; text-align:center; flex:1; }
+
+.tb-left, .tb-right{ display:flex; align-items:center; gap:10px; }
+.icon-btn{
+  display:inline-grid; place-items:center;
+  width:42px; height:42px; border-radius:12px;
+  border:1px solid var(--glass-border); background:var(--glass);
+}
+
+.user-mini{ display:flex; align-items:center; gap:10px; }
+.user-mini .avatar{ width:34px; height:34px; border-radius:999px; object-fit:cover; }
+.user-mini .meta{ display:flex; flex-direction:column; line-height:1.1; }
+.user-mini .name{ font-weight:900; }
+.user-mini .role{ color:var(--muted); font-weight:700; }
+
+/* ===== Sidebar ===== */
+.admin-sidebar{
+  position: fixed; inset-block:0; inset-inline-start:0; width:260px;
+  background: var(--card);
+  border-inline-end:1px solid var(--ring);
+  display:flex; flex-direction:column;
+  z-index: 1000;
+  transition: transform var(--dur) var(--easing), width var(--dur) var(--easing);
+}
+.admin-sidebar[data-collapsed="1"]{ width:78px; }
+.admin-sidebar[data-collapsed="1"] .sidebar-user .u-right,
+.admin-sidebar[data-collapsed="1"] .sidebar-nav .item span,
+.admin-sidebar[data-collapsed="1"] .show-when-expanded{ display:none; }
+.show-when-collapsed{ display:none; }
+.admin-sidebar[data-collapsed="1"] .show-when-collapsed{ display:flex; }
+
+/* === SVG Icons (Sidebar & Header) === */
+.icon-btn .ico{ width:18px; height:18px; display:block; }
+.sidebar-nav .item .ico{
+  width:22px; height:22px; display:block;
+  color:currentColor; stroke:currentColor; stroke-width:2; fill:none; vector-effect:non-scaling-stroke;
+  transition: transform var(--dur-fast) var(--easing), color var(--dur-fast) var(--easing);
+}
+html[dir="rtl"] .sidebar-nav .item:hover .ico{ transform:translateX(2px); }
+html[dir="ltr"] .sidebar-nav .item:hover .ico{ transform:translateX(-2px); }
+.sidebar-nav .item.active .ico{ color:var(--brand); stroke:currentColor; }
+.item-danger .btn-like .ico{ color:currentColor; stroke:currentColor; }
+.item-danger .btn-like:hover .ico{ color:#991b1b; stroke:currentColor; }
+
+/* رأس السيـدر */
+.sidebar-header{
+  display:flex; align-items:center; gap:8px;
+  padding:12px; border-bottom:1px solid var(--ring);
+}
+.brand{ display:flex; align-items:center; gap:10px; min-width:0; }
+.brand .title{ font-weight:900; }
+.brand .brand-mark{ width:36px; height:36px; object-fit:contain; border-radius:10px; }
+
+/* المستخدم داخل السيـدر */
+.sidebar-user{
+  position:relative; display:flex; align-items:center; gap:12px;
+  padding:16px 12px; border-bottom:1px solid var(--ring);
+}
+.u-avatar{ width:44px; height:44px; border-radius:12px; object-fit:cover; }
+.u-right .u-name{ font-weight:900; }
+.u-right .u-email{ color:var(--muted); font-weight:700; }
+.u-edit{
+  position:absolute; inset-inline-end:12px; inset-block:12px;
+  width:34px; height:34px; border-radius:10px; display:grid; place-items:center;
+  background:var(--glass); border:1px solid var(--glass-border);
+  transition:transform .18s ease, filter .18s ease;
+}
+.u-edit:hover{ transform:translateY(-1px); filter:brightness(1.05); }
+
+/* قائمة السيـدر */
+.sidebar-nav{ padding:10px 8px 16px; overflow-y:auto; flex:1; }
+.sidebar-nav::-webkit-scrollbar{ width:10px; }
+.sidebar-nav::-webkit-scrollbar-thumb{ background:var(--ring); border-radius:99px; }
+.sidebar-nav .item{
+  display:flex; align-items:center; gap:12px;
+  padding:12px; border-radius:14px; color:var(--fg); text-decoration:none; font-weight:800;
+  border:1px solid transparent;
+  transition: background var(--dur-fast) var(--easing), border-color var(--dur-fast) var(--easing), transform var(--dur-fast) var(--easing);
+}
+.sidebar-nav .item + .item, .sidebar-nav .item + form{ margin-top:6px; }
+.sidebar-nav .item:hover{ background:color-mix(in srgb, var(--brand) 10%, transparent); transform:translateY(-1px); }
+.sidebar-nav .item.active{ background:color-mix(in srgb, var(--brand) 16%, transparent); border-color:var(--brand); }
+.sidebar-nav .item .ico{ width:22px; height:22px; display:block; }
+.sidebar-nav form.item{ padding:0; border:none; }
+.sidebar-nav form.item .btn-like{
+  display:flex; align-items:center; gap:12px; padding:12px; width:100%;
+  background:transparent; border:1px solid transparent; border-radius:14px; color:var(--fg); font-weight:800;
+  transition: background var(--dur-fast) var(--easing), border-color var(--dur-fast) var(--easing), color var(--dur-fast) var(--easing), transform var(--dur-fast) var(--easing);
+}
+
+/* شعار أكبر عند الفتح */
+.admin-sidebar .brand .brand-mark{ width:32px; height:32px; }
+.admin-sidebar[data-open="1"] .brand .brand-mark{ width:44px; height:44px; }
+
+/* أظهر العنوان واليوزر فقط عند الفتح */
+.show-when-expanded{ display:none; }
+.admin-sidebar[data-open="1"] .show-when-expanded{ display:flex; }
+.admin-sidebar[data-open="1"] .sidebar-user{ display:flex; }
+
+/* زر القائمة يجب أن يظهر دائماً */
+.menu-btn{ display:inline-grid !important; }
+
+/* زر تسجيل الخروج (أحمر أنيق عند الهوفر) */
+.item-danger .btn-like:hover{
+  background:#fee2e2; border-color:#fecaca; color:#991b1b; transform:translateY(-1px);
+}
+
+/* ===== Overlay (مُعدّل: بدون بلور إلا عند الفتح) ===== */
+.admin-overlay{
+  position:fixed; inset:0;
+  background:rgba(0,0,0,0.32);
+  opacity:0; visibility:hidden; pointer-events:none;
+  transition:opacity .2s var(--easing), visibility .2s var(--easing);
+  z-index:950;                 /* تحت السايدبار (1000) */
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+}
+/* عند فتح السايدبار: أظهر الـoverlay ببلور خفيف فقط */
+.admin-overlay.is-open{
+  opacity:1; visibility:visible; pointer-events:auto;
+  -webkit-backdrop-filter: blur(1px);
+  backdrop-filter: blur(1px);
+}
+
+/* ===== Mobile / Tablet: Drawer sidebar ===== */
+@media (max-width: 991.98px){
+  .admin-wrap{ margin-inline-start:0 !important; }
+
+  .admin-sidebar{
+    position:fixed; top:0; bottom:0;
+    width:84vw; max-width:320px;
+    background:var(--card);
+    border-inline-end:1px solid var(--ring);
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
+    will-change:transform;
+    transition:transform var(--dur) var(--easing);
+    z-index:1000;
+  }
+
+  /* RTL: الدرج من اليمين */
+  html[dir="rtl"] .admin-sidebar{ right:0; left:auto; transform:translateX(100%); }
+  html[dir="rtl"] .admin-sidebar[data-open="1"]{ transform:translateX(0); }
+
+  /* LTR: الدرج من اليسار */
+  html[dir="ltr"] .admin-sidebar{ left:0; right:auto; transform:translateX(-100%); }
+  html[dir="ltr"] .admin-sidebar[data-open="1"]{ transform:translateX(0); }
+
+  .only-desktop{ display:none !important; }
+  .sidebar-header .brand .title{ display:none; }
+}
+
+/* تحسينات بسيطة */
+.no-scroll{ overflow:hidden; }
+.lang-btn{ display:inline-flex; align-items:center; gap:6px; font-weight:900; padding-inline:10px; }
+.lang-btn .lang-text{ font-size:.85rem; }
+/* طبقة التعتيم والضبابية عند فتح السايدبار بالموبايل */
+.admin-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, .42);        /* تعتيم خفيف */
+  -webkit-backdrop-filter: blur(3px);     /* ضبابية (Safari) */
+  backdrop-filter: blur(3px);             /* ضبابية */
+  z-index: 999;                           /* أقل من السايدبار */
+}
+
+/* منع تمرير الصفحة عند فتح الدرج */
+.no-scroll{ overflow: hidden; }

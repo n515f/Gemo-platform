@@ -1,5 +1,5 @@
 {{-- resources/views/admin/screens/ClientPortal.blade.php --}}
-@extends('layouts.site')
+@extends('layouts.admin')
 
 @push('styles')
   @vite(['resources/css/entries/admin.css'])
@@ -7,7 +7,7 @@
 
 @section('content')
   @php
-    // مسارات أيقونات SVG (ضعها في public/images/icons/)
+    // بطاقات شاشات الواجهة
     $cards = [
       [
         'title' => __('الرئيسية'),
@@ -16,27 +16,33 @@
         'icon'  => asset('images/icons/home.png'),
       ],
       [
+        'title' => __('الفئات'),
+        'desc'  => __('صفحات استعراض الفئات والخدمات.'),
+        'href'  => route('categories.index', [], false) ?? url('/categories'),
+        'icon'  => asset('images/icons/categories.png'),
+      ],
+      [
         'title' => __('خدماتنا'),
         'desc'  => __('كل خدمات الشركة ومجالات العمل.'),
-        'href'  => route('services.index'),
+        'href'  => route('services.index', [], false) ?? url('/services'),
         'icon'  => asset('images/icons/services.png'),
       ],
       [
         'title' => __('الكتالوج'),
         'desc'  => __('استعراض المنتجات والمواصفات.'),
-        'href'  => route('catalog.index'),
+        'href'  => route('catalog.index', [], false) ?? url('/catalog'),
         'icon'  => asset('images/icons/catalog.png'),
       ],
       [
         'title' => __('طلب عرض سعر'),
         'desc'  => __('نموذج إرسال طلب عرض السعر.'),
-        'href'  => route('rfq.create'),
+        'href'  => route('rfq.create', [], false) ?? url('/rfq/create'),
         'icon'  => asset('images/icons/rfq.png'),
       ],
       [
         'title' => __('تواصل معنا'),
         'desc'  => __('معلومات الاتصال ونموذج المراسلة.'),
-        'href'  => route('contact'),
+        'href'  => route('contact', [], false) ?? url('/contact'),
         'icon'  => asset('images/icons/contact.png'),
       ],
     ];

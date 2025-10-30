@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\ReportAdminController;
 use App\Http\Controllers\Admin\ClientPortalController;
 use App\Http\Controllers\Admin\AdAdminController;
 use App\Http\Controllers\Admin\AdminUsersController;
+use App\Http\Controllers\Admin\SettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,8 +84,10 @@ Route::prefix('admin')
     ->group(function () {
 
         Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
-
-        // الفئات
+            // الاعدادات
+   Route::get('/settings',  [SettingController::class, 'index'])->name('admin.settings.index');
+    Route::post('/settings/update', [SettingController::class, 'updateAll'])->name('admin.settings.updateAll');
+            // الفئات
         Route::resource('categories', CategoryAdminController::class)->names('admin.categories');
         Route::patch('categories/{category}/toggle', [CategoryAdminController::class, 'toggle'])->name('admin.categories.toggle');
         Route::delete('categories/{category}/icon',  [CategoryAdminController::class, 'destroyIcon'])->name('admin.categories.icon.destroy');
@@ -118,7 +121,7 @@ Route::prefix('admin')
             ->name('admin.reports.attachment.destroy');
 
         // شاشات العميل
-        Route::get('/screens', [ClientPortalController::class, 'index'])->name('admin.screens.ClientPortal');
+        Route::get('screens', [ClientPortalController::class, 'index'])->name('admin.screens.ClientPortal');
 
         // الإعلانات
         Route::resource('ads', AdAdminController::class)->names('admin.ads');
@@ -143,13 +146,13 @@ Route::get('/dashboard', function () {
 | Profile (Breeze)
 |--------------------------------------------------------------------------
 */
-Route::middleware('auth')->group(function () {
-    Route::get('/profile',  [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile',[ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile',[ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // آفاتار المستخدم
-    Route::post('/profile/avatar',   [ProfileController::class, 'storeAvatar'])->name('profile.avatar.store');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update'); // PATCH
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::post('/profile/avatar', [ProfileController::class, 'storeAvatar'])->name('profile.avatar.store');
     Route::delete('/profile/avatar', [ProfileController::class, 'destroyAvatar'])->name('profile.avatar.destroy');
 });
 

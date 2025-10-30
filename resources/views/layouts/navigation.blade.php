@@ -5,7 +5,7 @@
   $isAdminArea = request()->routeIs('admin.*');
 @endphp
 
-<nav x-data="{ open:false }" class="topnav rounded-[18px]" dir="{{ $dir }}">
+<!--nav x-data="{ open:false }" class="topnav rounded-[18px]" dir="{{ $dir }}">
   <button
     class="hamburger md-hide"
     :class="{ 'open': open }"
@@ -137,4 +137,4 @@
       </form>
     @endguest
   </div>
-</nav>
+</nav-->

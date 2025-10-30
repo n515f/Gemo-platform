@@ -3,56 +3,104 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
-    // ... موجود عندك: edit() / update() / destroy() ...
+    public function edit(Request $request)
+    {
+        $user = $request->user();
 
-    /**
-     * رفع صورة الأفاتار إلى storage/app/public/avatars
-     * وتحديث عمود profile_image للمستخدم الحالي.
-     */
+        // كشف الأدمن بعدة طرق شائعة
+        $isAdmin = false;
+        if (method_exists($user, 'hasRole')) {
+            $isAdmin = (bool) $user->hasRole('admin');
+        } elseif (isset($user->is_admin)) {
+            $isAdmin = (bool) $user->is_admin;
+        } elseif (isset($user->role)) {
+            $isAdmin = $user->role === 'admin';
+        }
+
+        return view('profile.edit', [
+            'user'    => $user,
+            'isAdmin' => $isAdmin,
+        ]);
+    }
+
+    public function update(Request $request)
+    {
+        $user = $request->user();
+
+        $data = $request->validate([
+            'name'     => ['required','string','max:255'],
+            'email'    => ['required','email','max:255','unique:users,email,'.$user->id],
+            'password' => ['nullable','confirmed', Password::min(8)],
+        ]);
+
+        $user->name  = $data['name'];
+        $user->email = $data['email'];
+
+        if (!empty($data['password'])) {
+            $user->password = Hash::make($data['password']);
+        }
+
+        $user->save();
+
+        return back()->with('status','profile-updated');
+    }
+
+    public function destroy(Request $request)
+    {
+        $request->validate(['password' => ['required']]);
+
+        if (! Hash::check($request->password, $request->user()->password)) {
+            return back()->withErrors(['password' => __('The password is incorrect.')]);
+        }
+         $user = $request->user();
+
+        $user->delete();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/')->with('status','account-deleted');
+    }
+
+    // ===== الصورة الشخصية (تعتمد الحقل: profile_image) =====
     public function storeAvatar(Request $request)
     {
         $request->validate([
-            'avatar' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:3072'], // 3MB
+            'avatar' => ['required','image','mimes:jpg,jpeg,png,webp','max:2048'],
         ]);
 
         $user = $request->user();
 
-        // احذف القديمة إن وُجدت
-        if ($user->profile_image && Storage::disk('public')->exists($user->profile_image)) {
+        // حذف القديمة إن وُجدت
+        if (!empty($user->profile_image)) {
             Storage::disk('public')->delete($user->profile_image);
         }
 
-        // خزّن الجديدة داخل مجلد avatars على قرص public
+        // تخزين الجديدة
         $path = $request->file('avatar')->store('avatars', 'public');
+        $user->profile_image = $path;
+        $user->save();
 
-        // حدّث العمود profile_image
-        $user->forceFill([
-            'profile_image' => $path,
-        ])->save();
-
-        return back()->with('status', __('تم تحديث الصورة.'));
+        return back()->with('status','avatar-updated');
     }
 
-    /**
-     * حذف صورة الأفاتار واستبدالها بالافتراضية.
-     */
     public function destroyAvatar(Request $request)
     {
         $user = $request->user();
 
-        if ($user->profile_image && Storage::disk('public')->exists($user->profile_image)) {
+        if (!empty($user->profile_image)) {
             Storage::disk('public')->delete($user->profile_image);
+            $user->profile_image = null;
+            $user->save();
         }
 
-        $user->forceFill([
-            'profile_image' => null,
-        ])->save();
-
-        return back()->with('status', __('تم حذف الصورة.'));
+        return back()->with('status','avatar-deleted');
     }
 }
+

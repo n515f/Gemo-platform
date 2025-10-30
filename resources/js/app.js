@@ -1,6 +1,7 @@
 // resources/js/app.js
 import './bootstrap';
 import './admin';
+import './catalog';
 import initAdsRotator from './ads';
 import initRevealOnScroll from './services';
 
@@ -8,7 +9,6 @@ import Alpine from 'alpinejs';
 window.Alpine = Alpine;
 Alpine.start();
 
-/* ========= الثيم ========= */
 const ICONS = { sun: '/images/sun.png', moon: '/images/moon.png' };
 const html = document.documentElement;
 const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
@@ -41,6 +41,38 @@ function applyTheme(theme, { persist = false } = {}) {
 function toggleTheme() {
   applyTheme(html.classList.contains('dark') ? 'light' : 'dark', { persist: true });
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  // تشغيل مكوّنات الصفحة
+  try { initAdsRotator(); } catch (e) { console.error('Ads rotator error:', e); }
+  try { initRevealOnScroll(); } catch {}
+
+  // Topbar
+  const topbar = document.querySelector('.topbar');
+  if (topbar) {
+    const onScroll = () => { (window.scrollY > 6) ? topbar.classList.add('scrolled') : topbar.classList.remove('scrolled'); };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
+  // Theme
+  applyTheme(currentTheme());
+  const themeBtns = new Set([
+    document.getElementById('themeIconBtn'),
+    document.getElementById('themeIconBtnMobile'),
+    document.getElementById('themeIconBtnDesktop'),
+    ...document.querySelectorAll('.theme-btn'),
+  ].filter(Boolean));
+  themeBtns.forEach(btn => btn.addEventListener('click', toggleTheme));
+  prefersDark.addEventListener('change', e => {
+    const saved = localStorage.getItem('theme');
+    if (saved !== 'dark' && saved !== 'light') {
+      applyTheme(e.matches ? 'dark' : 'light');
+    }
+  });
+
+  // Bottom-sheet للأفاتار + تأكيدات عامة … (كما هي عندك)
+});
 
 /* ========= تشغيل عند التحميل ========= */
 document.addEventListener('DOMContentLoaded', () => {
@@ -151,4 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
     primaryBtn.classList.add('pulse');
     setTimeout(()=>primaryBtn.classList.remove('pulse'), 4000);
   }
+});
+document.addEventListener('DOMContentLoaded', () => {
+  try { initAdsRotator(); } catch (e) { console.error(e); }
 });

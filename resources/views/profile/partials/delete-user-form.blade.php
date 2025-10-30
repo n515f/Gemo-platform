@@ -1,53 +1,52 @@
-<section class="space-y-6">
-    <header>
-        <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Delete Account') }}
+<section class="pf-sec pf-sec--danger">
+    <header class="pf-secHeader">
+        <h2 class="pf-secTitle">
+            {{ __('app.delete_account') }}
         </h2>
 
-        <p class="mt-1 text-sm text-gray-600">
-            {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.') }}
+        <p class="pf-secHelp">
+            {{ __('app.delete_account_help') }}
         </p>
     </header>
 
     <x-danger-button
+        class="pf-btn pf-btn--danger"
         x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
-    >{{ __('Delete Account') }}</x-danger-button>
+    >{{ __('app.delete_account') }}</x-danger-button>
 
     <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
-        <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
+        <form method="post" action="{{ route('profile.destroy') }}" class="pf-form pf-form--modal">
             @csrf
             @method('delete')
 
-            <h2 class="text-lg font-medium text-gray-900">
-                {{ __('Are you sure you want to delete your account?') }}
+            <h2 class="pf-modalTitle">
+                {{ __('app.confirm_delete_title') }}
             </h2>
 
-            <p class="mt-1 text-sm text-gray-600">
-                {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
+            <p class="pf-secHelp">
+                {{ __('app.confirm_delete_help') }}
             </p>
 
-            <div class="mt-6">
-                <x-input-label for="password" value="{{ __('Password') }}" class="sr-only" />
-
+            <div class="pf-field">
+                <x-input-label for="password" :value="__('app.password')" class="sr-only" />
                 <x-text-input
                     id="password"
                     name="password"
                     type="password"
-                    class="mt-1 block w-3/4"
-                    placeholder="{{ __('Password') }}"
+                    class="pf-input pf-input--modal"
+                    placeholder="{{ __('app.password') }}"
                 />
-
-                <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
+                <x-input-error :messages="$errors->userDeletion->get('password')" class="pf-error" />
             </div>
 
-            <div class="mt-6 flex justify-end">
-                <x-secondary-button x-on:click="$dispatch('close')">
-                    {{ __('Cancel') }}
+            <div class="pf-modalActions">
+                <x-secondary-button x-on:click="$dispatch('close')" class="pf-btn">
+                    {{ __('app.cancel') }}
                 </x-secondary-button>
 
-                <x-danger-button class="ms-3">
-                    {{ __('Delete Account') }}
+                <x-danger-button class="pf-btn pf-btn--danger ms-3">
+                    {{ __('app.delete_account') }}
                 </x-danger-button>
             </div>
         </form>
