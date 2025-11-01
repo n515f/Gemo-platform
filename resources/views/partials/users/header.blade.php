@@ -70,9 +70,10 @@
           <a class="pill clean-btn" href="{{ route('lang.switch','ar') }}">AR</a>
         @endif
 
-        @guest
-          <a href="{{ route('login') }}" class="pill cta only-desktop">{{ __('app.start_now') }}</a>
-          <a href="{{ route('login') }}" class="pill cta md-only">{{ __('app.start_now') }}</a>
+        @guest         
+@guest
+  <a href="{{ route('login') }}" class="pill cta md-only">{{ __('app.start_now') }}</a>      {{-- موبايل --}}
+@endguest
         @else
           {{-- زر يفتح قائمة المستخدم (لا يُخفي الاسم/الإيميل) --}}
           <button
@@ -157,15 +158,21 @@
             <div class="email ltr">{{ $user->email }}</div>
           </div>
         </div>
-      @else
-        <div class="mobile-user">
-          <img src="{{ asset('images/avatar.png') }}" alt="Guest">
-          <div>
-            <div class="name">{{ __('app.welcome_guest') }}</div>
-            <div class="email">{{ __('app.start_now') }}</div>
-          </div>
-        </div>
-      @endauth
+@else
+  <div class="mobile-user">
+    <span class="chip-avatar chip-avatar--icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="7.5" r="3.5" stroke="currentColor" stroke-width="1.8"/>
+        <path d="M4 19.2a8 8 0 0 1 16 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </span>
+    <div>
+      <div class="name">{{ __('app.welcome_guest') }}</div>
+      <div class="email">{{ __('app.start_now') }}</div>
+    </div>
+  </div>
+@endauth
+
 
       <a class="item {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">{{ __('app.home') }}</a>
       <a class="item" href="{{ route('categories.index') }}">{{ __('app.categories') }}</a>

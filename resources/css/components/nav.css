@@ -204,6 +204,58 @@ html[dir="ltr"] .right-logo{ order:0; }  html[dir="ltr"] .center-nav{ order:1; }
 
   /* 4) زر الهمبرغر في الطرف الآخر (الأخير) */
   .right-logo   { order: 4; }
+/* === زر ابدأ الآن (الشريط العلوي) مع زوايا منعطفة فقط === */
+.user-actions .pill.cta{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 12px;  /* ← الزوايا فقط، ليس دائري كامل */
+  background: linear-gradient(135deg, #22d3ee 0%, #6366f1 45%, #a855f7 100%);
+  color: #0b1220;
+  font-weight: 900;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow:
+    0 12px 28px rgba(99,102,241,.22),
+    0 2px 8px  rgba(2,6,23,.08);
+  isolation: isolate;
+  transform: translateZ(0);
+}
+
+/* توهج أخضر خفيف أسفل الزر */
+.user-actions .pill.cta::after{
+  content:"";
+  position:absolute;
+  left:14px; right:14px; bottom:-10px;
+  height:18px;
+  border-radius:12px; /* نفس قيمة الزر */
+  background: radial-gradient(60% 100% at 50% 0%,
+              rgba(16,185,129,.35), rgba(16,185,129,0));
+  filter: blur(6px);
+  z-index:-1;
+}
+
+/* التأثيرات عند التحويم */
+.user-actions .pill.cta:hover{ filter: brightness(1.05); transform: translateY(-1px); }
+.user-actions .pill.cta:active{ transform: translateY(0); filter: brightness(.98); }
+
+/* نسخة الموبايل */
+@media (max-width: 992px){
+  .user-actions .pill.cta.md-only{
+    padding: 8px 14px;
+    border-radius: 10px; /* زوايا ناعمة للموبايل */
+    font-size: .88rem;
+    box-shadow:
+      0 10px 22px rgba(99,102,241,.20),
+      0 2px 6px  rgba(2,6,23,.08);
+  }
+
+  [dir="rtl"] .user-actions .pill.cta.md-only{ margin-inline-end:auto; }
+  [dir="ltr"] .user-actions .pill.cta.md-only{ margin-inline-start:auto; }
+}
 
   /* تحسين مقاسات الأزرار في الموبايل */
   .user-actions .theme-btn{ width:36px; height:36px; border-radius:10px; }
@@ -308,14 +360,44 @@ html[dir="ltr"] .right-logo{ order:0; }  html[dir="ltr"] .center-nav{ order:1; }
 }
 
 
-/* ---------- Responsive ---------- */
-@media (max-width:992px){
-  .desktop-nav{ display:none !important; }
-  .topbar .shell{ gap:10px; }
-  .user-actions .theme-btn{ width:36px; height:36px; border-radius:10px; }
-  .clean-btn.pill{ padding:8px 10px; }
-  .logo-big{ width:44px; height:44px; }
+/* زر "ابدأ الآن" على الطرف مع بقاء أيقونة الثيم ظاهرة ودون تغيير الترتيب */
+/* تكبير أيقونة الزائر داخل بلوك mobile-user فقط */
+@media (max-width: 992px){
+  .mobile-user .chip-avatar--icon{
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+  }
+  .mobile-user .chip-avatar--icon svg{
+    width: 72%;
+    height: 72%;
+  }
+  /* مسافة مناسبة مع النص */
+  .mobile-user{ gap: 12px; }
 }
-@media (max-width:640px){
-  .topbar .shell{ padding:10px 0; }
+
+.only-desktop{ display:inline-flex; }
+@media (max-width:992px){ .only-desktop{ display:none !important; } }
+
+@media (max-width: 992px){
+  .user-actions{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    /* لا نستخدم width:100% أو justify-content:flex-end */
+  }
+
+  /* افصل الهامش حسب اتجاه الواجهة */
+  [dir="rtl"] .user-actions .pill.cta.md-only{
+    margin-inline-end:auto;   /* يدفع الزر لليسار في RTL */
+    margin-inline-start:0;
+  }
+  [dir="ltr"] .user-actions .pill.cta.md-only{
+    margin-inline-start:auto; /* يدفع الزر لليمين في LTR */
+    margin-inline-end:0;
+  }
+
+  /* تأكد أن العناصر لا تنضغط وتختفي */
+  .user-actions > *{ flex-shrink:0; }
 }
+

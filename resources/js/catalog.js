@@ -14,15 +14,43 @@
       const slides = Array.from(slider.querySelectorAll('.slide'));
       if (!track || slides.length === 0) return;
 
+      // إنشاء نقاط التنقل للسلايدر
+      const dotsContainer = slider.querySelector('.slider-dots');
+      if (dotsContainer && slides.length > 1) {
+        slides.forEach((_, idx) => {
+          const dot = document.createElement('button');
+          dot.className = 'dot' + (idx === 0 ? ' active' : '');
+          dot.setAttribute('type', 'button');
+          dot.setAttribute('aria-label', `Slide ${idx + 1}`);
+          dot.addEventListener('click', () => go(idx));
+          dotsContainer.appendChild(dot);
+        });
+      }
+
       let i = 0, tmr = null;
-      const go   = (idx) => { i = (idx + slides.length) % slides.length; track.style.transform = `translateX(-${i*100}%)`; };
+      const go = (idx) => { 
+        i = (idx + slides.length) % slides.length; 
+        track.style.transform = `translateX(-${i*100}%)`; 
+        
+        // تحديث النقاط النشطة
+        if (dotsContainer) {
+          dotsContainer.querySelectorAll('.dot').forEach((dot, dotIdx) => {
+            dot.classList.toggle('active', dotIdx === i);
+          });
+        }
+      };
+      
       const next = () => go(i + 1);
       const prev = () => go(i - 1);
 
       slider.querySelector('[data-next]')?.addEventListener('click', (e)=>{ e.preventDefault(); next(); });
       slider.querySelector('[data-prev]')?.addEventListener('click', (e)=>{ e.preventDefault(); prev(); });
 
-      const start = () => { stop(); tmr = setInterval(next, 4000); };
+      // استخدام الفاصل الزمني من البيانات أو الافتراضي (5 دقائق = 300 ثانية)
+      const intervalSec = parseInt(slider.dataset.intervalSec || '300', 10);
+      const intervalMs = intervalSec * 1000;
+      
+      const start = () => { stop(); tmr = setInterval(next, intervalMs); };
       const stop  = () => { if (tmr) { clearInterval(tmr); tmr = null; } };
 
       slider.addEventListener('mouseenter', stop);

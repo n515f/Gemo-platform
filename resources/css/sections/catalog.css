@@ -1,4 +1,249 @@
-/* ======= Grid ======= */
+/* ===== نموذج طلب عرض السعر ===== */
+.rfq-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  z-index: 10000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.rfq-backdrop.open {
+  opacity: 1;
+}
+
+.rfq-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10001;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.rfq-modal.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.rfq-modal .sheet {
+  background: #fff;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  transform: translateY(20px) scale(0.95);
+  transition: transform 0.3s ease;
+}
+
+.rfq-modal.open .sheet {
+  transform: translateY(0) scale(1);
+}
+
+.rfq-modal.active .rfq-container {
+  transform: translateY(0);
+}
+
+.rfq-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #eee;
+}
+
+.rfq-title {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--primary, #333);
+}
+
+.rfq-close {
+  background: none;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #777;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rfq-close:hover {
+  background: #f5f5f5;
+  color: #333;
+}
+
+.rfq-grid {
+  padding: 24px;
+  display: grid;
+  gap: 20px;
+}
+
+.rfq-summary .card {
+  border: 1px solid var(--ring, #ddd);
+  border-radius: 12px;
+  padding: 16px;
+  background: #f9f9f9;
+}
+
+.rfq-form .row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.rfq-form .row .full {
+  grid-column: 1 / -1;
+}
+
+.rfq-form .lbl {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.rfq-form input,
+.rfq-form textarea,
+.rfq-form select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.2s;
+  background: #fff;
+}
+
+.rfq-form input:focus,
+.rfq-form textarea:focus,
+.rfq-form select:focus {
+  border-color: var(--primary, #007bff);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.rfq-form textarea {
+  min-height: 100px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+@media (max-width: 640px) {
+  .rfq-form .row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.rfq-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.rfq-actions .btn {
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  text-align: center;
+  flex: 1;
+  min-width: 120px;
+}
+
+.btn-whats {
+  background: #25D366;
+  color: white;
+}
+
+.btn-whats:hover {
+  background: #22c55e;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.1);
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid #ddd;
+  color: #555;
+}
+
+.btn-ghost:hover {
+  background: #f5f5f5;
+}
+
+/* رسالة النجاح */
+.rfq-success {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.rfq-success .success-icon {
+  width: 60px;
+  height: 60px;
+  background: #28a745;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0 auto 20px;
+}
+
+.rfq-success h3 {
+  margin: 0 0 10px;
+  color: #28a745;
+  font-size: 1.3rem;
+}
+
+.rfq-success p {
+  margin: 0 0 20px;
+  color: #666;
+}
+
+.success-icon {
+  width: 60px;
+  height: 60px;
+  background: var(--primary);
+  color: white;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 30px;
+  margin: 0 auto 20px;
+}/* ======= Grid ======= */
 .pro-grid{
   display:grid;
   gap:1rem;
@@ -91,15 +336,91 @@ html[dir="ltr"] .pro-card ul.features{ padding:0 0 0 1rem; }
 .pro-card .media {
   position: relative;
   background: var(--soft);
-  display: flex;                /* مهم للتوسيط */
-  justify-content: center;      /* أفقي */
-  align-items: center;          /* عمودي */
-  height: 190px;                /* ارتفاع ثابت للبلوك */
+  height: 220px;                /* ارتفاع ثابت للبلوك */
+  border-radius: 14px 14px 0 0;
+  overflow: hidden;
 }
 
-.pro-card .media img {
-  max-width: 120px;             /* أقصى عرض للصورة */
-  max-height: 120px;            /* أقصى ارتفاع للصورة */
-  object-fit: contain;          /* يحافظ على النسبة */
+/* === Slider داخل بطاقة المنتج === */
+.pro-card .slider {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+.pro-card .slider .track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform .5s ease;
+  will-change: transform;
+}
+
+.pro-card .slider .slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
   display: block;
+  background: var(--soft);
+}
+
+.pro-card .slider .nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 0;
+  cursor: pointer;
+  background: rgba(0,0,0,.35);
+  color: #fff;
+  font-size: 18px;
+  display: grid;
+  place-items: center;
+  transition: filter .15s ease, transform .15s ease, background .15s ease;
+  z-index: 5;
+}
+
+.pro-card .slider .nav:hover {
+  filter: brightness(1.1);
+  background: rgba(0,0,0,.55);
+  transform: translateY(-50%) scale(1.06);
+}
+
+.pro-card .slider .nav.prev {
+  left: 8px;
+}
+
+.pro-card .slider .nav.next {
+  right: 8px;
+}
+
+/* نقاط السلايدر */
+.pro-card .slider-dots {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 5;
+}
+
+.pro-card .slider-dots .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.5);
+  border: 0;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+
+.pro-card .slider-dots .dot.active {
+  background: #fff;
+  transform: scale(1.2);
 }

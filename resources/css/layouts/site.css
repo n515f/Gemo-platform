@@ -80,41 +80,9 @@ body.app, .site-body{ background:var(--bg); color:var(--fg); }
 /* ================== شبكة بطاقات الكتالوج ================== */
 .pro-grid{
   display:grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap:18px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap:20px;
 }
-.pro-card{
-  background: var(--card, #0e1626);
-  border: 1px solid var(--ring, rgba(255,255,255,.08));
-  border-radius: 16px; overflow: hidden;
-}
-.pro-card .body{ padding:14px; }
-.pro-card .title{ margin:0 0 6px; font-weight:800; }
-.pro-card .code{ color: var(--muted,#8da0b5); font-weight:700; }
-.pro-card .sku{ display:inline-block; margin-bottom:8px; color:var(--muted,#8da0b5); }
-.pro-card .features{ margin:0 0 10px; padding-inline-start:18px; }
-.pro-card .lead{ margin:0 0 10px; color:var(--muted,#8da0b5); }
-.pro-card .cta{ display:flex; gap:10px; }
-
-/* === Slider داخل بطاقة المنتج === */
-.pro-card .media{ position:relative; }
-.pro-card .slider{ position:relative; overflow:hidden; border-radius:14px; }
-.pro-card .slider .track{
-  display:flex; width:100%;
-  transition: transform .5s ease; will-change: transform;
-}
-.pro-card .slider .slide{
-  flex:0 0 100%; width:100%; height:220px; object-fit:cover; display:block; background:#0b1220;
-}
-.pro-card .slider .nav{
-  position:absolute; top:50%; transform:translateY(-50%);
-  width:34px; height:34px; line-height:34px; text-align:center; border-radius:999px; border:0;
-  background:rgba(0,0,0,.35); color:#fff; font-size:18px; cursor:pointer;
-  transition: filter .15s ease, transform .15s ease, background .15s ease;
-}
-.pro-card .slider .nav:hover{ filter:brightness(1.1); transform:translateY(-50%) scale(1.06); }
-.pro-card .slider .nav.prev{ inset-inline-start:8px; }
-.pro-card .slider .nav.next{ inset-inline-end:8px; }
 
 /* ================== أزرار عامة ================== */
 .btn{
@@ -432,129 +400,137 @@ body.app, .site-body{ background:var(--bg); color:var(--fg); }
 
 
 /* ====== Ads Rotator (مُحسّن: صورة تغطي بالكامل + تموضع وسط + أسهم + نقاط) ====== */
-.ads-rotator{
+/* ====== Ads Rotator ====== */
+.ads-rotator {
   position: relative;
   overflow: hidden;
   border-radius: 16px;
   background: var(--soft);
-  /* تموضع وسط الصفحة */
   width: min(1200px, 96%);
   margin-inline: auto;
-
-  /* ارتفاع مرن مناسب للديسكتوب والموبايل */
   height: clamp(230px, 56vw, 480px);
 }
 
-/* بطاقة الإعلان */
-.ads-rotator .ad{
+/* البطاقات */
+.ads-rotator .ad {
   position: absolute;
   inset: 0;
   opacity: 0;
+  visibility: hidden;
   transform: translateX(16%);
-  transition: opacity .45s ease, transform .55s cubic-bezier(.22,.61,.36,1);
+  transition: opacity .45s ease, transform .55s cubic-bezier(.22,.61,.36,1), visibility .45s ease;
   display: block;
   z-index: 1;
 }
-.ads-rotator .ad.active{ opacity: 1; transform: translateX(0); z-index: 2; }
-.ads-rotator .ad.out-left{ opacity: 0; transform: translateX(-18%); }
+.ads-rotator .ad.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+  z-index: 2;
+}
+.ads-rotator .ad.out-left {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-18%);
+}
 
-/* حاوية الصورة */
-.ad-visual{
+/* الصورة */
+.ad-visual {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  line-height: 0;        /* يمنع أي فراغ سفلي */
+  line-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-/* ✅ الصورة تغطي كامل المساحة */
-.ad-visual img{
+.ad-visual img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  display: block;
   object-fit: cover;
   object-position: center;
-  max-width: none;
   transition: transform .6s ease;
+  background-color: var(--soft);
 }
-/* تكبير خفيف عند المرور */
-.ads-rotator .ad:hover .ad-visual img{ transform: scale(1.06); }
+.ads-rotator .ad:hover .ad-visual img { transform: scale(1.02); }
 
 /* طبقة النص */
-.ad-overlay{
+.ad-overlay {
   position: absolute;
-  inset: auto 0 0 0;              /* أسفل البطاقة */
-  padding: 16px 16px 18px;
-  background: linear-gradient(0deg, rgba(0,0,0,.55), rgba(0,0,0,0));
+  inset: auto 0 0 0;
+  padding: 20px 20px 22px;
+  background: linear-gradient(0deg, rgba(0,0,0,.75), rgba(0,0,0,.4) 60%, rgba(0,0,0,0));
   color: #fff;
   z-index: 3;
+  min-height: 80px;
 }
-.ad-overlay .ad-title{
-  margin: 0;
-  font-size: clamp(1rem, 2.2vw, 1.35rem);
-  font-weight: 900;
-}
-.ad-overlay .ad-desc{
-  margin: .25rem 0 0;
-  font-size: .95rem;
-  font-weight: 600;
-  opacity: .95;
-}
-.ad-overlay .ad-loc{ margin-top: 6px; font-weight: 800; opacity: .85; }
+.ad-overlay .ad-title { margin: 0; font-size: clamp(1rem, 2.2vw, 1.35rem); font-weight: 900; }
+.ad-overlay .ad-desc  { margin: .25rem 0 0; font-size: .95rem; font-weight: 600; opacity: .95; }
+.ad-overlay .ad-loc   { margin-top: 6px; font-weight: 800; opacity: .85; }
+.ad-overlay:empty { display: none; }
 
-/* نقاط المؤشر */
-.ads-dots{
+/* النقاط */
+.ads-dots {
   position: absolute;
-  bottom: 10px;
+  bottom: 12px;
   left: 50%;
   transform: translateX(-50%);
-  display: flex; gap: 8px;
+  display: flex;
+  gap: 8px;
   z-index: 4;
 }
-.ads-dots button{
-  width: 10px; height: 10px; border-radius: 50%;
+.ads-dots button {
+  width: 10px; height: 10px;
+  border-radius: 50%;
   background: rgba(255,255,255,.6);
-  border: none; cursor: pointer;
+  border: 0;
+  cursor: pointer;
   transition: all .3s ease;
 }
-.ads-dots button.active{ background: #fff; width: 12px; height: 12px; }
+.ads-dots button.active { background: #fff; width: 12px; height: 12px; }
 
-/* أسهم التنقّل (تتبع اتجاه الواجهة تلقائيًا) */
-.ads-nav{
-  position: absolute; top: 50%; transform: translateY(-50%);
-  width: 40px; height: 40px; border-radius: 50%;
-  border: 0; cursor: pointer; z-index: 5;
-  display: grid; place-items: center;
+/* الأسهم — مواقع صريحة (تتفادى اختلاف RTL/LTR) */
+.ads-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 0;
+  cursor: pointer;
+  z-index: 5;
+  display: grid;
+  place-items: center;
   background: rgba(0,0,0,.35);
-  color: #fff; font-size: 22px; line-height: 1;
-  transition: filter .2s ease, transform .2s ease, background .2s ease, opacity .2s ease;
+  color: #fff;
+  font-size: 22px;
+  transition: filter .2s ease, transform .2s ease, background .2s ease;
 }
-.ads-nav.prev{ inset-inline-start: 12px; }
-.ads-nav.next{ inset-inline-end: 12px; }
-.ads-nav:hover{ filter: brightness(1.08); transform: translateY(-50%) scale(1.06); }
-.ads-nav:focus-visible{
-  outline: 2px solid #fff; outline-offset: 2px;
-}
-/* ✅ فولباك CSS: لو الجافاسكربت تعطل لأي سبب، أظهر أول إعلان */
-.ads-rotator .ad:first-child {
-  opacity: 1;
-  transform: translateX(0);
-  z-index: 2;
-}
+.ads-nav.prev { left: 12px; right: auto; }   /* ← يسار دائمًا */
+.ads-nav.next { right: 12px; left: auto; }   /* → يمين دائمًا */
 
-/* تأكد أن حاوية النص لا تحجب الصورة إن كانت فارغة */
-.ad-overlay:empty { display:none; }
-
-
-/* تحسينات الاستجابة */
-@media (max-width: 900px){
-  .ads-rotator{ height: clamp(220px, 52vw, 360px); }
-  .ads-nav{ width: 36px; height: 36px; font-size: 20px; }
+.ads-nav:hover {
+  filter: brightness(1.15);
+  background: rgba(0,0,0,.55);
+  transform: translateY(-50%) scale(1.06);
 }
-@media (max-width: 600px){
-  .ads-rotator{ height: clamp(200px, 58vw, 300px); }
-  .ad-overlay{ padding: 12px 12px 14px; }
-  .ads-nav{ width: 34px; height: 34px; font-size: 18px; }
+.ads-nav:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+/* fallback لو تعطّل الجافاسكربت */
+.ads-rotator .ad:first-child { opacity: 1; transform: translateX(0); z-index: 2; }
+
+/* استجابة */
+@media (max-width: 900px) {
+  .ads-rotator { height: clamp(220px, 52vw, 360px); }
+  .ads-nav { width: 38px; height: 38px; font-size: 20px; }
+}
+@media (max-width: 600px) {
+  .ads-rotator { height: clamp(200px, 58vw, 300px); }
+  .ad-overlay { padding: 12px 12px 14px; }
+  .ads-nav { width: 34px; height: 34px; font-size: 18px; }
 }

@@ -64,13 +64,20 @@
         </div>
 
         <div class="rfq-actions">
-          <a id="rfqWhats" class="btn btn-whats" target="_blank" rel="noopener">
+          <button type="button" id="rfqWhatsBtn" class="btn btn-whats">
             {{ __('app.send_whatsapp') ?? 'Send on WhatsApp' }}
-          </a>
+          </button>
           <button type="submit" class="btn btn-primary">
             {{ __('app.send_email') ?? 'Send by Email' }}
           </button>
           <button type="button" class="btn btn-ghost" id="rfqCancel">{{ __('app.cancel') ?? 'Cancel' }}</button>
+        </div>
+        
+        <div class="rfq-success" style="display: none;">
+          <div class="success-icon">✓</div>
+          <h3>{{ __('app.request_sent') ?? 'Request Sent Successfully' }}</h3>
+          <p>{{ __('app.request_confirmation') ?? 'We will contact you soon.' }}</p>
+          <button type="button" class="btn btn-primary" id="rfqDone">{{ __('app.done') ?? 'Done' }}</button>
         </div>
       </form>
     </div>

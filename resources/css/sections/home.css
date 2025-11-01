@@ -36,24 +36,7 @@ html{ scroll-behavior:smooth; }
 .icon-head .sec-ico{ width:28px; height:28px; object-fit:contain; }
 
 /* ===== سلايدر الإعلانات ===== */
-.ads-rotator{
-  position:relative; overflow:hidden; border:1px solid var(--ring); background:var(--card);
-  border-radius:16px; box-shadow:var(--shadow); min-height:280px;
-}
-.ads-rotator .ad{
-  position:absolute; inset:0; display:grid; grid-template-columns:1.2fr 1fr; gap:0;
-  opacity:0; transform: scale(.98); transition: opacity .4s ease, transform .4s ease;
-}
-.ads-rotator .ad.active{ opacity:1; transform: scale(1); position:relative; }
-@media (max-width: 960px){ .ads-rotator .ad{ grid-template-columns:1fr; } }
-.ad-visual{ position:relative; overflow:hidden; }
-.ad-visual img{ width:100%; height:100%; object-fit:cover; transition: opacity .3s ease; opacity:1; }
-.ad-overlay{
-  padding:16px; display:flex; flex-direction:column; justify-content:center; gap:6px;
-}
-.ad-title{ margin:0; font-weight:900; font-size: clamp(18px,2.2vw,22px); }
-.ad-desc{ margin:0; color:var(--muted); }
-.ad-loc{ font-weight:800; opacity:.85; }
+/* تم نقل تنسيقات الإعلانات إلى ملف site.css */
 
 /* ===== المدير التنفيذي ===== */
 .ceo-block{ display:grid; gap:14px; grid-template-columns: 1.2fr 1fr; align-items:start; }

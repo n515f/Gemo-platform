@@ -29,7 +29,7 @@
 
         <article class="pro-card" data-product-id="{{ $p->id }}">
           <div class="media">
-            <div class="slider" data-slider>
+            <div class="slider" data-slider data-interval-sec="300">
               <div class="track">
                 @foreach($imgs as $src)
                   <img class="slide"
@@ -42,6 +42,7 @@
               @if($imgs->count() > 1)
                 <button class="nav prev" type="button" aria-label="Prev" data-prev>&lsaquo;</button>
                 <button class="nav next" type="button" aria-label="Next" data-next>&rsaquo;</button>
+                <div class="slider-dots"></div>
               @endif
             </div>
           </div>
@@ -93,7 +94,3 @@
   @include('catalog._rfq-modal')
 @endsection
 
-@push('scripts')
-  {{-- تأكد أن الـlayout يستدعي app.js. لو ما يستدعي، أضف السطر التالي: --}}
-  @vite('resources/js/app.js')
-@endpush

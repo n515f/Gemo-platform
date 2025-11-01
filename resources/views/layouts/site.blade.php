@@ -104,7 +104,6 @@
   @include('partials.users.footer-pro')
 
   {{-- عبر Vite --}}
-  @vite(['resources/js/app.js'])
   {{-- سكريبت تغيير الصورة --}}
   @stack('scripts')
 </body>

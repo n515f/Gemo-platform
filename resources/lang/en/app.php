@@ -29,6 +29,7 @@ return [
     'contact'      => 'Contact Info',
     'rights'       => 'All rights reserved.',
     'contact_us'   => 'Contact Us',
+    'start_now'    => 'Start Now',
 
     /* ===== Auth ===== */
     'brand_name'            => 'Gemo Platform',
