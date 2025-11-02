@@ -70,8 +70,8 @@ class ProductAdminController extends Controller
             'name_en'        => ['required','string','max:190'],
             'short_desc_ar'  => ['nullable','string'],
             'short_desc_en'  => ['nullable','string'],
-            'specs_ar'       => ['nullable','array'],
-            'specs_en'       => ['nullable','array'],
+            'specs_ar'       => ['nullable','string'], // تم تغييرها من array إلى string
+            'specs_en'       => ['nullable','string'], // تم تغييرها من array إلى string
             'price'          => ['nullable','numeric','min:0'],
             'is_active'      => ['nullable','boolean'],
             'sort_order'     => ['nullable','integer','min:0'],
@@ -122,20 +122,21 @@ class ProductAdminController extends Controller
             // رفع صور متعددة (name="images[]")
             if ($request->hasFile('images')) {
                 $order = 0;
-                foreach ($request->file('images') as $file) {
+                foreach ($request->file('images') as $index => $file) {
                     $path       = $file->store('products', 'public'); // products/xxx.jpg
                     $publicPath = 'storage/'.$path;                    // storage/products/xxx.jpg
                     ProductImage::create([
                         'product_id' => $product->id,
                         'path'       => $publicPath,
                         'sort_order' => $order++,
+                        'is_primary' => $index === 0, // الصورة الأولى تكون primary
                     ]);
                 }
             }
         });
 
         return redirect()->route('admin.products.index')
-            ->with('ok', '✅ تم إضافة المنتج وربط الفئات بنجاح.');
+            ->with('success', '✅ تم إضافة المنتج وربط الفئات بنجاح.');
     }
 
     /* =========================== Show =========================== */
@@ -242,6 +243,7 @@ class ProductAdminController extends Controller
                         'product_id' => $product->id,
                         'path'       => $publicPath,
                         'sort_order' => $order++,
+                        'is_primary' => $product->images()->count() === 0,
                     ]);
                 }
             }

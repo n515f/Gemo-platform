@@ -202,5 +202,67 @@ return [
     'profile_information'  => 'معلومات الحساب',
     'update_password'      => 'تحديث كلمة المرور',
     'delete_account'       => 'حذف الحساب',
+
+    /* ===== إعدادات الإدارة ===== */
+    'page_title'    => 'إعدادات الموقع',
+    'page_subtitle' => 'حدّث بيانات الشركة وروابط التواصل والإعدادات المتقدمة.',
+    'company_section' => 'بيانات الشركة',
+    'company_name_ar' => 'اسم الشركة (عربي)',
+    'company_name_en' => 'اسم الشركة (إنجليزي)',
+    'saved_success'   => 'تم حفظ الإعدادات بنجاح!',
+
+
+    /* ===== إعدادات الإدارة ===== */
+    'page_title'              => 'إعدادات الموقع',
+    'page_subtitle'           => 'حدّث بيانات الشركة وروابط التواصل والإعدادات المتقدمة.',
+    'company_section'         => 'بيانات الشركة',
+    'company_name_ar'         => 'اسم الشركة (عربي)',
+    'company_name_en'         => 'اسم الشركة (إنجليزي)',
+    'company_tagline_ar'      => 'الشعار (عربي)',
+    'company_tagline_en'      => 'الشعار (إنجليزي)',
+    'company_address_ar'      => 'العنوان (عربي)',
+    'company_address_en'      => 'العنوان (إنجليزي)',
+    'company_phone'           => 'الهاتف',
+    'company_email'           => 'البريد الإلكتروني',
+    'company_email_alt'       => 'بريد بديل',
+    'company_whatsapp_number' => 'رقم واتساب',
+    'website'                 => 'الموقع الإلكتروني',
+    'social_section'          => 'روابط التواصل',
+    'whatsapp'                => 'واتساب',
+    'instagram'               => 'إنستغرام',
+    'facebook'                => 'فيسبوك',
+    'twitter'                 => 'تويتر (X)',
+    'linkedin'                => 'لينكدإن',
+    'youtube'                 => 'يوتيوب',
+    'tiktok'                  => 'تيك توك',
+    'ceo_section'             => 'المدير التنفيذي',
+    'ceo_name_ar'             => 'الاسم (عربي)',
+    'ceo_name_en'             => 'الاسم (إنجليزي)',
+    'ceo_image'               => 'صورة المدير التنفيذي',
+    'ceo_certificates'        => 'شهادات المدير التنفيذي',
+    'saved_success'    => 'تم حفظ الإعدادات بنجاح!',
+
+
+
+    /* ===== واجهة الإدارة (العلوي/السايدبار) ===== */
+    'open_menu'        => 'فتح القائمة',
+    'toggle_theme'     => 'تبديل النمط',
+    'language_ar'     => 'العربية',
+    'language_en'     => 'English',
+    'client_portal'   => 'بوابة العملاء',
+    'settings'        => 'الإعدادات',
+    'admin_icon_alt'  => 'أيقونة المدير',
+    'avatar_alt'      => 'الصورة الرمزية',
+
+    /* ===== بطائق الإعدادات ===== */
+    'open_card'        => 'فتح',
+    'save_changes'     => 'حفظ التغييرات',
+    'site_colors'      => 'ألوان الموقع',
+    'primary_color'    => 'اللون الأساسي',
+    'secondary_color'  => 'اللون الثانوي',
+    'background_color' => 'لون الخلفية',
+    'upload_logo'      => 'شعار الشركة',
+    'logo_preview'     => 'معاينة الشعار',
+    'avatar_alt'      => 'الصورة الرمزية',
 ];
 

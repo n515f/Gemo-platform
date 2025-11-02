@@ -40,8 +40,8 @@
         }
       };
       
-      const next = () => go(i + 1);
-      const prev = () => go(i - 1);
+      const next = () => go(i - 1);
+      const prev = () => go(i + 1);
 
       slider.querySelector('[data-next]')?.addEventListener('click', (e)=>{ e.preventDefault(); next(); });
       slider.querySelector('[data-prev]')?.addEventListener('click', (e)=>{ e.preventDefault(); prev(); });

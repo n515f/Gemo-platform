@@ -7,7 +7,7 @@
     ? (Str::startsWith($u->profile_image, ['http', '/storage'])
         ? $u->profile_image
         : Storage::url($u->profile_image))
-    : asset('images/avatar.png');
+    : null; // بدون صورة: سنعرض أيقونة i-admin
 
   $isRtl = app()->getLocale()==='ar';
   $swapTo = $isRtl ? 'en' : 'ar';
@@ -15,18 +15,22 @@
 
 <header class="admin-topbar">
   <div class="tb-left">
-    {{-- زر القائمة (الوحيد) — ظاهر على كل المقاسات --}}
-    <button class="icon-btn menu-btn" data-admin-open aria-label="Open menu">
+    {{-- زر القائمة --}}
+    <button class="icon-btn menu-btn" data-admin-open aria-label="{{ __('app.open_menu') }}">
       <svg class="ico" width="18" height="18" aria-hidden="true"><use href="#i-menu"/></svg>
     </button>
 
-    {{-- اسم الدور + الإسم + صورة --}}
+    {{-- اسم الدور + الإسم + صورة/أيقونة --}}
     <div class="user-mini">
       <div class="meta">
         <strong class="name">{{ $u->name ?? 'admin' }}</strong>
         <small class="role">{{ $u?->role?->name ?? 'Admin' }}</small>
       </div>
-      <img class="avatar" src="{{ $avatar }}" alt="avatar">
+      @if($avatar)
+        <img class="avatar" src="{{ $avatar }}" alt="{{ __('app.avatar_alt') }}">
+      @else
+        <svg class="avatar ico" width="24" height="24" aria-label="{{ __('app.admin_icon_alt') }}"><use href="#i-admin"/></svg>
+      @endif
     </div>
   </div>
 
@@ -34,13 +38,17 @@
 
   <div class="tb-right">
     {{-- تبديل الثيم --}}
-    <button id="themeIconBtn" class="icon-btn theme-btn" type="button" aria-label="Toggle theme">
+    <button id="themeIconBtn" class="icon-btn theme-btn" type="button" aria-label="{{ __('app.toggle_theme') }}">
       <svg id="iconSun" class="ico" width="18" height="18" aria-hidden="true"><use href="#i-sun"/></svg>
       <svg id="iconMoon" class="ico" width="18" height="18" aria-hidden="true" style="display:none"><use href="#i-moon"/></svg>
     </button>
 
     {{-- تبديل اللغة --}}
-    <a class="icon-btn lang-btn" href="{{ route('lang.switch',$swapTo) }}" title="{{ $isRtl ? 'English' : 'العربية' }}">
+    @php
+      $isRtl = app()->getLocale()==='ar';
+      $swapTo = $isRtl ? 'en' : 'ar';
+    @endphp
+    <a class="icon-btn lang-btn" href="{{ route('lang.switch',$swapTo) }}" title="{{ $isRtl ? __('app.language_en') : __('app.language_ar') }}">
       <svg class="ico" width="18" height="18" aria-hidden="true"><use href="#i-globe"/></svg>
       <span class="lang-text">{{ $isRtl ? 'EN' : 'AR' }}</span>
     </a>

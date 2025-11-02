@@ -8,7 +8,7 @@
     ? (Str::startsWith($u->profile_image, ['http', '/storage'])
         ? $u->profile_image
         : Storage::url($u->profile_image))
-    : asset('images/avatar.png');
+    : null; // بدون صورة: سنعرض أيقونة i-admin
 
   $settingsUrl = Route::has('admin.settings.index')
       ? route('admin.settings.index')
@@ -37,7 +37,11 @@
 
   <div class="sidebar-user show-when-expanded">
     <div class="u-left">
-      <img class="u-avatar" src="{{ $avatar }}" alt="avatar">
+      @if($avatar)
+        <img class="u-avatar" src="{{ $avatar }}" alt="{{ __('app.avatar_alt') }}">
+      @else
+        <svg class="u-avatar ico" width="32" height="32" aria-label="{{ __('app.admin_icon_alt') }}"><use href="#i-admin"/></svg>
+      @endif
     </div>
     <div class="u-right">
       <div class="u-name">{{ $u->name }}</div>

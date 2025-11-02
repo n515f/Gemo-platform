@@ -1,41 +1,28 @@
 {{-- resources/views/partials/footer-pro.blade.php --}}
 @php
-  use App\Models\Setting;
-
-  // قارئ إعدادات مرن
-  $get = function (string $key, $default = null) use ($settings) {
-      if (isset($settings) && is_array($settings) && array_key_exists($key, $settings)) return $settings[$key];
-      if (isset($settings) && $settings instanceof \Illuminate\Support\Collection) { $v = $settings->get($key); if(!is_null($v)) return $v; }
-      return \App\Models\Setting::where('key',$key)->value('value') ?? $default;
-  };
-
   $lang  = app()->getLocale();
   $isRtl = $lang === 'ar';
   $dir   = $isRtl ? 'rtl' : 'ltr';
   $y     = date('Y');
 
-  // الهوية
-  $brand   = $get('company.name_'.($isRtl ? 'ar' : 'en'), 'جيمو');
-  $tagline = $get('company.tagline_'.($isRtl ? 'ar' : 'en'), __('app.tagline'));
-  $logo    = $get('company.logo', asset('images/logo.png'));
+  // اعتمد مباشرة على صف SiteSetting المشترك من مزوّد الخدمة
+  $brand   = $site->company_name_ar && $isRtl ? $site->company_name_ar : ($site->company_name_en ?: $site->company_name_ar);
+  $tagline = $site->company_tagline_ar && $isRtl ? $site->company_tagline_ar : ($site->company_tagline_en ?: '');
+  $logo    = $site->theme_logo_path ? asset($site->theme_logo_path) : asset('images/logo.png');
 
-  // تواصل
-  $phoneRaw  = $get('company.phone', '+967 738 742 001');
+  $phoneRaw  = $site->company_phone ?: '';
   $phone     = trim($phoneRaw);
   $phoneHref = preg_replace('/[^\d\+]/', '', $phone);
-  $email     = $get('company.email', 'info@example.com');
-  $emailAlt  = $get('company.email_alt');
-  $address   = $get('company.address_'.($isRtl ? 'ar' : 'en'), $isRtl ? 'صنعاء - اليمن' : 'Sanaa, Yemen');
-  $hours     = $get('company.hours_'.($isRtl ? 'ar' : 'en'), $isRtl ? 'الأحد - الخميس: 9:00 ص - 6:00 م' : 'Sun - Thu: 9:00 AM - 6:00 PM');
+  $email     = $site->company_email ?: '';
+  $emailAlt  = $site->company_email_alt ?: '';
+  $address   = $isRtl ? ($site->company_address_ar ?: '') : ($site->company_address_en ?: '');
+  $hours     = ''; // أضف حقل ساعات العمل لاحقاً إن رغبت
 
-  // سوشال (مع واتساب)
-  $waLink    = $get('social.whatsapp',  'https://wa.me/967738742001');
-  $wechat    = $get('social.wechat',    '#');
-  $facebook  = $get('social.facebook',  '#');
-  $instagram = $get('social.instagram', '#');
-  $xLink     = $get('social.x',         $get('social.twitter', '#'));
-
-  // تبديل اللغة
+  $waLink    = $site->social_whatsapp_url ?: '';
+  $wechat    = ''; // غير مستخدم حالياً
+  $facebook  = $site->social_facebook_url ?: '';
+  $instagram = $site->social_instagram_url ?: '';
+  $xLink     = $site->social_twitter_url ?: '';
   $langSwitchHref = route('lang.switch', $isRtl ? 'en' : 'ar');
   $langSwitchText = $isRtl ? 'English' : 'العربية';
 @endphp

@@ -75,7 +75,7 @@
               @php
                 $thumb = method_exists($p,'first_image_url') ? $p->first_image_url : optional($p->images->first())->path;
               @endphp
-              <img class="thumb" src="{{ $thumb ? asset($thumb) : asset('images/placeholder.png') }}" alt="" width="56" height="56">
+              <img class="thumb" src="{{ $thumb ? asset($thumb) : asset('images/no-image.png') }}" alt="" width="56" height="56">
             </td>
 
             <td class="stack">

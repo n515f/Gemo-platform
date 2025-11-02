@@ -104,4 +104,107 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!window.confirm(msg)) e.preventDefault();
     });
   });
+  // ===== بطائق الإعدادات: فتح/إغلاق + منع الإغلاق عند وجود تغييرات =====
+  const formSnapshots = new WeakMap();
+
+  function snapshotForm(form) {
+    const snap = {};
+    form.querySelectorAll('input,select,textarea').forEach(el => {
+      const name = el.name || el.id;
+      if (!name) return;
+      if (el.type === 'checkbox' || el.type === 'radio') {
+        snap[name] = el.checked;
+      } else if (el.type === 'file') {
+        snap[name] = null; // لا يمكن حفظ الملف نفسه
+      } else {
+        snap[name] = el.value;
+      }
+    });
+    formSnapshots.set(form, snap);
+    form.dataset.dirty = '0';
+  }
+
+  function isFormDirty(form) {
+    const snap = formSnapshots.get(form);
+    if (!snap) return false;
+    let dirty = false;
+    form.querySelectorAll('input,select,textarea').forEach(el => {
+      const name = el.name || el.id;
+      if (!name) return;
+      let cur;
+      if (el.type === 'checkbox' || el.type === 'radio') {
+        cur = el.checked;
+      } else if (el.type === 'file') {
+        cur = null; // نتجاهل الملفات للمقارنة
+      } else {
+        cur = el.value;
+      }
+      if (snap[name] !== cur) dirty = true;
+    });
+    form.dataset.dirty = dirty ? '1' : '0';
+    return dirty;
+  }
+
+  function revertForm(form) {
+    const snap = formSnapshots.get(form);
+    if (!snap) return;
+    form.querySelectorAll('input,select,textarea').forEach(el => {
+      const name = el.name || el.id;
+      if (!name) return;
+      if (el.type === 'checkbox' || el.type === 'radio') {
+        el.checked = !!snap[name];
+      } else if (el.type === 'file') {
+        el.value = ''; // نفرّغ اختيار الملف
+      } else {
+        el.value = snap[name] ?? '';
+      }
+    });
+    form.dataset.dirty = '0';
+  }
+
+  // ربط مستمعات تغيير لضبط حالة dirty
+  document.querySelectorAll('[data-card-form]').forEach(form => {
+    form.addEventListener('input', () => isFormDirty(form));
+    form.addEventListener('change', () => isFormDirty(form));
+
+    // تأكيد قبل الحفظ
+    form.addEventListener('submit', (e) => {
+      const sure = window.confirm('هل أنت متأكد من تغيير إعدادات الموقع؟');
+      if (!sure) {
+        e.preventDefault();
+        revertForm(form); // أعد القيم كما كانت
+        alert('تم إرجاع القيم قبل التعديل.');
+        return;
+      }
+      // إن وافق: الاستمرار بالحفظ — سيعيد التوجيه ويُحدّث الصفحة
+    });
+  });
+
+  // تبديل فتح/إغلاق البطاقات + تبديل الأيقونة
+  document.querySelectorAll('[data-card-toggle]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const card = btn.closest('[data-settings-card]');
+      if (!card) return;
+      const form = card.querySelector('[data-card-form]');
+      const iconUse = btn.querySelector('[data-toggle-icon] use');
+
+      const isOpen = card.getAttribute('data-open') === '1';
+
+      if (isOpen) {
+        // منع الإغلاق إذا هناك تغييرات غير محفوظة
+        if (form && isFormDirty(form)) {
+          alert('يرجى حفظ التغييرات داخل البطاقة قبل الإغلاق.');
+          return;
+        }
+        card.setAttribute('data-open', '0');
+        btn.setAttribute('aria-expanded', 'false');
+        if (iconUse) iconUse.setAttribute('href', '#i-chevron-down');
+      } else {
+        card.setAttribute('data-open', '1');
+        btn.setAttribute('aria-expanded', 'true');
+        if (iconUse) iconUse.setAttribute('href', '#i-x');
+        if (form) snapshotForm(form);
+      }
+    });
+  });
 });

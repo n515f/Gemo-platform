@@ -40,8 +40,8 @@
                 @endforeach
               </div>
               @if($imgs->count() > 1)
-                <button class="nav prev" type="button" aria-label="Prev" data-prev>&lsaquo;</button>
-                <button class="nav next" type="button" aria-label="Next" data-next>&rsaquo;</button>
+                <button class="nav prev" type="button" aria-label="Prev" data-prev>&gt;</button>
+                <button class="nav next" type="button" aria-label="Next" data-next>&lt;</button>
                 <div class="slider-dots"></div>
               @endif
             </div>

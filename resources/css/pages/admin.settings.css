@@ -1,0 +1,278 @@
+/* صفحة إعدادات الأدمن — Responsive + RTL/LTR + Dark-aware */
+:root {
+  --settings-card-bg: rgba(255,255,255,0.85);
+  --settings-success-bg: #dcfce7;
+  --settings-success-text: #166534;
+}
+
+/* دعم الوضع الداكن */
+.dark {
+  --settings-card-bg: rgba(18,21,30,0.85);
+  --settings-success-bg: rgba(22, 101, 52, 0.25);
+  --settings-success-text: #86efac;
+}
+
+/* بقية تنسيقات الصفحة */
+:root {
+  --bg-card: rgba(255, 255, 255, 0.75);
+  --bg-page: var(--page-bg, #f0f2f7);
+  --shadow: 0 14px 34px rgba(0, 0, 0, 0.12);
+  --shadow-hover: 0 20px 48px rgba(0, 0, 0, 0.18);
+  --success-bg: #dcfce7;
+  --success-text: #166534;
+}
+
+.settings-page { 
+  background: var(--bg-page); 
+}
+
+.settings-page {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding: 24px;
+  background: var(--bg);
+}
+
+.settings-header .title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--fg);
+  margin: 0 0 6px;
+}
+
+.settings-header .subtitle {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0 0 18px;
+}
+
+.alert.success {
+  background: var(--settings-success-bg);
+  color: var(--settings-success-text);
+  border: 1px solid var(--settings-success-text);
+  padding: 10px 14px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* دائمًا عمود واحد */
+  gap: 16px;
+}
+@media (min-width: 992px) {
+  .cards-grid {
+    grid-template-columns: 1fr; /* إبقائها عمود واحد */
+  }
+}
+
+/* تصميم البطاقة */
+.settings-card {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  transition: transform .14s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease, filter .2s ease;
+  overflow: hidden;
+}
+/* هوفر وتركّز */
+.settings-card:hover,
+.settings-card:focus-within {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+  background: rgba(255, 255, 255, 0.80);
+}
+.dark .settings-card:hover,
+.dark .settings-card:focus-within {
+  background: rgba(18, 21, 30, 0.88);
+}
+
+/* رأس البطاقة قابل للنقر */
+.settings-card .card-head {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 14px 16px;
+  cursor: pointer; /* يسمح بالنقر في أي مكان */
+}
+
+/* أيقونة ضبابية لكل بطاقة */
+.settings-card .card-icon {
+  position: relative;
+  width: 44px; height: 44px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.35);
+  border: 1px solid rgba(255,255,255,0.4);
+  box-shadow: 0 8px 24px rgba(0,0,0,.08);
+}
+.dark .settings-card .card-icon {
+  background: rgba(24,26,30,0.35);
+  border-color: rgba(255,255,255,0.18);
+}
+.settings-card .card-icon .icon { width: 22px; height: 22px; }
+
+/* عنوان البطاقة أكبر */
+.settings-card .card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--fg);
+}
+
+/* زر التبديل — زر التبديل — ثبّته في منتصف الطرف الأيسر */
+.settings-card .card-toggle {
+  left: -12px;
+  right: auto;
+  inset-inline-start: auto;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--ring);
+  background: rgba(255,255,255,0.65);
+  color: var(--fg);
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(37,99,235,.18);
+  transition: transform .08s ease, box-shadow .2s ease, background .2s ease, opacity .2s ease;
+  z-index: 2;
+}
+.settings-card .card-toggle:hover { transform: translateY(-50%) translateX(0) scale(1.04); }
+.settings-card .card-toggle .icon { width: 18px; height: 18px; }
+.settings-card[data-open="1"] .card-toggle { background: rgba(255,255,255,0.85); }
+.settings-card .card-toggle[disabled] { opacity: .6; cursor: not-allowed; }
+
+/* جسم البطاقة + زر الحفظ */
+.settings-card .card-body {
+  display: none;
+  padding: 18px 16px;
+  border-top: 1px dashed var(--ring);
+  font-size: 15px; /* تكبير الخط داخل البطاقة */
+  line-height: 1.65;
+}
+.settings-card[data-open="1"] .card-body { display: block; }
+.settings-card .form-actions {
+  display: none;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+.settings-card[data-open="1"] .form-actions { display: flex; }
+
+/* معاينة الشعار */
+.logo-preview img {
+  max-width: 180px;
+  border-radius: 12px;
+  border: 1px solid var(--ring);
+  box-shadow: 0 8px 24px rgba(0,0,0,.10);
+}
+
+/* تدرجات البطاقة — أغمق + أكثر وضوحًا */
+.settings-card:nth-of-type(1) { background-image: radial-gradient(800px circle at 5% 10%, rgba(37,99,235,.22), transparent 38%); }
+.settings-card:nth-of-type(2) { background-image: radial-gradient(800px circle at 95% 15%, rgba(16,185,129,.24), transparent 38%); }
+.settings-card:nth-of-type(3) { background-image: radial-gradient(800px circle at 50% 0%, rgba(245,158,11,.26), transparent 40%); }
+.settings-card:nth-of-type(4) { background-image: radial-gradient(800px circle at 5% 85%, rgba(99,102,241,.24), transparent 38%); }
+.settings-card:nth-of-type(5) { background-image: radial-gradient(800px circle at 95% 85%, rgba(244,63,94,.26), transparent 40%); }
+
+/* نصوص الحقول أكبر قليلًا */
+.field .lbl {
+  display: block;
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.input {
+  width: 100%;
+  height: 44px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.70);
+  color: var(--text);
+  outline: none;
+  font-size: 15px; /* تكبير خط الحقول */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.dark .input { background: rgba(20, 22, 24, 0.65); }
+.input:focus { border-color: var(--brand); box-shadow: var(--ring); }
+.input::placeholder { color: var(--muted); opacity: 0.75; }
+
+/* قائمة المفاتيح والقيم */
+.kv-list { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.kv-row { display: grid; grid-template-columns: minmax(200px, 280px) 1fr; gap: 10px; align-items: center; }
+@media (max-width: 576px) { .kv-row { grid-template-columns: 1fr; } }
+
+.kv-key .key-label {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px dashed var(--ring);
+  background: rgba(255, 255, 255, 0.60);
+  color: var(--muted);
+  font-size: 13px;
+}
+@media (prefers-color-scheme: dark) {
+  .kv-key .key-label { background: rgba(20, 22, 24, 0.55); }
+}
+
+.kv-add { margin-top: 14px; }
+
+/* أزرار الإجراءات */
+.form-actions { display: flex; justify-content: flex-end; margin-top: 18px; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 42px;
+  padding: 0 16px;
+  border-radius: 12px;
+  border: 1px solid var(--ring);
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--fg);
+  cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.2s ease, background .2s ease;
+}
+.btn.primary { background: var(--brand); border-color: var(--brand); color: #fff; }
+.btn:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(37, 99, 235, 0.18); }
+
+/* RTL/LTR دعم الاتجاه */
+.settings-page:dir(rtl) .form-actions { justify-content: flex-start; }
+.settings-page:dir(rtl) .kv-row { direction: rtl; }
+.settings-page:dir(ltr) .kv-row { direction: ltr; }
+
+/* بدائل عند عدم دعم الخلفية الضبابية */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .settings-card {
+    background: rgba(255, 255, 255, 0.92);
+    border-color: rgba(0,0,0,0.08);
+  }
+  .dark .settings-card {
+    background: rgba(18, 21, 30, 0.92);
+    border-color: rgba(255,255,255,0.08);
+  }
+  .settings-card .card-icon {
+    background: rgba(255,255,255,0.65);
+    border-color: rgba(255,255,255,0.55);
+  }
+  .dark .settings-card .card-icon {
+    background: rgba(24,26,30,0.65);
+    border-color: rgba(255,255,255,0.18);
+  }
+  .settings-card .card-toggle {
+    background: rgba(255,255,255,0.85);
+    border-color: var(--ring);
+  }
+}
+
+/* دعم الخلفية الضبابية مع WebKit */
+.settings-card { -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.settings-card .card-icon { -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.settings-card .card-toggle { -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
