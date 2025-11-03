@@ -7,7 +7,7 @@
 @section('content')
 <section class="admin-page">
   <header class="page-head">
-    <h1 class="title">تقرير جديد</h1>
+    <h1 class="title">{{ __('app.new_report') }}</h1>
   </header>
 
   @include('components.flash')

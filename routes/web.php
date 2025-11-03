@@ -43,8 +43,11 @@ Route::middleware(['setlocale'])->group(function () {
     Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
 
     // تبديل اللغة
-    Route::get('/lang/{locale}', function (string $locale) {
-        $locale = in_array($locale, ['ar','en']) ? $locale : 'ar';
+    Route::get('lang/{locale}', function (string $locale) {
+        $available = config('app.available_locales', ['ar', 'en']);
+        if (!in_array($locale, $available)) {
+            abort(404);
+        }
         session(['locale' => $locale]);
         app()->setLocale($locale);
         return back();

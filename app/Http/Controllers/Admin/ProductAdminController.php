@@ -55,6 +55,14 @@ class ProductAdminController extends Controller
         return view('admin.products.create', compact('categories'));
     }
 
+    // Helper: turn textarea lines into a clean JSON array
+    private function normalizeSpecsText(?string $text): ?array
+    {
+        $lines = preg_split('/\r\n|\r|\n/', (string) $text);
+        $items = array_values(array_filter(array_map('trim', $lines), fn ($l) => $l !== ''));
+        return count($items) ? $items : null;
+    }
+
     public function store(Request $request)
     {
         // زر إلغاء من فورم الإنشاء
@@ -70,8 +78,8 @@ class ProductAdminController extends Controller
             'name_en'        => ['required','string','max:190'],
             'short_desc_ar'  => ['nullable','string'],
             'short_desc_en'  => ['nullable','string'],
-            'specs_ar'       => ['nullable','string'], // تم تغييرها من array إلى string
-            'specs_en'       => ['nullable','string'], // تم تغييرها من array إلى string
+            'specs_ar'       => ['nullable','string'],
+            'specs_en'       => ['nullable','string'],
             'price'          => ['nullable','numeric','min:0'],
             'is_active'      => ['nullable','boolean'],
             'sort_order'     => ['nullable','integer','min:0'],

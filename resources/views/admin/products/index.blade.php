@@ -43,8 +43,19 @@
         <option value="desc" {{ ($dir ?? '')==='desc' ? 'selected':'' }}>{{ __('تنازلي') }}</option>
       </select>
 
-      <button class="btn btn-light" type="submit">{{ __('تصفية') }}</button>
-      <a class="btn btn-primary" href="{{ route('admin.products.create') }}">+ {{ __('منتج جديد') }}</a>
+      <button class="btn btn--search" type="submit">
+        <svg class="ico" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="m21 21-4.35-4.35" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        {{ __('تصفية') }}
+      </button>
+      <a class="btn btn--add" href="{{ route('admin.products.create') }}">
+        <svg class="ico" viewBox="0 0 24 24">
+          <path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        {{ __('منتج جديد') }}
+      </a>
     </form>
   </header>
 
@@ -71,11 +82,13 @@
         <tbody>
         @forelse($products as $p)
           <tr>
+            {{-- داخل الصف --}}
             <td>
               @php
-                $thumb = method_exists($p,'first_image_url') ? $p->first_image_url : optional($p->images->first())->path;
+                $thumbPath = optional($p->images->first())->path;
+                $src = $p->first_image_url ?: ($thumbPath ? asset($thumbPath) : asset('images/no-image.png'));
               @endphp
-              <img class="thumb" src="{{ $thumb ? asset($thumb) : asset('images/no-image.png') }}" alt="" width="56" height="56">
+              <img class="thumb" src="{{ $src }}" alt="" width="56" height="56">
             </td>
 
             <td class="stack">
@@ -110,14 +123,31 @@
             <td>{{ optional($p->updated_at)->format('Y-m-d H:i') }}</td>
 
             <td class="actions">
-              <a class="btn btn-soft small"  href="{{ route('admin.products.show', $p) }}">{{ __('عرض') }}</a>
-              <a class="btn btn-light small" href="{{ route('admin.products.edit', $p) }}">{{ __('تعديل') }}</a>
+              <a class="btn btn--search btn--sm" href="{{ route('admin.products.show', $p) }}">
+                <svg class="ico" viewBox="0 0 24 24">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" fill="none" stroke="currentColor" stroke-width="2"/>
+                  <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                {{ __('عرض') }}
+              </a>
+              <a class="btn btn--edit btn--sm" href="{{ route('admin.products.edit', $p) }}">
+                <svg class="ico" viewBox="0 0 24 24">
+                  <path d="M14.5 3.5a2.5 2.5 0 0 1 3.5 3.5L8 17l-4 1 1-4 9.5-10.5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                </svg>
+                {{ __('تعديل') }}
+              </a>
 
               <form method="POST" action="{{ route('admin.products.destroy', $p) }}"
                     class="needs-confirm" data-confirm="{{ __('حذف هذا المنتج؟') }}"
                     style="display:inline-block">
                 @csrf @method('DELETE')
-                <button class="btn btn-danger small" type="submit">{{ __('حذف') }}</button>
+                <button class="btn btn--delete btn--sm" type="submit">
+                  <svg class="ico" viewBox="0 0 24 24">
+                    <path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M10 11v6M14 11v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  {{ __('حذف') }}
+                </button>
               </form>
             </td>
           </tr>

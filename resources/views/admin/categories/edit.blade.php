@@ -59,8 +59,18 @@
     </div>
 
     <div class="row-end">
-      <a class="btn" href="{{ route('admin.categories.index') }}">رجوع</a>
-      <button class="btn btn-primary">تحديث</button>
+      <a class="btn btn--search btn--outline" href="{{ route('admin.categories.index') }}">
+          <svg class="ico" viewBox="0 0 24 24">
+              <path d="M19 12H5M12 19l-7-7 7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          رجوع
+      </a>
+      <button class="btn btn--edit">
+          <svg class="ico" viewBox="0 0 24 24">
+              <path d="M14.5 3.5a2.5 2.5 0 0 1 3.5 3.5L8 17l-4 1 1-4 9.5-10.5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+          تحديث
+      </button>
     </div>
   </form>
 @endsection

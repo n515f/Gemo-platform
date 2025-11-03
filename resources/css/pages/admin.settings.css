@@ -230,16 +230,20 @@
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--btn-gap);
   height: 42px;
   padding: 0 16px;
-  border-radius: 12px;
+  border-radius: var(--btn-radius);
   border: 1px solid var(--ring);
-  background: rgba(255, 255, 255, 0.78);
+  background: var(--soft);
   color: var(--fg);
   cursor: pointer;
-  transition: transform 0.08s ease, box-shadow 0.2s ease, background .2s ease;
+  transition: transform var(--dur-fast) var(--easing), box-shadow .2s ease, background var(--dur-fast) var(--easing);
 }
+.btn:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(37, 99, 235, 0.18); }
+/* Map to unified tokens */
+.btn.primary { background: var(--btn-add-bg); border-color: transparent; color: var(--btn-add-fg); }
+.btn.danger  { background: var(--btn-delete-bg); border-color: transparent; color: var(--btn-delete-fg); }
 .btn.primary { background: var(--brand); border-color: var(--brand); color: #fff; }
 .btn:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(37, 99, 235, 0.18); }
 

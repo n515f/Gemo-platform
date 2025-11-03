@@ -8,13 +8,23 @@
     <div class="lhs">
       <h1 class="title">{{ $project->title }}</h1>
       <p class="muted">
-        {{ __('العميل') }}: {{ $project->client_name }} •
-        {{ __('الحالة') }}: <span class="badge">{{ __($project->status) }}</span>
+        {{ __('app.client') }}: {{ $project->client_name }} •
+        {{ __('app.status') }}: <span class="badge">{{ __($project->status) }}</span>
       </p>
     </div>
     <div class="rhs">
-      <a class="btn btn-light" href="{{ route('admin.projects.index') }}">{{ __('رجوع') }}</a>
-      <a class="btn btn-primary" href="{{ route('admin.projects.edit', $project) }}">{{ __('تعديل') }}</a>
+      <a class="btn btn--search btn--outline" href="{{ route('admin.projects.index') }}">
+          <svg class="ico" viewBox="0 0 24 24">
+              <path d="M19 12H5M12 19l-7-7 7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          {{ __('app.back') }}
+      </a>
+      <a class="btn btn--edit" href="{{ route('admin.projects.edit', $project) }}">
+          <svg class="ico" viewBox="0 0 24 24">
+              <path d="M14.5 3.5a2.5 2.5 0 0 1 3.5 3.5L8 17l-4 1 1-4 9.5-10.5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+          {{ __('app.edit') }}
+      </a>
     </div>
   </header>
 
@@ -22,7 +32,7 @@
 
   <div class="grid two">
     <div class="card">
-      <h3 class="card-title">{{ __('بيانات المشروع') }}</h3>
+      <h3 class="card-title">{{ __('app.project_data') }}</h3>
       <div class="stack">
         <div><strong>{{ __('المنتج') }}:</strong> {{ optional($project->product)->name_ar ?? '—' }}</div>
         <div><strong>{{ __('البداية') }}:</strong> {{ $project->start_date ?: '—' }}</div>
@@ -56,7 +66,12 @@
           <textarea name="note" class="textarea" rows="3"></textarea>
         </div>
         <div class="actions">
-          <button class="btn btn-primary" type="submit">{{ __('إضافة') }}</button>
+          <button class="btn btn--add" type="submit">
+              <svg class="ico" viewBox="0 0 24 24">
+                  <path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              {{ __('إضافة') }}
+          </button>
         </div>
       </form>
     </div>
@@ -87,7 +102,13 @@
           </div>
           <form method="POST" action="{{ route('admin.projects.updates.destroy', [$project, $u]) }}" onsubmit="return confirm('حذف هذا التحديث؟')">
             @csrf @method('DELETE')
-            <button class="btn btn-danger small" type="submit">{{ __('حذف التحديث') }}</button>
+            <button class="btn btn--delete btn--sm" type="submit">
+                <svg class="ico" viewBox="0 0 24 24">
+                    <path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M10 11v6M14 11v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                {{ __('حذف التحديث') }}
+            </button>
           </form>
         </div>
       @empty

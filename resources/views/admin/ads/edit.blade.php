@@ -2,7 +2,7 @@
 @push('styles') @vite('resources/css/entries/admin.css') @endpush
 
 @section('content')
-  <h1 class="page-title">تعديل إعلان</h1>
+  <h1 class="page-title">{{ __('app.edit_ad') }}</h1>
   @include('components.flash')
 
   <form method="POST" action="{{ route('admin.ads.update',$ad) }}" enctype="multipart/form-data" class="form-card">
@@ -77,8 +77,18 @@
     </div>
 
     <div class="row-end gap-6">
-      <a class="btn" href="{{ route('admin.ads.index') }}">إلغاء</a>
-      <button class="btn btn-primary">تحديث</button>
+        <a class="btn btn--search btn--outline" href="{{ route('admin.ads.index') }}">
+            <svg class="ico" viewBox="0 0 24 24">
+                <path d="M19 12H5M12 19l-7-7 7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            إلغاء
+        </a>
+        <button class="btn btn--edit">
+            <svg class="ico" viewBox="0 0 24 24">
+                <path d="M14.5 3.5a2.5 2.5 0 0 1 3.5 3.5L8 17l-4 1 1-4 9.5-10.5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+            تحديث
+        </button>
     </div>
   </form>
 @endsection

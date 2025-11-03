@@ -400,4 +400,45 @@ html[dir="ltr"] .right-logo{ order:0; }  html[dir="ltr"] .center-nav{ order:1; }
   /* تأكد أن العناصر لا تنضغط وتختفي */
   .user-actions > *{ flex-shrink:0; }
 }
+/* Harmonize pills and header buttons */
+.pill{
+    display:inline-flex; align-items:center; justify-content:center;
+    gap: var(--btn-gap);
+    padding: var(--btn-padding);
+    border-radius: var(--btn-radius);
+    border:1px solid var(--ring);
+    font-weight: var(--btn-font-weight);
+    color: var(--fg);
+    background: var(--soft);
+    text-decoration:none;
+    transition: transform var(--dur-fast) var(--easing), filter var(--dur-fast) var(--easing), background var(--dur-fast) var(--easing), border-color var(--dur-fast) var(--easing);
+}
+.pill:hover{ transform:translateY(-1px); filter:brightness(1.02); }
+.pill .ico{
+    width: var(--btn-icon-size);
+    height: var(--btn-icon-size);
+    display:block; color:currentColor; stroke:currentColor; stroke-width:2; fill:none; vector-effect:non-scaling-stroke;
+}
+
+/* Map intents for header pills */
+.pill.search{ background: var(--btn-search-bg); color: var(--btn-search-fg); border-color: var(--ring); }
+.pill.search:hover{ background: var(--btn-search-hover); }
+
+.pill.add{ background: var(--btn-add-bg); color: var(--btn-add-fg); border-color: transparent; }
+.pill.add:hover{ background: var(--btn-add-hover); }
+
+.pill.edit{ background: var(--btn-edit-bg); color: var(--btn-edit-fg); border-color: transparent; }
+.pill.edit:hover{ background: var(--btn-edit-hover); }
+
+.pill.delete{ background: var(--btn-delete-bg); color: var(--btn-delete-fg); border-color: transparent; }
+.pill.delete:hover{ background: var(--btn-delete-hover); }
+
+/* Theme toggle still glassy but consistent sizing */
+.theme-btn{
+    display:inline-grid; place-items:center;
+    width:42px; height:42px;
+    border-radius: var(--btn-radius);
+    border:1px solid var(--glass-border);
+    background: var(--glass);
+}
 

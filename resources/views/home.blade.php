@@ -19,11 +19,9 @@
         <div class="brand-card">
           <img class="brand-logo" src="{{ asset('images/logo.png') }}" alt="Company Logo">
           <div class="brand-info">
-            <div class="brand-name">{{ $isAr ? 'شركة عادل سعيد للتجارة والصناعة' : 'Adel Saeed Trading & Industry' }}</div>
-            <div class="brand-desc">
-              {{ $isAr ? 'توريد وتركيب وتشغيل وصيانة خطوط إنتاج ومعدات صناعية.' : 'Supply, installation, commissioning & maintenance of industrial production lines and equipment.' }}
-            </div>
-            <div class="brand-loc">{{ $isAr ? 'العنوان: سلطنة عمان · مسقط' : 'Address: Muscat · Sultanate of Oman' }}</div>
+            <div class="brand-name">{{ __('app.brand') }}</div>
+            <div class="brand-desc">{{ __('app.tagline') }}</div>
+            <div class="brand-loc">{{ __('app.address') }}: {{ app()->getLocale()==='ar' ? 'سلطنة عمان · مسقط' : 'Muscat · Sultanate of Oman' }}</div>
           </div>
           <div class="cta">
             <a class="btn btn-light btn-home" href="{{ route('catalog.index') }}">{{ __('app.catalog') }}</a>

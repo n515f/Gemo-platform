@@ -15,10 +15,15 @@
 .lbl{ display:block; font-weight:800; margin-bottom:6px; }
 
 .btn{ display:inline-flex; align-items:center; justify-content:center; gap:.45rem;
-  padding:.65rem 1rem; border-radius:12px; font-weight:900; border:1px solid transparent; cursor:pointer;
+  padding:.62rem .9rem; border:1px solid transparent; border-radius:10px;
+  font-weight:900; cursor:pointer; text-decoration:none; transition:transform .15s ease, filter .15s ease, box-shadow .2s ease;
 }
-.btn-primary{ background:var(--grad-brand); color:#0b1220; }
-.btn-light{ background:var(--soft); color:var(--fg); border-color:var(--ring); }
+.btn.small{ padding:.45rem .65rem; border-radius:9px; }
+/* Map to unified tokens */
+.btn-primary{ background: var(--btn-add-bg); color: var(--btn-add-fg); border-color: transparent; }
+.btn-primary:hover{ background: var(--btn-add-hover); }
+.btn-light{ background: var(--btn-search-bg); color: var(--btn-search-fg); border-color: var(--ring); }
+.btn-danger{ background: var(--btn-delete-bg); color: var(--btn-delete-fg); border-color: transparent; }
 .btn-soft{ background:color-mix(in srgb, var(--brand) 10%, transparent); }
 .btn-danger{ background:#fee2e2; color:#991b1b; }
 .btn.small{ padding:.45rem .7rem; border-radius:10px; }

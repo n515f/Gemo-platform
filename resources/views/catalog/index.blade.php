@@ -69,18 +69,26 @@
               <p class="lead">{{ \Illuminate\Support\Str::limit($desc, 160) }}</p>
             @endif
 
-            <div class="cta">
-              <a class="btn btn-primary js-open-rfq"
+            <div class="actions">
+              <a class="btn btn--add js-open-rfq"
                  href="#"
                  data-id="{{ $p->id }}"
                  data-name="{{ $p->trans_name }}"
                  data-code="{{ $p->code ?? '' }}"
                  data-sku="{{ $p->sku ?? '' }}">
+                <svg class="ico" viewBox="0 0 24 24">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16l4-4h10a2 2 0 0 0 2-2V6a4 4 0 0 0-4-4z" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <path d="M12 8v6M9 11h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
                 {{ __('app.ask_quote') }}
-              </a>
-              <a class="btn btn-ghost" href="{{ route('rfq.create', ['product'=>$p->id]) }}">
+            </a>
+            <a class="btn btn--search btn--outline" href="{{ route('rfq.create', ['product'=>$p->id]) }}">
+                <svg class="ico" viewBox="0 0 24 24">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+                </svg>
                 {{ __('app.details') ?? 'Details' }}
-              </a>
+            </a>
             </div>
           </div>
         </article>

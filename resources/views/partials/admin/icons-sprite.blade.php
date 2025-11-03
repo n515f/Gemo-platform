@@ -128,4 +128,34 @@
     <path d="M4 21v-1.5A6.5 6.5 0 0 1 10.5 13h3A6.5 6.5 0 0 1 20 19.5V21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
     <path d="M16 7l2-2M8 7l-2-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
   </symbol>
+
+  <!-- البحث -->
+  <symbol id="i-search" viewBox="0 0 24 24">
+    <circle cx="11" cy="11" r="8" fill="none" stroke="currentColor" stroke-width="2"/>
+    <path d="m21 21-4.35-4.35" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- الإضافة -->
+  <symbol id="i-plus" viewBox="0 0 24 24">
+    <path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- الحذف -->
+  <symbol id="i-trash" viewBox="0 0 24 24">
+    <path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M10 11v6M14 11v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- عرض/مشاهدة -->
+  <symbol id="i-eye" viewBox="0 0 24 24">
+    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" fill="none" stroke="currentColor" stroke-width="2"/>
+    <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+  </symbol>
+
+  <!-- حفظ -->
+  <symbol id="i-save" viewBox="0 0 24 24">
+    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" fill="none" stroke="currentColor" stroke-width="2"/>
+    <polyline points="17,21 17,13 7,13 7,21" fill="none" stroke="currentColor" stroke-width="2"/>
+    <polyline points="7,3 7,8 15,8" fill="none" stroke="currentColor" stroke-width="2"/>
+  </symbol>
 </svg>

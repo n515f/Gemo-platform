@@ -39,3 +39,9 @@ label, .label { font-weight: 700; color: var(--text-1); display: inline-block; m
 .form-error { color: var(--danger); font-size: 13px; margin-top: 6px; }
 
 .checkbox-inline { display: inline-flex; align-items: center; gap: 8px; color: var(--text-2); }
+
+/* تحسين بسيط لحقول داخل مودال RFQ */
+.rfq-modal .label{ color:var(--text-1); }
+.rfq-modal .actions{ display:flex; align-items:center; gap:10px; margin-top:12px; flex-wrap:wrap; }
+.rfq-modal .card{ border:1px solid var(--ring); background:var(--card); border-radius:16px; padding:12px; box-shadow:var(--shadow); }
+.rfq-modal .card-title{ margin:0 0 8px; font-weight:900; }

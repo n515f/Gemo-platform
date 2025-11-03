@@ -169,6 +169,9 @@ html[dir="ltr"] .sidebar-nav .item:hover .ico{ transform:translateX(-2px); }
   .sidebar-header .brand .title{ display:none; }
 }
 
+/* Modal overlay helper (used by RFQ modal) */
+.modal-overlay{ position:fixed; inset:0; background:rgba(0,0,0,.32); z-index:1100; }
+
 /* تحسينات بسيطة */
 .no-scroll{ overflow:hidden; }
 .lang-btn{ display:inline-flex; align-items:center; gap:6px; font-weight:900; padding-inline:10px; }

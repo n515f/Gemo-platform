@@ -208,3 +208,69 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+// ===== RFQ Modal (open card -> load show form) =====
+const rfqModal = document.querySelector('.rfq-modal');
+const rfqContent = rfqModal?.querySelector('.rfq-modal__content');
+const rfqClose = rfqModal?.querySelector('.rfq-modal__close');
+let lastFocus = null;
+
+function openRfqModal(url) {
+  if (!rfqModal || !rfqContent || !url) return;
+  lastFocus = document.activeElement;
+  rfqModal.hidden = false;
+  rfqModal.setAttribute('aria-hidden', 'false');
+  rfqContent.innerHTML = '<div class="rfq-modal__loading">جارٍ التحميل...</div>';
+  fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' }})
+    .then(res => res.text())
+    .then(html => {
+      // Extract main form section from the show view
+      // Fallback: inject entire HTML if we cannot slice
+      const temp = document.createElement('div');
+      temp.innerHTML = html;
+      const section = temp.querySelector('.rfq-form') || temp.querySelector('section.admin-page') || temp;
+      rfqContent.innerHTML = '';
+      rfqContent.appendChild(section.cloneNode(true));
+      // Focus first focusable element
+      const focusable = rfqModal.querySelector('button, [href], input, select, textarea');
+      focusable?.focus();
+    })
+    .catch(() => {
+      rfqContent.innerHTML = '<div class="rfq-modal__loading">تعذر التحميل، حاول مجدداً.</div>';
+    });
+  document.body.classList.add('no-scroll');
+}
+
+function closeRfqModal() {
+  if (!rfqModal) return;
+  rfqModal.hidden = true;
+  rfqModal.setAttribute('aria-hidden', 'true');
+  rfqContent.innerHTML = '';
+  document.body.classList.remove('no-scroll');
+  lastFocus?.focus();
+}
+
+rfqClose?.addEventListener('click', closeRfqModal);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && rfqModal && !rfqModal.hidden) closeRfqModal();
+});
+
+// Delegate: clicking a card opens modal unless clicking interactive children
+document.querySelectorAll('.rfq-card').forEach(card => {
+  card.addEventListener('click', (e) => {
+    const interactive = e.target.closest('button,a,input,select,textarea,.rfq-actions');
+    if (interactive) return; // ignore
+    const url = card.getAttribute('data-show-url');
+    openRfqModal(url);
+  });
+});
+
+// Explicit edit button
+document.querySelectorAll('[data-rfq-open]').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const card = btn.closest('.rfq-card');
+    const url = card?.getAttribute('data-show-url');
+    openRfqModal(url);
+  });
+});

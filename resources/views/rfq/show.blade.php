@@ -63,7 +63,9 @@
   </div>
 
   <div style="margin-top:14px">
-    <a class="btn outline" href="{{ url()->previous() }}">{{ __('عودة') }}</a>
-  </div>
+    <a class="btn btn--search btn--outline" href="{{ url()->previous() }}">
+        {{ __('app.back') }}
+    </a>
+</div>
 </div>
 @endsection
