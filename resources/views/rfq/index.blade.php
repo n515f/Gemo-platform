@@ -6,17 +6,17 @@
 
 @section('content')
 <div class="container" style="max-width:1100px">
-  <h1 class="page-title">{{ __('طلبات عرض السعر') }}</h1>
+  <h1 class="page-title">{{ __('app.rfq_requests') }}</h1>
 
   <form method="GET" class="search-bar" style="margin-bottom:12px">
-    <input type="text" name="q" value="{{ $q }}" placeholder="ابحث بالاسم/البريد/الهاتف">
+    <input type="text" name="q" value="{{ $q }}" placeholder="{{ __('app.search_name_email_phone') }}">
     <select name="status" class="rfq-select" style="max-width:220px">
-      <option value="">{{ __('كل الحالات') }}</option>
-      @foreach (['pending'=>'قيد المراجعة','reviewed'=>'مُراجع','quoted'=>'تم التسعير','won'=>'رابح','lost'=>'خاسر'] as $k=>$v)
+      <option value="">{{ __('app.all_statuses') }}</option>
+      @foreach (['pending'=>__('app.under_review'),'reviewed'=>__('app.reviewed'),'quoted'=>__('app.quoted'),'won'=>__('app.winner'),'lost'=>__('app.loser')] as $k=>$v)
         <option value="{{ $k }}" @selected($status===$k)>{{ $v }}</option>
       @endforeach
     </select>
-    <button class="btn primary">{{ __('تصفية') }}</button>
+    <button class="btn primary">{{ __('app.filter') }}</button>
   </form>
 
   <div class="card" style="padding:0">
@@ -25,12 +25,12 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>العميل</th>
-            <th>الهاتف</th>
-            <th>الخدمة</th>
-            <th>الميزانية</th>
-            <th>الحالة</th>
-            <th>التاريخ</th>
+            <th>{{ __('app.client') }}</th>
+            <th>{{ __('app.phone') }}</th>
+            <th>{{ __('app.service') }}</th>
+            <th>{{ __('app.budget') }}</th>
+            <th>{{ __('app.status') }}</th>
+            <th>{{ __('app.date') }}</th>
             <th></th>
           </tr>
         </thead>
@@ -48,12 +48,12 @@
               <td>{{ $r->status }}</td>
               <td class="text-muted small">{{ $r->created_at?->format('Y-m-d H:i') }}</td>
               <td>
-                <a class="btn outline" href="{{ route('admin.rfqs.show',$r) }}">{{ __('فتح') }}</a>
+                <a class="btn outline" href="{{ route('admin.rfqs.show',$r) }}">{{ __('app.open') }}</a>
               </td>
             </tr>
           @empty
             <tr>
-              <td colspan="8" class="text-center py-4">{{ __('لا توجد طلبات.') }}</td>
+              <td colspan="8" class="text-center py-4">{{ __('app.no_requests') }}</td>
             </tr>
           @endforelse
         </tbody>

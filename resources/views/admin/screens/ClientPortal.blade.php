@@ -10,38 +10,38 @@
     // بطاقات شاشات الواجهة
     $cards = [
       [
-        'title' => __('الرئيسية'),
-        'desc'  => __('الصفحة الافتتاحية والمحتوى التعريفي.'),
+        'title' => __('app.portal_home'),
+        'desc'  => __('app.portal_home_desc'),
         'href'  => route('home'),
         'icon'  => asset('images/icons/home.png'),
       ],
       [
-        'title' => __('الفئات'),
-        'desc'  => __('صفحات استعراض الفئات والخدمات.'),
+        'title' => __('app.portal_categories'),
+        'desc'  => __('app.portal_categories_desc'),
         'href'  => route('categories.index', [], false) ?? url('/categories'),
         'icon'  => asset('images/icons/categories.png'),
       ],
       [
-        'title' => __('خدماتنا'),
-        'desc'  => __('كل خدمات الشركة ومجالات العمل.'),
+        'title' => __('app.portal_services'),
+        'desc'  => __('app.portal_services_desc'),
         'href'  => route('services.index', [], false) ?? url('/services'),
         'icon'  => asset('images/icons/services.png'),
       ],
       [
-        'title' => __('الكتالوج'),
-        'desc'  => __('استعراض المنتجات والمواصفات.'),
+        'title' => __('app.portal_catalog'),
+        'desc'  => __('app.portal_catalog_desc'),
         'href'  => route('catalog.index', [], false) ?? url('/catalog'),
         'icon'  => asset('images/icons/catalog.png'),
       ],
       [
-        'title' => __('طلب عرض سعر'),
-        'desc'  => __('نموذج إرسال طلب عرض السعر.'),
+        'title' => __('app.portal_rfq'),
+        'desc'  => __('app.portal_rfq_desc'),
         'href'  => route('rfq.create', [], false) ?? url('/rfq/create'),
         'icon'  => asset('images/icons/rfq.png'),
       ],
       [
-        'title' => __('تواصل معنا'),
-        'desc'  => __('معلومات الاتصال ونموذج المراسلة.'),
+        'title' => __('app.portal_contact'),
+        'desc'  => __('app.portal_contact_desc'),
         'href'  => route('contact', [], false) ?? url('/contact'),
         'icon'  => asset('images/icons/contact.png'),
       ],
@@ -49,9 +49,9 @@
   @endphp
 
   <section class="client-portal">
-    <h1 class="cp-title">{{ __('شاشات العميل') }}</h1>
+    <h1 class="cp-title">{{ __('app.client_portal_title') }}</h1>
     <p class="cp-sub">
-      {{ __('هذه بطائق مختصرة لصفحات الواجهة العامة — للاطّلاع والتنقّل السريع من قبل الأدمن.') }}
+      {{ __('app.client_portal_subtitle') }}
     </p>
 
     <div class="cp-grid">
@@ -67,7 +67,7 @@
           </div>
 
           <div class="cp-actions">
-            <span class="btn btn-go">{{ __('انتقال') }}</span>
+            <span class="btn btn-go">{{ __('app.go') }}</span>
           </div>
         </a>
       @endforeach

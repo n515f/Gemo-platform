@@ -77,7 +77,7 @@
        aria-label="WhatsApp">
       <div class="channel-icon"><img src="{{ asset('images/whatsapp.png') }}" alt="WhatsApp"></div>
       <div class="channel-body">
-        <h3>WhatsApp</h3>
+        <h3>{{ __('app.whatsapp') }}</h3>
         <p class="muted">{{ __('app.whatsapp_desc') }}</p>
         <div class="pill ltr">{{ $whNumber ?? '—' }}</div>
       </div>
@@ -89,7 +89,7 @@
        aria-label="Gmail">
       <div class="channel-icon"><img src="{{ asset('images/icons/gmail.png') }}" alt="Gmail"></div>
       <div class="channel-body">
-        <h3>Gmail</h3>
+        <h3>{{ __('app.gmail') }}</h3>
         <p class="muted">{{ __('app.gmail_desc') }}</p>
         <div class="pill ltr">{{ $gmailAddr }}</div>
       </div>
@@ -101,7 +101,7 @@
        aria-label="Yahoo Mail">
       <div class="channel-icon"><img src="{{ asset('images/icons/yahoo.png') }}" alt="Yahoo"></div>
       <div class="channel-body">
-        <h3>Yahoo Mail</h3>
+        <h3>{{ __('app.yahoo_mail') }}</h3>
         <p class="muted">{{ __('app.yahoo_desc') }}</p>
         <div class="pill ltr">{{ $yahooAddr }}</div>
       </div>
@@ -114,7 +114,7 @@
        aria-label="WeChat">
       <div class="channel-icon"><img src="{{ asset('images/icons/wechat.png') }}" alt="WeChat"></div>
       <div class="channel-body">
-        <h3>WeChat</h3>
+        <h3>{{ __('app.wechat') }}</h3>
         <p class="muted">{{ __('app.wechat_desc') }}</p>
         <div class="pill ltr">@yourid</div>
       </div>
@@ -127,9 +127,9 @@
        aria-label="Facebook">
       <div class="channel-icon"><img src="{{ asset('images/icons/facebook.png') }}" alt="Facebook"></div>
       <div class="channel-body">
-        <h3>Facebook</h3>
+        <h3>{{ __('app.facebook') }}</h3>
         <p class="muted">{{ __('app.facebook_desc') }}</p>
-        <div class="pill ltr">Adel Saeed</div>
+        <div class="pill ltr">{{ __('app.adel_saeed') }}</div>
       </div>
     </a>
 
@@ -140,9 +140,9 @@
        aria-label="Instagram">
       <div class="channel-icon"><img src="{{ asset('images/instagram.png') }}" alt="Instagram"></div>
       <div class="channel-body">
-        <h3>Instagram</h3>
+        <h3>{{ __('app.instagram') }}</h3>
         <p class="muted">{{ __('app.instagram_desc') }}</p>
-        <div class="pill ltr">@adelsaeed_</div>
+        <div class="pill ltr">{{ __('app.instagram_handle') }}</div>
       </div>
     </a>
 

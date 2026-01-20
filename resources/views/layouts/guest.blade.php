@@ -1,6 +1,6 @@
 @props([
-  'hideHeaderLogo' => false,  // لإخفاء شعار الهيدر عند الحاجة
-  'boxed' => false            // لاحتواء المحتوى في كرت افتراضي (سلوك Breeze القديم)
+  'hideHeaderLogo' => false,
+  'boxed' => false
 ])
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale()==='ar'?'rtl':'ltr' }}">
@@ -22,6 +22,8 @@
     }catch(_){}})();
   </script>
 
+  <link rel="icon" type="image/x-icon" href="{{ asset('favicon-nuxt.ico') }}">
+  <link rel="shortcut icon" href="{{ asset('favicon-nuxt.ico') }}">
   {{-- الأوث تدفع auth.css عبر @push من صفحاتها --}}
   @vite(['resources/js/app.js'])
   @stack('styles')

@@ -9,7 +9,8 @@
       <h1 class="title">{{ $project->title }}</h1>
       <p class="muted">
         {{ __('app.client') }}: {{ $project->client_name }} •
-        {{ __('app.status') }}: <span class="badge">{{ __($project->status) }}</span>
+        {{ __('app.status') }}:
+        <span class="badge">{{ __('app.statuses.' . $project->status) }}</span>
       </p>
     </div>
     <div class="rhs">
@@ -34,35 +35,38 @@
     <div class="card">
       <h3 class="card-title">{{ __('app.project_data') }}</h3>
       <div class="stack">
-        <div><strong>{{ __('المنتج') }}:</strong> {{ optional($project->product)->name_ar ?? '—' }}</div>
-        <div><strong>{{ __('البداية') }}:</strong> {{ $project->start_date ?: '—' }}</div>
-        <div><strong>{{ __('الانتهاء') }}:</strong> {{ $project->due_date ?: '—' }}</div>
-        <div><strong>{{ __('ملاحظات') }}:</strong> {{ $project->notes ?: '—' }}</div>
-        <div class="muted">{{ __('آخر تحديث') }}: {{ optional($project->updated_at)->format('Y-m-d H:i') }}</div>
+        <div>
+          <strong>{{ __('app.product') }}:</strong>
+          {{ optional($project->product)->{app()->getLocale()==='ar' ? 'name_ar' : 'name_en'} ?? '—' }}
+        </div>
+        <div><strong>{{ __('app.start_short') }}:</strong> {{ $project->start_date ?: '—' }}</div>
+        <div><strong>{{ __('app.due_short') }}:</strong> {{ $project->due_date ?: '—' }}</div>
+        <div><strong>{{ __('app.notes') }}:</strong> {{ $project->notes ?: '—' }}</div>
+        <div class="muted">{{ __('app.updated_at') }}: {{ optional($project->updated_at)->format('Y-m-d H:i') }}</div>
       </div>
     </div>
 
     <div class="card">
-      <h3 class="card-title">{{ __('إضافة تحديث') }}</h3>
+      <h3 class="card-title">{{ __('app.add_update') }}</h3>
       <form method="POST" action="{{ route('admin.projects.updates.store', $project) }}" enctype="multipart/form-data">
         @csrf
         <div class="grid two">
           <div>
-            <label class="lbl">{{ __('الحالة (اختياري)') }}</label>
+            <label class="lbl">{{ __('app.status_optional') }}</label>
             <select class="select" name="status">
-              <option value="">{{ __('بدون تغيير') }}</option>
+              <option value="">{{ __('app.no_change') }}</option>
               @foreach($statuses as $st)
-                <option value="{{ $st }}">{{ __($st) }}</option>
+                <option value="{{ $st }}">{{ __('app.statuses.' . $st) }}</option>
               @endforeach
             </select>
           </div>
           <div>
-            <label class="lbl">{{ __('مرفقات') }}</label>
+            <label class="lbl">{{ __('app.attachments') }}</label>
             <input type="file" name="attachments[]" multiple>
           </div>
         </div>
         <div>
-          <label class="lbl">{{ __('ملاحظة') }}</label>
+          <label class="lbl">{{ __('app.note') }}</label>
           <textarea name="note" class="textarea" rows="3"></textarea>
         </div>
         <div class="actions">
@@ -70,7 +74,7 @@
               <svg class="ico" viewBox="0 0 24 24">
                   <path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              {{ __('إضافة') }}
+              {{ __('app.add') }}
           </button>
         </div>
       </form>
@@ -78,14 +82,16 @@
   </div>
 
   <div class="card">
-    <h3 class="card-title">{{ __('سجل التحديثات') }}</h3>
+    <h3 class="card-title">{{ __('app.updates_log') }}</h3>
     <div class="updates">
       @forelse($project->updates as $u)
         <div class="update-item">
           <div class="update-head">
             <strong>#{{ $u->id }}</strong>
             <span class="muted">{{ optional($u->created_at)->format('Y-m-d H:i') }}</span>
-            @if($u->status)<span class="badge">{{ __($u->status) }}</span>@endif
+            @if($u->status)
+              <span class="badge">{{ __('app.statuses.' . $u->status) }}</span>
+            @endif
           </div>
           <div class="update-body">
             <p>{{ $u->note ?: '—' }}</p>
@@ -100,19 +106,22 @@
               </div>
             @endif
           </div>
-          <form method="POST" action="{{ route('admin.projects.updates.destroy', [$project, $u]) }}" onsubmit="return confirm('حذف هذا التحديث؟')">
+
+          <form method="POST"
+                action="{{ route('admin.projects.updates.destroy', [$project, $u]) }}"
+                class="needs-confirm" data-confirm="{{ __('app.confirm_delete_update') }}">
             @csrf @method('DELETE')
             <button class="btn btn--delete btn--sm" type="submit">
                 <svg class="ico" viewBox="0 0 24 24">
                     <path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M10 11v6M14 11v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                {{ __('حذف التحديث') }}
+                {{ __('app.delete_update') }}
             </button>
           </form>
         </div>
       @empty
-        <div class="empty">{{ __('لا توجد تحديثات بعد.') }}</div>
+        <div class="empty">{{ __('app.no_updates_yet') }}</div>
       @endforelse
     </div>
   </div>

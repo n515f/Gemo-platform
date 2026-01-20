@@ -21,7 +21,7 @@
           <div class="brand-info">
             <div class="brand-name">{{ __('app.brand') }}</div>
             <div class="brand-desc">{{ __('app.tagline') }}</div>
-            <div class="brand-loc">{{ __('app.address') }}: {{ app()->getLocale()==='ar' ? 'سلطنة عمان · مسقط' : 'Muscat · Sultanate of Oman' }}</div>
+            <div class="brand-loc">{{ __('app.address') }}: {{ __('app.sultanate_oman') }}</div>
           </div>
           <div class="cta">
             <a class="btn btn-light btn-home" href="{{ route('catalog.index') }}">{{ __('app.catalog') }}</a>
@@ -38,8 +38,8 @@
     <div class="sec-head icon-head">
       <img class="sec-ico" src="{{ asset('images/icons/manager.png') }}" alt="">
       <div>
-        <h2>{{ $isAr ? 'المدير التنفيذي' : 'Chief Executive Officer' }}</h2>
-        <p class="sec-sub">{{ $isAr ? 'نبذة سريعة عن الخبرات والشهادات.' : 'A brief about expertise & certifications.' }}</p>
+        <h2>{{ __('app.ceo') }}</h2>
+        <p class="sec-sub">{{ __('app.brief_expertise') }}</p>
       </div>
     </div>
 
@@ -48,11 +48,11 @@
         <img class="ceo-avatar lg" src="{{ asset('images/manager.png') }}" alt="CEO">
         <div class="ceo-info">
           <div class="ceo-name">{{ $isAr ? 'م. عادل سعيد' : 'Eng. Adel Saeed' }}</div>
-          <div class="ceo-title">{{ $isAr ? 'المدير التنفيذي' : 'CEO' }}</div>
+          <div class="ceo-title">{{ __('app.ceo') }}</div>
           <ul class="ceo-bullets">
-            <li>{{ $isAr ? 'خبرة +15 سنة في الحلول الصناعية.' : '15+ years in industrial solutions.' }}</li>
-            <li>{{ $isAr ? 'إدارة مشاريع تركيب وتشغيل لعدة مصانع.' : 'Managed installation & commissioning projects.' }}</li>
-            <li>{{ $isAr ? 'بناء فرق تشغيل وصيانة عالية الكفاءة.' : 'Built high-performing O&M teams.' }}</li>
+            <li>{{ __('app.experience_15_years') }}</li>
+            <li>{{ __('app.managed_projects') }}</li>
+            <li>{{ __('app.built_high_performing_teams') }}</li>
           </ul>
         </div>
       </div>
@@ -160,8 +160,8 @@
     <div class="sec-head icon-head">
       <img class="sec-ico" src="{{ asset('images/icons/Sectors.png') }}" alt="">
       <div>
-        <h2>{{ $isAr ? 'القطاعات التي نخدمها' : 'Industries We Serve' }}</h2>
-        <p class="sec-sub">{{ $isAr ? 'حلول صناعية لقطاعات متعددة – مرّر للاطّلاع.' : 'Cross-industry solutions — hover to pause.' }}</p>
+        <h2>{{ __('app.industries_we_serve') }}</h2>
+        <p class="sec-sub">{{ __('app.cross_industry_solutions') }}</p>
       </div>
     </div>
 
@@ -191,7 +191,7 @@
       <img class="sec-ico" src="{{ asset('images/icons/catalog.png') }}" alt="">
       <div>
         <h2>{{ __('app.catalog') }}</h2>
-        <p class="sec-sub">{{ $isAr ? 'تعرّف على المنتجات والمعدات وخطوط الإنتاج.' : 'Explore products & complete lines.' }}</p>
+        <p class="sec-sub">{{ __('app.explore_products_lines') }}</p>
       </div>
     </div>
 
@@ -214,15 +214,15 @@
       @else
         <a class="glass-card delay-0" href="{{ route('catalog.index') }}">
           <img src="{{ asset('images/services/full-line.jpg') }}" alt="">
-          <div class="glass-overlay"><div class="name">Full Line</div></div>
+          <div class="glass-overlay"><div class="name">{{ __('app.full_line') }}</div></div>
         </a>
         <a class="glass-card delay-1" href="{{ route('catalog.index') }}">
           <img src="{{ asset('images/services/training.jpg') }}" alt="">
-          <div class="glass-overlay"><div class="name">Training</div></div>
+          <div class="glass-overlay"><div class="name">{{ __('app.training') }}</div></div>
         </a>
         <a class="glass-card delay-2" href="{{ route('catalog.index') }}">
           <img src="{{ asset('images/services/customer-service.png') }}" alt="">
-          <div class="glass-overlay"><div class="name">Support</div></div>
+          <div class="glass-overlay"><div class="name">{{ __('app.support') }}</div></div>
         </a>
       @endisset
     </div>
@@ -233,23 +233,23 @@
     <div class="sec-head icon-head">
       <img class="sec-ico" src="{{ asset('images/icons/works.png') }}" alt="">
       <div>
-        <h2>{{ $isAr ? 'بعض أعمالنا' : 'Selected Works' }}</h2>
-        <p class="sec-sub">{{ $isAr ? 'نماذج من مشاريع تركيب وتشغيل خطوط الإنتاج.' : 'Samples from installation & commissioning projects.' }}</p>
+        <h2>{{ __('app.selected_works') }}</h2>
+        <p class="sec-sub">{{ __('app.samples_installation') }}</p>
       </div>
     </div>
 
     <div class="gallery-3">
       <div class="work-card delay-0">
         <img src="{{ asset('images/services/installation.jpg') }}" alt="">
-        <div class="work-overlay"><div class="name">{{ $isAr ? 'تركيب خط تغليف' : 'Packaging Line Installation' }}</div></div>
+        <div class="work-overlay"><div class="name">{{ __('app.packaging_line_installation') }}</div></div>
       </div>
       <div class="work-card delay-1">
         <img src="{{ asset('images/services/full-line.jpg') }}" alt="">
-        <div class="work-overlay"><div class="name">{{ $isAr ? 'تشغيل خط إنتاج متكامل' : 'Commissioning a Full Line' }}</div></div>
+        <div class="work-overlay"><div class="name">{{ __('app.commissioning_full_line') }}</div></div>
       </div>
       <div class="work-card delay-2">
         <img src="{{ asset('images/services/training.jpg') }}" alt="">
-        <div class="work-overlay"><div class="name">{{ $isAr ? 'تدريب طاقم التشغيل' : 'Operations Team Training' }}</div></div>
+        <div class="work-overlay"><div class="name">{{ __('app.operations_team_training') }}</div></div>
       </div>
     </div>
   </section>
@@ -260,16 +260,16 @@
       <img class="sec-ico" src="{{ asset('images/icons/rfq.png') }}" alt="">
       <div>
         <h3>{{ __('app.cta_rfq') }}</h3>
-        <p class="sec-sub">{{ $isAr ? 'أخبرنا باحتياجك وسنقدّم عرضًا مناسبًا خلال وقتٍ قصير. الخطوات بسيطة:' : 'Tell us your need and we’ll send a prompt quotation. Simple steps:' }}</p>
+        <p class="sec-sub">{{ __('app.tell_us_need') }}</p>
       </div>
     </div>
 
     <div class="cta-card">
       <div class="copy">
         <ul class="steps">
-          <li>{{ $isAr ? 'اختر المنتج/الخدمة.' : 'Choose product/service.' }}</li>
-          <li>{{ $isAr ? 'املأ نموذج «طلب عرض سعر».' : 'Fill out the “RFQ” form.' }}</li>
-          <li>{{ $isAr ? 'سنتواصل لتأكيد التفاصيل والتسعير.' : 'We’ll confirm details & pricing.' }}</li>
+          <li>{{ __('app.choose_product_service') }}</li>
+          <li>{{ __('app.fill_rfq_form') }}</li>
+          <li>{{ __('app.confirm_details_pricing') }}</li>
         </ul>
       </div>
       <a class="btn btn-primary btn-lg" href="{{ route('rfq.create') }}">{{ __('app.start_now') }}</a>
@@ -282,34 +282,34 @@
       <img class="sec-ico" src="{{ asset('images/icons/contact.png') }}" alt="">
       <div>
         <h2>{{ __('app.contact_us') }}</h2>
-        <p class="sec-sub">{{ $isAr ? 'اختر القناة المناسبة لك:' : 'Choose your preferred channel:' }}</p>
+        <p class="sec-sub">{{ __('app.choose_channel') }}</p>
       </div>
     </div>
 
     <div class="contact-cards">
       <a class="contact-item grad-whatsapp delay-0" href="https://wa.me/967738742001" target="_blank" rel="noopener">
-        <img src="{{ asset('images/icons/whatsapp.png') }}" alt="WhatsApp">
-        <div><div class="t">WhatsApp</div><div class="s ltr">+967 738 742 001</div></div>
+        <img src="{{ asset('images/icons/whatsapp.png') }}" alt="{{ __('app.whatsapp') }}">
+        <div><div class="t">{{ __('app.whatsapp') }}</div><div class="s ltr">{{ __('app.whatsapp_number') }}</div></div>
       </a>
 
       <a class="contact-item grad-instagram delay-1" href="https://instagram.com/adelsk2002" target="_blank" rel="noopener">
-        <img src="{{ asset('images/icons/Instagram.png') }}" alt="Instagram">
-        <div><div class="t">Instagram</div><div class="s ltr">@adelsk2002</div></div>
+        <img src="{{ asset('images/icons/Instagram.png') }}" alt="{{ __('app.instagram') }}">
+        <div><div class="t">{{ __('app.instagram') }}</div><div class="s ltr">{{ __('app.instagram_handle') }}</div></div>
       </a>
 
       <a class="contact-item grad-facebook delay-2" href="https://facebook.com" target="_blank" rel="noopener">
-        <img src="{{ asset('images/icons/facebook.png') }}" alt="Facebook">
-        <div><div class="t">Facebook</div><div class="s">/AdelSaeed</div></div>
+        <img src="{{ asset('images/icons/facebook.png') }}" alt="{{ __('app.facebook') }}">
+        <div><div class="t">{{ __('app.facebook') }}</div><div class="s">{{ __('app.facebook_page') }}</div></div>
       </a>
 
       <a class="contact-item grad-yahoo delay-3" href="mailto:Adelsk2002@yahoo.com">
-        <img src="{{ asset('images/icons/yahoo.png') }}" alt="Email">
-        <div><div class="t">Email</div><div class="s ltr">Adelsk2002@yahoo.com</div></div>
+        <img src="{{ asset('images/icons/yahoo.png') }}" alt="{{ __('app.yahoo_mail') }}">
+        <div><div class="t">{{ __('app.yahoo_mail') }}</div><div class="s ltr">{{ __('app.yahoo_email') }}</div></div>
       </a>
 
       <a class="contact-item grad-gmail delay-4" href="mailto:Adelsk2002@gmail.com">
-        <img src="{{ asset('images/icons/gmail.png') }}" alt="Email">
-        <div><div class="t">Email</div><div class="s ltr">Adelsk2002@gmail.com</div></div>
+        <img src="{{ asset('images/icons/gmail.png') }}" alt="{{ __('app.gmail') }}">
+        <div><div class="t">{{ __('app.gmail') }}</div><div class="s ltr">{{ __('app.gmail_email') }}</div></div>
       </a>
     </div>
   </section>

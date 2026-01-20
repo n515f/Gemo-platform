@@ -8,38 +8,40 @@
   @if($method !== 'POST') @method($method) @endif
 
   <div>
-    <label class="lbl">عنوان التقرير</label>
+    <label class="lbl">{{ __('app.report_title') }}</label>
     <input class="input" type="text" name="title" value="{{ old('title', $report->title ?? '') }}" required>
     @error('title') <div class="flash error">{{ $message }}</div> @enderror
   </div>
 
   <div>
-    <label class="lbl">المشروع (اختياري)</label>
+    <label class="lbl">{{ __('app.project_optional') }}</label>
     <select class="select" name="project_id">
-      <option value="">— لا شيء —</option>
+      <option value="">{{ __('app.none') }}</option>
       @foreach($projects as $p)
-        <option value="{{ $p->id }}" @selected(old('project_id', $report->project_id ?? '') == $p->id)>{{ $p->title }}</option>
+        <option value="{{ $p->id }}" @selected(old('project_id', $report->project_id ?? '') == $p->id)>
+          {{ $p->title }}
+        </option>
       @endforeach
     </select>
     @error('project_id') <div class="flash error">{{ $message }}</div> @enderror
   </div>
 
   <div class="col-span-2" style="grid-column: 1 / -1;">
-    <label class="lbl">ملاحظات</label>
+    <label class="lbl">{{ __('app.notes') }}</label>
     <textarea class="textarea" name="notes" rows="6">{{ old('notes', $report->notes ?? '') }}</textarea>
     @error('notes') <div class="flash error">{{ $message }}</div> @enderror
   </div>
 
   <div class="col-span-2" style="grid-column: 1 / -1;">
-    <label class="lbl">مرفقات (متعددة)</label>
+    <label class="lbl">{{ __('app.attachments_multiple') }}</label>
     <input class="input" type="file" name="attachments[]" multiple>
     @error('attachments.*') <div class="flash error">{{ $message }}</div> @enderror
   </div>
 
   <div class="mt" style="grid-column: 1 / -1; display:flex; gap:8px; flex-wrap:wrap;">
-    <button class="btn btn-primary" type="submit">حفظ</button>
+    <button class="btn btn-primary" type="submit">{{ __('app.save') }}</button>
     @if($method !== 'POST')
-      <button class="btn btn-light" name="cancel" value="1">إلغاء</button>
+      <button class="btn btn-light" name="cancel" value="1">{{ __('app.cancel') }}</button>
     @endif
   </div>
 </form>

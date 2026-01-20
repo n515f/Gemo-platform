@@ -2,7 +2,7 @@
 @push('styles') @vite('resources/css/entries/admin.css') @endpush
 
 @section('content')
-  <h1 class="page-title">الإعلانات</h1>
+  <h1 class="page-title">{{ __('app.ads') }}</h1>
   @include('components.flash')
 
   @php
@@ -14,15 +14,15 @@
 
   <div class="toolbar">
     <form method="get" class="inline">
-      <input class="input" type="text" name="q" value="{{ $qInput }}" placeholder="بحث..." />
+      <input class="input" type="text" name="q" value="{{ $qInput }}" placeholder="{{ __('app.search_placeholder') }}" />
       <select class="input" name="active">
-        <option value=""  @selected($activeStr==='')>الكل</option>
-        <option value="1" @selected($activeStr==='1')>فعّال</option>
-        <option value="0" @selected($activeStr==='0')>مؤرشف</option>
+        <option value=""  @selected($activeStr==='')>{{ __('app.all') }}</option>
+        <option value="1" @selected($activeStr==='1')>{{ __('app.active') }}</option>
+        <option value="0" @selected($activeStr==='0')>{{ __('app.archived') }}</option>
       </select>
-      <button class="btn">بحث</button>
+      <button class="btn">{{ __('app.search') }}</button>
     </form>
-    <a class="btn btn-primary" href="{{ route('admin.ads.create') }}">إعلان جديد</a>
+    <a class="btn btn-primary" href="{{ route('admin.ads.create') }}">{{ __('app.new_ad') }}</a>
   </div>
 
   <div class="grid-3">
@@ -35,16 +35,16 @@
 
       <div class="card">
         <div class="row-between">
-          <strong>{{ $ad->title_ar ?? $ad->title_en ?? 'بدون عنوان' }}</strong>
+          <strong>{{ $ad->title_ar ?? $ad->title_en ?? __('app.no_title') }}</strong>
           @if($ad->is_active)
-            <span class="badge">Active</span>
+            <span class="badge">{{ __('app.active') }}</span>
           @else
-            <span class="badge soft">Archived</span>
+            <span class="badge soft">{{ __('app.archived') }}</span>
           @endif
         </div>
 
         @if($firstImg)
-          <img class="cover" src="{{ asset($firstImg) }}" alt="">
+          <img class="cover" src="{{ asset($firstImg) }}" alt="{{ __('app.ad_image') }}">
         @endif
 
         <div class="muted">
@@ -56,15 +56,18 @@
         @endif
 
         <div class="row-end gap-6 mt-8">
-          <a class="btn" href="{{ route('admin.ads.edit', $ad) }}">تعديل</a>
-          <form method="POST" action="{{ route('admin.ads.destroy', $ad) }}" onsubmit="return confirm('حذف الإعلان؟')">
+          <a class="btn" href="{{ route('admin.ads.edit', $ad) }}">{{ __('app.edit') }}</a>
+<form method="POST"
+      action="{{ route('admin.ads.destroy', $ad) }}"
+      data-confirm="{{ __('app.confirm_delete_ad') }}"
+      onsubmit="return confirm(this.dataset.confirm)">
             @csrf @method('DELETE')
-            <button class="btn danger">حذف</button>
+            <button class="btn danger">{{ __('app.delete') }}</button>
           </form>
         </div>
       </div>
     @empty
-      <div class="empty">لا توجد إعلانات.</div>
+      <div class="empty">{{ __('app.no_ads') }}</div>
     @endforelse
   </div>
 

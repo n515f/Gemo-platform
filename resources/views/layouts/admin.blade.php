@@ -15,6 +15,8 @@
     }catch(_){}})();
   </script>
 
+  <link rel="icon" type="image/x-icon" href="{{ asset('favicon-nuxt.ico') }}">
+  <link rel="shortcut icon" href="{{ asset('favicon-nuxt.ico') }}">
   @vite(['resources/css/entries/admin.css','resources/js/app.js']) {{-- app.js يستورد admin.js --}}
   @stack('styles')
 </head>

@@ -30,8 +30,8 @@
           <a class="pill {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">{{ __('app.admin') }}</a>
         @endrole
         @role('technician')
-          <a class="pill {{ request()->routeIs('reports.create') ? 'active' : '' }}" href="{{ route('reports.create') }}">إنشاء تقرير</a>
-          <a class="pill {{ request()->routeIs('reports.index') ? 'active' : '' }}" href="{{ route('reports.index') }}">تقاريري</a>
+          <a class="pill {{ request()->routeIs('reports.create') ? 'active' : '' }}" href="{{ route('reports.create') }}">{{ __('app.create_report') }}</a>
+          <a class="pill {{ request()->routeIs('reports.index') ? 'active' : '' }}" href="{{ route('reports.index') }}">{{ __('app.my_reports') }}</a>
         @endrole
       @endauth
     @else
@@ -101,8 +101,8 @@
           <a class="item" href="{{ route('admin.dashboard') }}">{{ __('app.admin') }}</a>
         @endrole
         @role('technician')
-          <a class="item {{ request()->routeIs('reports.create') ? 'active' : '' }}" href="{{ route('reports.create') }}">إنشاء تقرير</a>
-          <a class="item {{ request()->routeIs('reports.index') ? 'active' : '' }}" href="{{ route('reports.index') }}">تقاريري</a>
+          <a class="item {{ request()->routeIs('reports.create') ? 'active' : '' }}" href="{{ route('reports.create') }}">{{ __('app.create_report') }}</a>
+          <a class="item {{ request()->routeIs('reports.index') ? 'active' : '' }}" href="{{ route('reports.index') }}">{{ __('app.my_reports') }}</a>
         @endrole
       @endauth
     @else
@@ -122,9 +122,9 @@
         <img id="themeIconMobile" src="{{ asset('images/moon.png') }}" alt="" width="18" height="18">
       </button>
       @if(app()->getLocale()==='ar')
-        <a class="lang" href="{{ route('lang.switch','en') }}">English</a>
+        <a class="lang" href="{{ route('lang.switch','en') }}">{{ __('app.english') }}</a>
       @else
-        <a class="lang" href="{{ route('lang.switch','ar') }}">العربية</a>
+        <a class="lang" href="{{ route('lang.switch','ar') }}">{{ __('app.arabic') }}</a>
       @endif
     </div>
 

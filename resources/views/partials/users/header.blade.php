@@ -65,9 +65,9 @@
 
         {{-- اللغة --}}
         @if(app()->getLocale() === 'ar')
-          <a class="pill clean-btn" href="{{ route('lang.switch','en') }}">EN</a>
+          <a class="pill clean-btn" href="{{ route('lang.switch','en') }}">{{ __('app.english_short') }}</a>
         @else
-          <a class="pill clean-btn" href="{{ route('lang.switch','ar') }}">AR</a>
+          <a class="pill clean-btn" href="{{ route('lang.switch','ar') }}">{{ __('app.arabic_short') }}</a>
         @endif
 
         @guest         
@@ -201,7 +201,7 @@
             {{ $isRtl ? __('app.language_en') : __('app.language_ar') }}
           </a>
         @else
-          <a class="lang" href="{{ route('lang.switch','ar') }}">العربية</a>
+          <a class="lang" href="{{ route('lang.switch','ar') }}">{{ __('app.arabic') }}</a>
         @endif
       </div>
 

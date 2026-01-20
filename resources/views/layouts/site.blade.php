@@ -44,13 +44,12 @@
     })();
   </script>
 
+  <link rel="icon" type="image/x-icon" href="{{ asset('favicon-nuxt.ico') }}">
+  <link rel="shortcut icon" href="{{ asset('favicon-nuxt.ico') }}">
   {{-- عبر Vite --}}
   @vite(['resources/css/entries/site.css','resources/js/app.js'])
   @stack('styles')
-
- 
 </head>
-
 <body class="app">
   {{-- ======= الهيدر ======= --}}
     @include('partials.users.header')
